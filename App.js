@@ -23,6 +23,7 @@ import Signin from './screens/authentication/Signin';
 import ForgotPassword from './screens/authentication/ForgetPassword';
 import VerifyResetCode from './screens/authentication/VerifyResetCode';
 import Menu from './screens/home/Menu';
+import DeliveryAgentProfile from './screens/home/DeliveryAgentProfile';
 
 const App: () => React$Node = () => {
   return (
@@ -33,7 +34,8 @@ const App: () => React$Node = () => {
        {/* <Signin /> */}
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
-       <Menu />
+       {/* <Menu /> */}
+       <DeliveryAgentProfile />
     </>
   )
 }
