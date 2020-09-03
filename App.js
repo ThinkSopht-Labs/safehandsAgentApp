@@ -22,6 +22,7 @@ import Signup from './screens/authentication/Signup';
 import Signin from './screens/authentication/Signin';
 import ForgotPassword from './screens/authentication/ForgetPassword';
 import VerifyResetCode from './screens/authentication/VerifyResetCode';
+import Menu from './screens/home/Menu';
 
 const App: () => React$Node = () => {
   return (
@@ -31,7 +32,8 @@ const App: () => React$Node = () => {
        {/* <Signup /> */}
        {/* <Signin /> */}
        {/* <ForgotPassword /> */}
-       <VerifyResetCode />
+       {/* <VerifyResetCode /> */}
+       <Menu />
     </>
   )
 }
