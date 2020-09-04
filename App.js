@@ -41,13 +41,13 @@ const App = () => {
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}
-       {/* <DeliveryAgentProfile /> */}
+       <DeliveryAgentProfile />
        {/* <DeliveryRequest /> */}
        {/* <StartTrip /> */}
        {/* <EstimatedTimeArrival /> */}
        {/* <EstimatedTimeDelivery /> */}
        {/* <ContactPerson /> */}
-       <DeliveryContactPerson />
+       {/* <DeliveryContactPerson /> */}
     </>
   )
 }

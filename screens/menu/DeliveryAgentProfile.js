@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
 import propic from '../../assets/images/user-icon.png'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/AntDesign';
 import ProfileButton from '../../components/buttons/ProfileButton';
 
 export default class DeliveryAgentProfile extends Component {
@@ -20,11 +20,11 @@ export default class DeliveryAgentProfile extends Component {
                             <Text style={stylesheet.text}>Member since</Text>
                             <Text style={stylesheet.date}>16.06.2020</Text>
                             <View style={stylesheet.rating}>
-                                <Icon name="star" size={30} color="#900" />
-                                <Icon name="star" size={30} color="#900" />
-                                <Icon name="star" size={30} color="#900" />
-                                <Icon name="star" size={30} color="#900" />
-                                <Icon name="star" size={30} color="#900" />
+                                <Icon name="star" size={25} color="#F2C94C" />
+                                <Icon name="star" size={25} color="#F2C94C" />
+                                <Icon name="star" size={25} color="#F2C94C" />
+                                <Icon name="star" size={25} color="#F2C94C" />
+                                <Icon name="star" size={25} color="#D5DDE0" />
                             </View>
                             <Text style={stylesheet.blueText}><Text style={stylesheet.deepBlue}>23</Text> Successful deliveries complete</Text>
                         </View>
@@ -86,7 +86,9 @@ const stylesheet = StyleSheet.create({
     rating: {
         flexDirection:"row",
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        paddingVertical:10
+        
     },
 
     info: {
