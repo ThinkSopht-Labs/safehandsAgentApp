@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 export default class ProfileButton extends Component {
     render() {
         return (
-            <TouchableOpacity style={[stylesheet.btn]}>
+            <TouchableOpacity style={[stylesheet.btn, this.props.style]}>
                 <Text style={stylesheet.btnText}> {this.props.label} </Text>
             </TouchableOpacity>
         )

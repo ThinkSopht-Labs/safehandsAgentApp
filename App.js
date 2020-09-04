@@ -22,10 +22,11 @@ import Signup from './screens/authentication/Signup';
 import Signin from './screens/authentication/Signin';
 import ForgotPassword from './screens/authentication/ForgetPassword';
 import VerifyResetCode from './screens/authentication/VerifyResetCode';
-import Menu from './screens/home/Menu';
-import DeliveryAgentProfile from './screens/home/DeliveryAgentProfile';
+import Menu from './screens/menu/Menu';
+import DeliveryAgentProfile from './screens/menu/DeliveryAgentProfile';
+import DeliveryRequest from './screens/menu/DeliveryRequest';
 
-const App: () => React$Node = () => {
+const App = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
@@ -35,7 +36,8 @@ const App: () => React$Node = () => {
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}
-       <DeliveryAgentProfile />
+       {/* <DeliveryAgentProfile /> */}
+       <DeliveryRequest />
     </>
   )
 }
