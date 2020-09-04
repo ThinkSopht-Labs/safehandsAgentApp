@@ -27,6 +27,7 @@ import DeliveryAgentProfile from './screens/menu/DeliveryAgentProfile';
 import DeliveryRequest from './screens/menu/DeliveryRequest';
 import StartTrip from './screens/trip/StartTrip';
 import EstimatedTimeArrival from './components/trip/EstimatedTimeArrival';
+import EstimatedTimeDelivery from './screens/trip/EstimatedTimeDelivery';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
        {/* <DeliveryRequest /> */}
        {/* <StartTrip /> */}
        {/* <EstimatedTimeArrival /> */}
+       {/* <EstimatedTimeDelivery /> */}
        
     </>
   )

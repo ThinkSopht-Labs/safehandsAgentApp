@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 export default class DeliveryDetailsCard extends Component {
     render() {
         return (
-            <View style={stylesheet.DDCrad}>
+            <View style={[stylesheet.DDCrad, this.props.style]}>
                 
                 <View style={stylesheet.row}>
                     <View style={stylesheet.verticalLine}></View>
@@ -51,9 +51,8 @@ const stylesheet = StyleSheet.create({
         justifyContent:"space-between",
         padding:20,
         marginBottom:15,
-        borderWidth:0.5,
-        borderColor:"rgba(151, 173, 182, 0.2)",
-        marginVertical:20
+        marginVertical:20,
+        elevation:2
     },
 
     row: {

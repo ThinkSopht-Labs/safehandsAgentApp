@@ -6,7 +6,7 @@ export default class EstimatedTimeArrival extends Component {
         return (
             <View style={[stylesheet.container, this.props.style]}>
                 <Text style={stylesheet.eta}>ETA</Text>
-                <Text style={stylesheet.min}>16</Text>
+                <Text style={stylesheet.min}>{this.props.eta}</Text>
                 <Text style={stylesheet.small}>min</Text>
             </View>
         )
@@ -15,9 +15,9 @@ export default class EstimatedTimeArrival extends Component {
 
 const stylesheet = StyleSheet.create({
     container: {
-        width:175,
-        height:175,
-        borderRadius:87.5,
+        width:150,
+        height:150,
+        borderRadius:75,
         elevation:20,
         backgroundColor:"#ffffff",
         justifyContent:"center"
@@ -42,7 +42,7 @@ const stylesheet = StyleSheet.create({
         fontWeight:"bold",
         color:"#2F88FC",
         alignSelf:"center",
-        paddingVertical:10
+        paddingVertical:5
     }
 
 })
