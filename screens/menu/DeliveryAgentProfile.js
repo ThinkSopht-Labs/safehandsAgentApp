@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, ScrollView 
 import propic from '../../assets/images/user-icon.png'
 import Icon from 'react-native-vector-icons/AntDesign';
 import ProfileButton from '../../components/buttons/ProfileButton';
+import Icon1 from 'react-native-vector-icons/Entypo'
 
 export default class DeliveryAgentProfile extends Component {
     render() {
@@ -10,9 +11,12 @@ export default class DeliveryAgentProfile extends Component {
             <ScrollView>
                 <View style={stylesheet.updateUserCon}>
                     <View style={stylesheet.topCol}>
-                        <TouchableOpacity>
+                        <View style={stylesheet.propicContainer}>
                             <Image style={stylesheet.propic} source={propic} alt="propic" />
-                        </TouchableOpacity>
+                            <TouchableOpacity style={stylesheet.editIcon}>
+                                <Icon1 name="edit" size={22} color="#000" />
+                            </TouchableOpacity>
+                        </View>
                         <View style={stylesheet.info}>
                             <Text style={stylesheet.name}>Gerald Amanor</Text>
                             <Text style={stylesheet.email}>gerald@mail.com</Text>
@@ -76,6 +80,26 @@ const stylesheet = StyleSheet.create({
         flexDirection:"column",
         alignItems:"center",
         justifyContent:"center"
+    },
+
+    editIcon: {
+        position:"absolute",
+        top:-6,
+        right:-8,
+        backgroundColor:"#fff",
+        padding:5,
+        borderRadius:12.5,
+        borderColor:"#fff",
+        elevation:2
+    },
+
+    propicContainer: {
+        position:"relative",
+        width:120,
+        height:120,
+        backgroundColor:"#C4C4C4",
+        elevation:10,
+        borderRadius:60
     },
 
     propic: {

@@ -30,6 +30,8 @@ import EstimatedTimeArrival from './components/trip/EstimatedTimeArrival';
 import EstimatedTimeDelivery from './screens/trip/EstimatedTimeDelivery';
 import ContactPerson from './components/trip/ContactPerson';
 import DeliveryContactPerson from './screens/trip/DeliveryContactPerson';
+import ConfirmDelivery from './screens/trip/ConfirmDelivery';
+import Checker from './components/trip/Checker';
 
 const App = () => {
   return (
@@ -41,13 +43,15 @@ const App = () => {
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}
-       <DeliveryAgentProfile />
+       {/* <DeliveryAgentProfile /> */}
        {/* <DeliveryRequest /> */}
        {/* <StartTrip /> */}
        {/* <EstimatedTimeArrival /> */}
        {/* <EstimatedTimeDelivery /> */}
        {/* <ContactPerson /> */}
        {/* <DeliveryContactPerson /> */}
+       {/* <ConfirmDelivery /> */}
+       <Checker />
     </>
   )
 }

@@ -10,9 +10,9 @@ export default class Menu extends Component {
                 <View style={stylesheet.blueBackground}> 
                     <View style={stylesheet.propicContainer}>
                         <Image style={stylesheet.propic} source={propic} alt="propic" />
-                        {/* <TouchableOpacity style={stylesheet.editIcon}>
+                        <TouchableOpacity style={stylesheet.editIcon}>
                             <Icon name="edit" size={22} color="#fff" />
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                     </View>
                     <Text style={stylesheet.name}>Gerald</Text>
                     <Text style={stylesheet.email}>gerald@mail.com</Text>
@@ -39,6 +39,7 @@ const stylesheet = StyleSheet.create({
         alignItems:"flex-start",
         width:"80%"
     },
+
     editIcon: {
         position:"absolute",
         top:-6,
@@ -50,9 +51,10 @@ const stylesheet = StyleSheet.create({
         elevation:2
     },
 
-    // propicContainer: {
-    //     position:"relative",
-    // },
+    propicContainer: {
+        position:"relative",
+        width:100
+    },
 
     propic: {
         width:100,
