@@ -25,6 +25,8 @@ import VerifyResetCode from './screens/authentication/VerifyResetCode';
 import Menu from './screens/menu/Menu';
 import DeliveryAgentProfile from './screens/menu/DeliveryAgentProfile';
 import DeliveryRequest from './screens/menu/DeliveryRequest';
+import StartTrip from './screens/trip/StartTrip';
+import EstimatedTimeArrival from './components/trip/EstimatedTimeArrival';
 
 const App = () => {
   return (
@@ -37,7 +39,10 @@ const App = () => {
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}
        {/* <DeliveryAgentProfile /> */}
-       <DeliveryRequest />
+       {/* <DeliveryRequest /> */}
+       {/* <StartTrip /> */}
+       {/* <EstimatedTimeArrival /> */}
+       
     </>
   )
 }
