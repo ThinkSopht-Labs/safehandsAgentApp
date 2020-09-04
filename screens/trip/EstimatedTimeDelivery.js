@@ -34,6 +34,7 @@ const stylesheet = StyleSheet.create({
         width:"100%",
         justifyContent:"flex-start",
         alignItems:"center",
-        paddingTop:10
+        paddingTop:10,
+        paddingHorizontal:30
     }
 })

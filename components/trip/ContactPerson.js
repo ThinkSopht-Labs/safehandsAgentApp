@@ -7,7 +7,7 @@ import ChatButton from '../buttons/ChatButton'
 export default class ContactPerson extends Component {
     render() {
         return (
-            <View style={[stylesheet.container]}>
+            <View style={[stylesheet.container, this.props.style]}>
                 <View style={stylesheet.imageContainer}>
                     <Image source={propic} />
                 </View>
@@ -28,7 +28,7 @@ export default class ContactPerson extends Component {
 const stylesheet = StyleSheet.create({
     container: {
         flexDirection:"row",
-        flex:1,
+        width:"90%",
         justifyContent:"flex-start",
         alignItems:"flex-start"
     },
