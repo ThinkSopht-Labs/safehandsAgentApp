@@ -3,26 +3,20 @@ import { Text, View, StyleSheet, Image } from 'react-native'
 import crate from '../../assets/images/crate-icon.png'
 import Checker from '../../components/trip/Checker'
 import FormButton from '../../components/buttons/FormButton'
+import DeliveryCard from '../../components/trip/DeliveryCard'
+import CreditCard from '../../components/trip/CreditCard'
 
-export default class ConfirmDelivery extends Component {
+export default class ConfirmPayment extends Component {
     render() {
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
-                    <Image source={crate} />
-                    <Text style={stylesheet.title}>Your Package has been delivered</Text>
-                    <View style={stylesheet.listContainer}>
-                        <View style={stylesheet.list}>
-                            <Checker style={{marginRight:15}} check={true} />
-                            <Text style={stylesheet.text}>Package delivered to the contact person</Text>
-                        </View>
-                        <View style={stylesheet.list}>
-                            <Checker style={{marginRight:15}} />
-                            <Text style={stylesheet.text}>Delivered in good condition?</Text>
-                        </View>
-                    </View>
+                    <View style={stylesheet.aviPlaceholder}></View>
+                    <Text style={stylesheet.title}>Payment Confirmed</Text>
+                    <DeliveryCard />
+                    <CreditCard style={{width:'93%'}} />
                 </View>
-                <FormButton label="End Trip" style={{backgroundColor:"#EB5757", width:"90%", position:"absolute", bottom:30}} />
+                <FormButton label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:30}} />
             </View>
         )
     }
@@ -35,7 +29,7 @@ const stylesheet = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         flexDirection:"column",
-        
+        marginTop:-30
     },
 
     requestContainer: {
@@ -45,6 +39,13 @@ const stylesheet = StyleSheet.create({
         elevation:7,
         paddingVertical:50,
         width:"90%"
+    },
+
+    aviPlaceholder: {
+        width:80,
+        height:80,
+        borderRadius:40,
+        backgroundColor:"#F7F8F9",
     },
 
     title: {

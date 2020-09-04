@@ -52,7 +52,8 @@ const stylesheet = StyleSheet.create({
         padding:20,
         marginBottom:15,
         marginVertical:20,
-        elevation:2
+        borderWidth:1,
+        borderColor:"rgba(151, 173, 182, 0.2)"
     },
 
     row: {

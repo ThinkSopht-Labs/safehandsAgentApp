@@ -32,6 +32,7 @@ import ContactPerson from './components/trip/ContactPerson';
 import DeliveryContactPerson from './screens/trip/DeliveryContactPerson';
 import ConfirmDelivery from './screens/trip/ConfirmDelivery';
 import Checker from './components/trip/Checker';
+import ConfirmPayment from './screens/trip/ConfirmPayment';
 
 const App = () => {
   return (
@@ -51,7 +52,8 @@ const App = () => {
        {/* <ContactPerson /> */}
        {/* <DeliveryContactPerson /> */}
        {/* <ConfirmDelivery /> */}
-       <Checker />
+       {/* <Checker /> */}
+       <ConfirmPayment />
     </>
   )
 }

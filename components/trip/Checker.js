@@ -5,7 +5,7 @@ import checker from '../../assets/images/checker-icon.png'
 export default class Checker extends Component {
     render() {
         return (
-            <View style={stylesheet.checker}>
+            <View style={[stylesheet.checker, this.props.style]}>
                 {
                     this.props.check && <Image style={stylesheet.check} source={checker} />
                 }
