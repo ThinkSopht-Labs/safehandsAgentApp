@@ -34,7 +34,9 @@ import ConfirmDelivery from './screens/trip/ConfirmDelivery';
 import Checker from './components/trip/Checker';
 import ConfirmPayment from './screens/trip/ConfirmPayment';
 import DeliveryReceipt from './screens/trip/DeliveryReceipt';
-import DeliveryHistory from './screens/trip/DeliveryHistory';
+import DeliveryHistory from './screens/menu/DeliveryHistory';
+import DeliveryDetails from './screens/menu/DeliveryDetails';
+
 
 const App = () => {
   return (
@@ -57,7 +59,9 @@ const App = () => {
        {/* <Checker /> */}
        {/* <ConfirmPayment /> */}
        {/* <DeliveryReceipt /> */}
-       <DeliveryHistory />
+       {/* <DeliveryHistory /> */}
+       <DeliveryDetails />
+       
     </>
   )
 }
