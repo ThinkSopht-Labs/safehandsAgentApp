@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
-import crate from '../../assets/images/crate-icon.png'
-import Checker from '../../components/trip/Checker'
 import FormButton from '../../components/buttons/FormButton'
 import DeliveryCard from '../../components/trip/DeliveryCard'
 import CreditCard from '../../components/trip/CreditCard'

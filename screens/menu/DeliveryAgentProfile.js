@@ -24,11 +24,11 @@ export default class DeliveryAgentProfile extends Component {
                             <Text style={stylesheet.text}>Member since</Text>
                             <Text style={stylesheet.date}>16.06.2020</Text>
                             <View style={stylesheet.rating}>
-                                <Icon name="star" size={25} color="#F2C94C" />
-                                <Icon name="star" size={25} color="#F2C94C" />
-                                <Icon name="star" size={25} color="#F2C94C" />
-                                <Icon name="star" size={25} color="#F2C94C" />
-                                <Icon name="star" size={25} color="#D5DDE0" />
+                                <Icon name="star" size={27} color="#F2C94C" />
+                                <Icon name="star" size={27} color="#F2C94C" />
+                                <Icon name="star" size={27} color="#F2C94C" />
+                                <Icon name="star" size={27} color="#F2C94C" />
+                                <Icon name="star" size={27} color="#D5DDE0" />
                             </View>
                             <Text style={stylesheet.blueText}><Text style={stylesheet.deepBlue}>23</Text> Successful deliveries complete</Text>
                         </View>
