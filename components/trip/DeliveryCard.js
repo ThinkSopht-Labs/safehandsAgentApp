@@ -6,7 +6,30 @@ export default class DeliveryDetailsCard extends Component {
     render() {
         return (
             <View style={[stylesheet.DDCrad, this.props.style]}>
-                
+
+                {
+                    this.props.status ==="Success" ?
+                    <>
+                        <View style={stylesheet.top}>
+                            <Text style={stylesheet.item}>Hair Extention</Text>
+                            <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
+                        </View>
+                        <Text style={stylesheet.timestamp}>8 JUNE 2019, 18:39</Text>
+                    </> : null
+                }
+
+                {
+                    this.props.status ==="Cancelled" ?
+                    <View style={stylesheet.topRow}>
+                        <Text style={stylesheet.heading}>
+                            10 JUNE 2019, 18:35
+                        </Text>
+                        <Text style={[stylesheet.heading, stylesheet.status]}>
+                            CANCELLED
+                        </Text>
+                    </View>: null
+                }
+
                 <View style={stylesheet.row}>
                     <View style={stylesheet.verticalLine}></View>
                     <Text style={stylesheet.time}>
@@ -56,6 +79,31 @@ const stylesheet = StyleSheet.create({
         borderColor:"rgba(151, 173, 182, 0.2)"
     },
 
+    topRow: {
+        borderBottomColor:"#D5DDE0",
+        borderBottomWidth:1,
+        paddingBottom:10,
+        flexDirection:"row",
+        justifyContent:"space-between",
+    },
+
+    top: {
+        borderBottomColor:"#D5DDE0",
+        borderBottomWidth:1,
+        paddingBottom:10,
+    },
+
+    heading: {
+        fontWeight:"bold",
+        fontSize:13,
+        lineHeight:20,
+        color:"#3E4958"
+    },
+
+    status: {
+        color:"#EB5757"
+    },
+
     row: {
         flexDirection:"row",
         justifyContent:"flex-start",
@@ -75,6 +123,31 @@ const stylesheet = StyleSheet.create({
     time: {
         color:"#97ADB6",
         fontSize:13,
+    },
+
+    timestamp: {
+        fontSize:13,
+        color:"#3E4958",
+        fontWeight:"bold",
+        marginTop:10
+    },
+
+    item: {
+        fontSize:30,
+        fontWeight:"bold",
+        letterSpacing:0.2,
+        lineHeight:28,
+        color:"#000000",
+        marginTop:20,
+        alignSelf:"center"
+    },
+
+    desc: {
+        color: "#97ADB6",
+        fontSize: 18,
+        lineHeight:28,
+        letterSpacing:0.2,
+        alignSelf:"center"
     },
 
     address: {

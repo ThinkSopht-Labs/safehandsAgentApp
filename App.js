@@ -34,6 +34,7 @@ import ConfirmDelivery from './screens/trip/ConfirmDelivery';
 import Checker from './components/trip/Checker';
 import ConfirmPayment from './screens/trip/ConfirmPayment';
 import DeliveryReceipt from './screens/trip/DeliveryReceipt';
+import DeliveryHistory from './screens/trip/DeliveryHistory';
 
 const App = () => {
   return (
@@ -44,7 +45,7 @@ const App = () => {
        {/* <Signin /> */}
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
-       <Menu />
+       {/* <Menu /> */}
        {/* <DeliveryAgentProfile /> */}
        {/* <DeliveryRequest /> */}
        {/* <StartTrip /> */}
@@ -56,6 +57,7 @@ const App = () => {
        {/* <Checker /> */}
        {/* <ConfirmPayment /> */}
        {/* <DeliveryReceipt /> */}
+       <DeliveryHistory />
     </>
   )
 }
