@@ -52,10 +52,12 @@ export default class ComplimentsRatings extends Component {
                         <Text style={stylesheet.formText}>GN 716 - 12</Text>
                     </View>
                 </View>
-                <DeliveryAgentRatingsCard />
-                <DeliveryAgentRatingsCard />
-                <DeliveryAgentRatingsCard />
-                <DeliveryAgentRatingsCard />
+                <View style={stylesheet.deliveryAgentRatingContainer}>
+                    <DeliveryAgentRatingsCard />
+                    <DeliveryAgentRatingsCard />
+                    <DeliveryAgentRatingsCard />
+                    <DeliveryAgentRatingsCard />
+                </View>
             </ScrollView>
         )
     }
@@ -66,7 +68,7 @@ const stylesheet = StyleSheet.create({
         flex: 1,
         paddingHorizontal:20,
         paddingTop:40,
-        backgroundColor:"#ffffff"
+        backgroundColor:"#ffffff",
     },
     nameRow:{
         flexDirection:'row',
@@ -85,17 +87,16 @@ const stylesheet = StyleSheet.create({
     },
     detailRow:{
         flexDirection:'row',
-        width:'100',
         justifyContent: 'space-between'
     },
     rate:{
         borderWidth: 1,
         borderRadius:15,
         borderColor:'#D5DDE0',
-        paddingVertical:40,
         width: '30%',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        paddingVertical:5
     },
     rateIconContainer:{
         backgroundColor:'#D5DDE0',
@@ -113,7 +114,6 @@ const stylesheet = StyleSheet.create({
     ratingRow:{
         flexDirection:'row',
         justifyContent:'space-between',
-        height:'15%',
         marginTop:'7%'
     },
     title:{
@@ -146,5 +146,9 @@ const stylesheet = StyleSheet.create({
         fontSize:15,
         color:"#3E4958",
         paddingVertical:15
+    },
+
+    deliveryAgentRatingContainer: {
+        marginBottom:50
     }
 })

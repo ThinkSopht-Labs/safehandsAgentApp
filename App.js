@@ -38,6 +38,7 @@ import DeliveryHistory from './screens/menu/DeliveryHistory';
 import DeliveryDetails from './screens/menu/DeliveryDetails';
 import ComplimentsRatings from './screens/menu/ComplimentsRatings';
 import DeliveryAgentRatingsCard from './components/menu/DeliveryAgentRatingsCard';
+import RideSummary from './screens/menu/RideSummary';
 
 
 const App = () => {
@@ -63,8 +64,9 @@ const App = () => {
        {/* <DeliveryReceipt /> */}
        {/* <DeliveryHistory /> */}
        {/* <DeliveryDetails /> */}
-       <ComplimentsRatings />
+       {/* <ComplimentsRatings /> */}
        {/* <DeliveryAgentRatingsCard /> */}
+       <RideSummary />
        
     </>
   )
