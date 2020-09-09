@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import TipsCards from '../../components/menu/TipsCards'
 import TipsTableTitle from '../../components/menu/TipsTableTitle'
-import { BarChart } from 'react-native-chart-kit'
+import { LineChart } from 'react-native-chart-kit'
 
 const screenWidth = Dimensions.get("window").width
 
-export default class CommsTips2 extends Component {
+export default class CommsTips3 extends Component {
     render() {
         const data = {
             labels: ["1", "2", "3", "4", "5", "6"],
@@ -34,51 +34,43 @@ export default class CommsTips2 extends Component {
             <View style={stylesheet.container}>
                 <ScrollView style={stylesheet.scrollContainer} showsVerticalScrollIndicator={false}>
                     <View style={{paddingTop:10}}>
-                    <BarChart
+                    <LineChart
                         style={{
                             marginStart:-20
                         }}
                         data={data}
-                        width={screenWidth-40}
+                        width={screenWidth+35}
                         height={220}
                         chartConfig={chartConfig}
                         verticalLabelRotation={0} 
                         withInnerLines={false}
                         fromZero={true}
-                        showBarTops={false}
+                        withVerticalLines={false}
+                        withHorizontalLines={false}
                     />
                     </View>
-                    <TouchableOpacity onPress={this.gotoMileage2} style={stylesheet.btn}>
-                        <Text style={stylesheet.btnText}>Weekly view</Text>
-                    </TouchableOpacity>
-                    
                     <View style={stylesheet.cardsRow}>
                         <TipsCards caption="Trips" tip="65"/>
-                        <TipsCards caption="Comm." tip="785"/>
-                        <TipsCards caption="Tips" tip="87"/>
+                        <TipsCards caption="Kilometers" tip="945"/>
                     </View>
                     <View style={stylesheet.tableContainer}>
                         <View style={stylesheet.tableTitle}>
                             <Text style={[stylesheet.title, stylesheet.wider]}>Delivery</Text>
-                            <Text style={[stylesheet.title, stylesheet.smaller]}>Commission</Text>
-                            <Text style={[stylesheet.title, stylesheet.smaller]}>Trip</Text>
-                            <Text style={[stylesheet.title, stylesheet.smaller]}>Total</Text>
+                            <Text style={[stylesheet.title, stylesheet.smaller]}>Time</Text>
+                            <Text style={[stylesheet.title, stylesheet.smaller]}>Mileage</Text>
                         </View>
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
-                        <TipsTableTitle />
+                        <TipsTableTitle type />
+                        <TipsTableTitle type />
+                        <TipsTableTitle type />
+                        <TipsTableTitle type />
+                        <TipsTableTitle type />
+                        <TipsTableTitle type />
                     </View>
                 </ScrollView>
                 <View style={stylesheet.totalRow}>
                     <Text style={[stylesheet.total, stylesheet.wider]}>Total</Text>
-                    <Text style={[stylesheet.totalTime, stylesheet.smaller]}>15.50</Text>
-                    <Text style={[stylesheet.totalTime, stylesheet.smaller]}>5.00</Text>
-                    <Text style={[stylesheet.totalMileage, stylesheet.smaller]}>20.00</Text>
+                    <Text style={[stylesheet.totalTime, stylesheet.smaller]}>337 mins</Text>
+                    <Text style={[stylesheet.totalMileage, stylesheet.smaller]}>945Km</Text>
                 </View>
             </View>
         )
@@ -151,7 +143,7 @@ const stylesheet = StyleSheet.create({
     },
 
     wider: {
-        flex:1,
+        flex:0.6,
         textAlign:"left"
     },
 
