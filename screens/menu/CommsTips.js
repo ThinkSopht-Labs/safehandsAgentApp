@@ -53,8 +53,8 @@ export default class CommsTips extends Component {
                     
                     <View style={stylesheet.cardsRow}>
                         <TipsCards caption="Trips" tip="65"/>
-                        <TipsCards caption="Comm." tip="785"/>
-                        <TipsCards caption="Tips" tip="87"/>
+                        <TipsCards showCurrency={true} caption="Comm." tip="785"/>
+                        <TipsCards showCurrency={true} caption="Tips" tip="87"/>
                     </View>
                     <View style={stylesheet.tableContainer}>
                         <View style={stylesheet.tableTitle}>

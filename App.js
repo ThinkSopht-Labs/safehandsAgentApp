@@ -71,7 +71,7 @@ const App = () => {
        {/* <RideSummary /> */}
        {/* <CommsTips /> */}
        {/* <CommsTips2 /> */}
-       <CommsTips3 />
+       {/* <CommsTips3 /> */}
        
     </>
   )

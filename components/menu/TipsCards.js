@@ -5,7 +5,7 @@ export default class TipsCards extends Component {
     render() {
         return (
             <View style={stylesheet.mileageCardSmall}>
-                <Text style={stylesheet.mileageSmall}>{this.props.tip}</Text>
+                <Text style={stylesheet.mileageSmall}>{this.props.showCurrency && <Text style={stylesheet.ghc}>Ghc</Text>} {this.props.tip}</Text>
                 <Text style={stylesheet.caption}>{this.props.caption}</Text>
             </View>
         )
@@ -27,6 +27,12 @@ const stylesheet = StyleSheet.create({
         marginBottom:-15
     },
 
+    ghc: {
+        color:"#000000",
+        fontSize:10,
+        letterSpacing:1,
+    },
+
     mileageCardSmall: {
         flexDirection:"column",
         alignItems:"center",
@@ -35,7 +41,7 @@ const stylesheet = StyleSheet.create({
         borderRadius:15,
         elevation:10,
         paddingBottom:10,
-        minWidth:100,
+        minWidth:120,
         paddingHorizontal:10,
         marginEnd:10
     }
