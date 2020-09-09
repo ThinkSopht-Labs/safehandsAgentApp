@@ -2,22 +2,21 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import TipsCards from '../../components/menu/TipsCards'
 import TipsTableTitle from '../../components/menu/TipsTableTitle'
-import { PieChart } from 'react-native-chart-kit'
+import { BarChart } from 'react-native-chart-kit'
 
 const screenWidth = Dimensions.get("window").width
 
 export default class CommsTips2 extends Component {
     render() {
-        const data = [
-            {
-              commission: 87,
-              color: "rgba(67, 136, 252, 0.1)"
-            },
-            {
-              commission: 785,
-              color: "rgba(151, 173, 182, 0.6)"
-            }
-        ]
+        const data = {
+            labels: ["1", "2", "3", "4", "5", "6"],
+            datasets: [
+              {
+                data: [20, 45, 28, 80, 99, 43]
+              }
+            ]
+          }
+
         const chartConfig = {
             backgroundGradientFrom: "#ffffff",
             backgroundGradientFromOpacity: 0,
@@ -30,25 +29,31 @@ export default class CommsTips2 extends Component {
             strokeWidth: 3, // optional, default 3
             barPercentage: 1,
             useShadowColorFromDataset: false, // optional
+            // propsForBackgroundLines:{
+            //     stroke:"#1152FD",
+            //     strokeWidth:"0"
+            // }
         }; 
         return (
             <View style={stylesheet.container}>
                 <ScrollView style={stylesheet.scrollContainer} showsVerticalScrollIndicator={false}>
                     <View style={{paddingTop:10}}>
-                    <PieChart
+                    <BarChart
+                        style={{
+                            marginStart:-20
+                        }}
                         data={data}
-                        width={screenWidth}
+                        width={screenWidth-40}
                         height={220}
                         chartConfig={chartConfig}
-                        accessor="commission"
-                        backgroundColor="transparent"
-                        hasLegend={false}
-                        paddingLeft={screenWidth/5}
-                        absolute
-                        />
+                        verticalLabelRotation={0} 
+                        withInnerLines={false}
+                        fromZero={true}
+                        showBarTops={false}
+                    />
                     </View>
                     <TouchableOpacity onPress={this.gotoMileage2} style={stylesheet.btn}>
-                        <Text style={stylesheet.btnText}>View over time</Text>
+                        <Text style={stylesheet.btnText}>Weekly view</Text>
                     </TouchableOpacity>
                     
                     <View style={stylesheet.cardsRow}>
