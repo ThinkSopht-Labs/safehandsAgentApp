@@ -36,6 +36,8 @@ import ConfirmPayment from './screens/trip/ConfirmPayment';
 import DeliveryReceipt from './screens/trip/DeliveryReceipt';
 import DeliveryHistory from './screens/menu/DeliveryHistory';
 import DeliveryDetails from './screens/menu/DeliveryDetails';
+import ComplimentsRatings from './screens/menu/ComplimentsRatings';
+import DeliveryAgentRatingsCard from './components/menu/DeliveryAgentRatingsCard';
 
 
 const App = () => {
@@ -60,7 +62,9 @@ const App = () => {
        {/* <ConfirmPayment /> */}
        {/* <DeliveryReceipt /> */}
        {/* <DeliveryHistory /> */}
-       <DeliveryDetails />
+       {/* <DeliveryDetails /> */}
+       <ComplimentsRatings />
+       {/* <DeliveryAgentRatingsCard /> */}
        
     </>
   )
