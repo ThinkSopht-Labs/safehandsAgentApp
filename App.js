@@ -39,6 +39,8 @@ import DeliveryDetails from './screens/menu/DeliveryDetails';
 import ComplimentsRatings from './screens/menu/ComplimentsRatings';
 import DeliveryAgentRatingsCard from './components/menu/DeliveryAgentRatingsCard';
 import RideSummary from './screens/menu/RideSummary';
+import CommsTips from './screens/menu/CommsTips';
+import CommsTips2 from './screens/menu/CommsTips2';
 
 
 const App = () => {
@@ -67,6 +69,8 @@ const App = () => {
        {/* <ComplimentsRatings /> */}
        {/* <DeliveryAgentRatingsCard /> */}
        {/* <RideSummary /> */}
+       {/* <CommsTips /> */}
+       <CommsTips2 />
        
     </>
   )
