@@ -66,7 +66,7 @@ const App = () => {
        {/* <DeliveryDetails /> */}
        {/* <ComplimentsRatings /> */}
        {/* <DeliveryAgentRatingsCard /> */}
-       <RideSummary />
+       {/* <RideSummary /> */}
        
     </>
   )
