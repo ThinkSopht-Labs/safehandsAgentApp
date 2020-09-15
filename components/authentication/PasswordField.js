@@ -20,7 +20,7 @@ export default class PasswordFeild extends Component {
         return (
             <View>
                 <Text style={[styles.title, this.props.style]}>{this.props.label}</Text>
-                <TextInput onChange={this.props.onChange} style={styles.input} secureTextEntry={this.state.isSecureText} />
+                <TextInput style={styles.input} secureTextEntry={this.state.isSecureText} />
                 <TouchableOpacity onPress={this.toggleSecureTextEntry} style={styles.iconContainer}>
                     <Icon name={this.state.isSecureText ? "eye-outline" : "eye-off-outline"} color="#97ADB6" size={20} />
                 </TouchableOpacity>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor:"#F7F8F9",
         flexDirection: 'row',
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
         width: '100%',
         minHeight: '8%',
         marginTop: '2%',
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     iconContainer:{
         position:"absolute",
         bottom:"30%",
-        right:20
+        right:15
     }
 })

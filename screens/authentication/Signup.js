@@ -12,6 +12,8 @@ export default class Signup extends Component {
 
               <InputField textContentType='name' style={{marginTop:70}} label="NAME" />
 
+              <InputField datepicker textContentType='telephoneNumber' keyboardType='phone-pad' label="DATE OF BIRTH" />
+
               <InputField textContentType='telephoneNumber' keyboardType='phone-pad' label="PHONE" />
 
               <InputField textContentType='emailAddress' keyboardType='email-address' label="EMAIL" />

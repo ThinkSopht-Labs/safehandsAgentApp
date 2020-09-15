@@ -12,7 +12,14 @@ export default class StackNavigation extends Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator>
+                <Stack.Navigator 
+                    screenOptions={{
+                    headerTintColor: '#3E4958',
+                    headerStyle: {
+                        height: 80,
+                        elevation:1
+                    }
+                }}>
 
                     <Stack.Screen 
                         name="Splash Screen"
@@ -24,16 +31,29 @@ export default class StackNavigation extends Component {
                     <Stack.Screen 
                         name="Sign In"
                         component={Signin}
+                        options={{
+                            headerTitleAlign:"center",
+                            headerLeft:()=>null
+                        }}
+                        
                     />
 
                     <Stack.Screen 
                         name="Forgot Password"
                         component={ForgotPassword}
+                        options={{
+                            headerTitleAlign:"center",
+                            headerTransparent:true
+                        }}
                     />
 
                     <Stack.Screen 
                         name="Sign Up"
                         component={Signup}
+                        options={{
+                            headerTitleAlign:"center",
+                            headerBackTitleVisible:false
+                        }}
                     />
 
                 </Stack.Navigator>

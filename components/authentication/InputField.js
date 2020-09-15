@@ -1,12 +1,55 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TextInput } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import DateTimePickerModal from "react-native-modal-datetime-picker"
+import moment from 'moment'
 
 export default class InputField extends Component {
+    constructor(){
+        super()
+        this.state = {
+            show:false,
+            date: new Date()
+        }
+    }
+    confirm = (selectedDate) => {
+        const currentDate = selectedDate
+        this.setState({
+            show:false,
+            date:currentDate
+        })
+    }
+
+    togglePicker = ()=> {
+        this.setState({
+            show:this.state.show ? false : true
+        })
+    }
+
     render() {
         return (
             <View >
                 <Text style={[styles.title, this.props.style]}>{this.props.label}</Text>
-                <TextInput onChange={this.props.onChange} textContentType={this.props.textContentType} keyboardType={this.props.keyboardType} style={styles.input} />
+                {
+                    !this.props.datepicker ? 
+                    <TextInput 
+                        onChange={this.props.onChange} 
+                        textContentType={this.props.textContentType} 
+                        keyboardType={this.props.keyboardType} 
+                        style={styles.input} 
+                    /> : 
+                    <>  
+                        <TouchableOpacity style={[styles.input, styles.dateField]} onPress={this.togglePicker} >
+                            <Text style={styles.date}>{moment(this.state.date.toString()).format("Do MMMM YYYY")}</Text>
+                        </TouchableOpacity> 
+                        <DateTimePickerModal
+                            isVisible={this.state.show}
+                            date={this.state.date}
+                            onConfirm={this.confirm}
+                            onCancel={this.togglePicker}
+                        />
+                    </>
+                }
             </View>
         )
     }
@@ -24,13 +67,21 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor:"#F7F8F9",
         flexDirection: 'row',
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
         width: '100%',
         minHeight: '8%',
         marginTop: '2%',
         marginBottom: '5%',
         justifyContent: 'center',
         alignItems: 'center',
+        fontSize:15
+    },
+    dateField: {
+        paddingHorizontal:15,
+        paddingVertical:20,
+        justifyContent:"flex-start"
+    },
+    date: {
         fontSize:15
     }
 })
