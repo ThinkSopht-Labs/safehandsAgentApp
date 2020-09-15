@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 export default class FormButton extends Component {
     render() {
         return (
-            <TouchableOpacity style={[styles.btn, this.props.style]}>
+            <TouchableOpacity onPress={this.props.handleSubmit} style={[styles.btn, this.props.style]}>
               <Text style={styles.btnText}>{this.props.label}</Text>
             </TouchableOpacity>
         )

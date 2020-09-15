@@ -18,6 +18,13 @@ export default class StackNavigation extends Component {
                     headerStyle: {
                         height: 80,
                         elevation:1
+                    },
+                    headerTitleStyle: {
+                        fontWeight:'bold',
+                        fontSize:20,
+                        lineHeight:28,
+                        color:"#3E4958",
+                        letterSpacing:0.2
                     }
                 }}>
 
@@ -46,6 +53,7 @@ export default class StackNavigation extends Component {
                             headerTransparent:true
                         }}
                     />
+
 
                     <Stack.Screen 
                         name="Sign Up"

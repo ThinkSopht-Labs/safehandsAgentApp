@@ -9,15 +9,18 @@ export default class InputField extends Component {
         super()
         this.state = {
             show:false,
-            date: new Date()
+            date: new Date(),
+            selectedDate: ""
         }
     }
     confirm = (selectedDate) => {
         const currentDate = selectedDate
         this.setState({
             show:false,
-            date:currentDate
+            date:currentDate,
+            selectedDate:currentDate
         })
+        this.props.onDateChange(currentDate)
     }
 
     togglePicker = ()=> {
@@ -33,14 +36,16 @@ export default class InputField extends Component {
                 {
                     !this.props.datepicker ? 
                     <TextInput 
-                        onChange={this.props.onChange} 
+                        onChangeText={(text)=>this.props.handleInput(text, this.props.name)} 
                         textContentType={this.props.textContentType} 
                         keyboardType={this.props.keyboardType} 
                         style={styles.input} 
                     /> : 
                     <>  
                         <TouchableOpacity style={[styles.input, styles.dateField]} onPress={this.togglePicker} >
-                            <Text style={styles.date}>{moment(this.state.date.toString()).format("Do MMMM YYYY")}</Text>
+                            <Text style={styles.date}>{
+                                this.state.selectedDate !== "" ? moment(this.state.selectedDate.toString()).format("Do MMMM YYYY") : null
+                            }</Text>
                         </TouchableOpacity> 
                         <DateTimePickerModal
                             isVisible={this.state.show}
@@ -79,7 +84,8 @@ const styles = StyleSheet.create({
     dateField: {
         paddingHorizontal:15,
         paddingVertical:20,
-        justifyContent:"flex-start"
+        justifyContent:"flex-start",
+        marginBottom:10
     },
     date: {
         fontSize:15
