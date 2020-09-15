@@ -5,6 +5,7 @@ import Signin from '../screens/authentication/Signin';
 import Signup from '../screens/authentication/Signup';
 import SplashScreen from '../screens/welcome/SplashScreen';
 import ForgotPassword from '../screens/authentication/ForgetPassword';
+import VerifyResetCode from '../screens/authentication/VerifyResetCode';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,15 @@ export default class StackNavigation extends Component {
                     <Stack.Screen 
                         name="Sign Up"
                         component={Signup}
+                        options={{
+                            headerTitleAlign:"center",
+                            headerBackTitleVisible:false
+                        }}
+                    />
+
+                    <Stack.Screen 
+                        name="Verify"
+                        component={VerifyResetCode}
                         options={{
                             headerTitleAlign:"center",
                             headerBackTitleVisible:false

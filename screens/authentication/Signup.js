@@ -1,9 +1,14 @@
+import Axios from 'axios'
 import React, { Component } from 'react'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native'
 import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
-import axios from 'axios'
+import { create } from 'apisauce'
+
+const api = create({
+  baseURL: 'http://3.122.61.133:80/api',
+})
 
 export default class Signup extends Component {
   constructor(){
@@ -15,7 +20,8 @@ export default class Signup extends Component {
       email:"",
       pass:"",
       pass2:"",
-      address:""
+      address:"",
+      err:""
     }
   }
 
@@ -27,12 +33,16 @@ export default class Signup extends Component {
 
   handleInput = (text, name) => {
     this.setState({
+      err:"",
       [name]:text
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({
+      err:""
+    })
     if(this.state.pass !== this.state.pass2){
       Alert.alert("Oops!", "Passwords do not match")
       return
@@ -43,14 +53,22 @@ export default class Signup extends Component {
       phone:this.state.phone,
       email:this.state.email,
       dob:this.state.dob,
-      address:this.state.address
+      address:this.state.address,
+      password:this.state.pass
     }
-    axios.post("http://3.122.61.133:80/api/auth/driver/register", JSON.stringify(driver))
+    api.post('/auth/driver/register', JSON.stringify(driver))
     .then(res=>{
-      console.log(res);
+      if(res.ok){
+        this.props.navigation.navigate("Verify", {phone:driver.phone})
+      }
+      this.setState({
+        err:res.data.message
+      })
     })
     .catch(err=>{
-      console.log(err);
+      this.setState({
+        err:err.originalError.message
+      })
     })
   }
 
@@ -58,7 +76,7 @@ export default class Signup extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
-
+            <Text style={styles.errFeed}>{this.state.err}</Text>
             <InputField name="name" handleInput={this.handleInput} textContentType='name' style={{marginTop:20}} label="NAME" />
 
             <InputField onDateChange={this.onDateChange} datepicker textContentType='telephoneNumber' keyboardType='phone-pad' label="DATE OF BIRTH" />
@@ -116,8 +134,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingVertical:20,
       backgroundColor:"#ffffff"
-    }
+    },
 
+    errFeed: {
+      color:"red",
+      fontSize:12,
+      alignSelf:"center",
+      textAlign:"center"
+    }
     
   })
   
