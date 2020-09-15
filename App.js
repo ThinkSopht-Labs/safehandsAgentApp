@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   SafeAreaView,
@@ -15,7 +15,6 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from './screens/welcome/SplashScreen';
 import Signup from './screens/authentication/Signup';
@@ -48,7 +47,7 @@ const App = () => {
     <>
       <StatusBar barStyle="light-content" />
        {/* <SplashScreen /> */}
-       <Signup />
+       {/* <Signup /> */}
        {/* <Signin /> */}
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
