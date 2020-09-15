@@ -47,6 +47,7 @@ export default class CommsTips extends Component {
                         absolute
                         />
                     </View>
+                    
                     <TouchableOpacity onPress={this.gotoMileage2} style={stylesheet.btn}>
                         <Text style={stylesheet.btnText}>View over time</Text>
                     </TouchableOpacity>
