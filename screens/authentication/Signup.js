@@ -10,11 +10,11 @@ export default class Signup extends Component {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
             <View style={styles.container}>
 
-              <InputField style={{marginTop:70}} label="NAME" />
+              <InputField textContentType='name' style={{marginTop:70}} label="NAME" />
 
-              <InputField label="PHONE" />
+              <InputField textContentType='telephoneNumber' keyboardType='phone-pad' label="PHONE" />
 
-              <InputField label="EMAIL" />
+              <InputField textContentType='emailAddress' keyboardType='email-address' label="EMAIL" />
 
               <PasswordFeild label="PASSWORD" />
 

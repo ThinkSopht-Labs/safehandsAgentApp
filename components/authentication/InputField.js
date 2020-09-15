@@ -6,7 +6,7 @@ export default class InputField extends Component {
         return (
             <View >
                 <Text style={[styles.title, this.props.style]}>{this.props.label}</Text>
-                <TextInput style={styles.input} />
+                <TextInput onChange={this.props.onChange} textContentType={this.props.textContentType} keyboardType={this.props.keyboardType} style={styles.input} />
             </View>
         )
     }
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
         marginBottom: '1%',
         paddingLeft: '1%',
         color:"#3E4958"
-        },
-        input: {
+    },
+    input: {
         borderRadius: 15,
         backgroundColor:"#F7F8F9",
         flexDirection: 'row',
@@ -31,5 +31,6 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
         justifyContent: 'center',
         alignItems: 'center',
+        fontSize:15
     }
 })
