@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, ScrollView } from 'react-native'
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
 import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
@@ -7,12 +7,14 @@ import FormButton from '../../components/buttons/FormButton'
 export default class Signup extends Component {
     render() {
       return (
-        <ScrollView contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
             <View style={styles.container}>
 
               <InputField style={{marginTop:70}} label="NAME" />
 
               <InputField label="PHONE" />
+
+              <InputField label="EMAIL" />
 
               <PasswordFeild label="PASSWORD" />
 

@@ -1,12 +1,29 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TextInput } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class PasswordFeild extends Component {
+    constructor(){
+        super()
+        this.state = {
+            isSecureText:true
+        }
+    }
+
+    toggleSecureTextEntry = () => {
+        this.setState({
+            isSecureText:this.state.isSecureText ? false : true
+        })
+    }
+
     render() {
         return (
-            <View >
+            <View>
                 <Text style={[styles.title, this.props.style]}>{this.props.label}</Text>
-                <TextInput style={styles.input} />
+                <TextInput onChange={this.props.onChange} style={styles.input} secureTextEntry={this.state.isSecureText} />
+                <TouchableOpacity onPress={this.toggleSecureTextEntry} style={styles.iconContainer}>
+                    <Icon name={this.state.isSecureText ? "eye-outline" : "eye-off-outline"} color="#97ADB6" size={20} />
+                </TouchableOpacity>
             </View>
         )
     }
@@ -20,7 +37,7 @@ const styles = StyleSheet.create({
         paddingLeft: '1%',
         color:"#3E4958"
         },
-        input: {
+    input: {
         borderRadius: 15,
         backgroundColor:"#F7F8F9",
         flexDirection: 'row',
@@ -31,5 +48,11 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
         justifyContent: 'center',
         alignItems: 'center',
+        fontSize:15
+    },
+    iconContainer:{
+        position:"absolute",
+        bottom:"30%",
+        right:20
     }
 })
