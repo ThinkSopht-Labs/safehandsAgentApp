@@ -27,7 +27,7 @@ export default class Signup extends Component {
             <Text style={styles.bottomText}>
               Already have an account?
             </Text>
-            <Text onPress={() => navigation.navigate('Signin')} style={styles.link}>
+            <Text onPress={() => this.props.navigation.navigate('Sign In')} style={styles.link}>
                 Sign in
             </Text>
           </View>

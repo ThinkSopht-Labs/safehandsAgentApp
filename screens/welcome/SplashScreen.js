@@ -3,6 +3,9 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'
 
 export default class SplashScreen extends Component {
+    gotoSignin = () => {
+      this.props.navigation.navigate('Sign In')
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -40,7 +43,7 @@ export default class SplashScreen extends Component {
                     </Text>
 
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate('Signup')}
+                        onPress={this.gotoSignin}
                         style={styles.btn}>
                         <Text style={styles.btnTxt}>Get started</Text>
                     </TouchableOpacity>

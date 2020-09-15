@@ -5,26 +5,26 @@ import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 
 export default class Signin extends Component {
-    render() {
-      return (
-        <ScrollView contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
-            <View style={styles.container}>
-                <InputField label="EMAIL/PHONE" />
-                <PasswordFeild label="PASSWORD" />
-                <FormButton style={{marginTop:20}} label="Sign In" />
-                <Text style={[styles.bottomText, {paddingVertical:10}]}>Forgotten password?</Text>
-          </View>
-          <View style={styles.signInLink}>
-            <Text style={styles.bottomText}>
-              Don't have an account?
-            </Text>
-            <Text onPress={() => navigation.navigate('Signin')} style={styles.link}>
-                Sign in
-            </Text>
-          </View>
-        </ScrollView>
-      )
-    }
+  render() {
+    return (
+      <ScrollView contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
+          <View style={styles.container}>
+              <InputField label="EMAIL/PHONE" />
+              <PasswordFeild label="PASSWORD" />
+              <FormButton style={{marginTop:20}} label="Sign In" />
+              <Text style={[styles.bottomText, {paddingVertical:10}]} onPress={()=>this.props.navigation.navigate("Forgot Password")}>Forgotten password?</Text>
+        </View>
+        <View style={styles.signInLink}>
+          <Text style={styles.bottomText}>
+            Don't have an account?
+          </Text>
+          <Text onPress={() => this.props.navigation.navigate('Sign Up')} style={styles.link}>
+              Sign up
+          </Text>
+        </View>
+      </ScrollView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
