@@ -6,7 +6,7 @@ import Signup from '../screens/authentication/Signup';
 import SplashScreen from '../screens/welcome/SplashScreen';
 import ForgotPassword from '../screens/authentication/ForgetPassword';
 import VerifyResetCode from '../screens/authentication/VerifyResetCode';
-import Home from '../screens/menu/Home';
+import DrawerNavigation from '../navigation/DrawerNavigation';
 
 const Stack = createStackNavigator();
 
@@ -76,7 +76,7 @@ export default class StackNavigation extends Component {
 
                     <Stack.Screen 
                         name="Home"
-                        component={Home}
+                        component={DrawerNavigation}
                         options={{headerShown: false}}
                     />
 

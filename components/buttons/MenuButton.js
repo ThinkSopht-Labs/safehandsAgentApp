@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Entypo'
 export default class MenuButton extends Component {
     render() {
         return (
-            <TouchableOpacity style={stylesheet.menuIcon}>
+            <TouchableOpacity onPress={this.props.onPress} style={stylesheet.menuIcon}>
                 <Icon name="menu" size={30} color="#4B545A" />
             </TouchableOpacity>
         )

@@ -37,7 +37,6 @@ const stylesheet = StyleSheet.create({
         backgroundColor:"#ffffff",
         justifyContent:"flex-start",
         alignItems:"flex-start",
-        width:"80%"
     },
 
     editIcon: {

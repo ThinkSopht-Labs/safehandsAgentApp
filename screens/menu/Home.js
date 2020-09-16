@@ -3,10 +3,13 @@ import { Text, View, StyleSheet } from 'react-native'
 import MenuButton from '../../components/buttons/MenuButton'
 
 export default class Home extends Component {
+    toggleDrawer = () => {
+        this.props.navigation.toggleDrawer()
+    }
     render() {
         return (
             <View style={stylesheet.container}>
-                <MenuButton />
+                <MenuButton onPress={this.toggleDrawer} />
                 <Text style={stylesheet.text}>Welcome</Text>
                 <Text style={stylesheet.text}>This is supposed to be a Map View</Text>
             </View>
