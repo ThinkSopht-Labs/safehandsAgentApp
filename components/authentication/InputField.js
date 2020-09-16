@@ -40,6 +40,7 @@ export default class InputField extends Component {
                         textContentType={this.props.textContentType} 
                         keyboardType={this.props.keyboardType} 
                         style={styles.input} 
+                        defaultValue={this.props.defaultValue}
                     /> : 
                     <>  
                         <TouchableOpacity style={[styles.input, styles.dateField]} onPress={this.togglePicker} >
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     },
     dateField: {
         paddingHorizontal:15,
-        paddingVertical:20,
+        paddingVertical:15,
         justifyContent:"flex-start",
         marginBottom:10
     },

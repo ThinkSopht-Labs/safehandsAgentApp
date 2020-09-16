@@ -42,6 +42,7 @@ import CommsTips from './screens/menu/CommsTips';
 import CommsTips2 from './screens/menu/CommsTips2';
 import CommsTips3 from './screens/menu/CommsTips3';
 import StackNavigation from './navigation/StackNavigation';
+import Home from './screens/menu/Home';
 
 const App = () => {
   return (
@@ -72,7 +73,8 @@ const App = () => {
        {/* <CommsTips /> */}
        {/* <CommsTips2 /> */}
        {/* <CommsTips3 /> */}
-       <StackNavigation />
+       <Home />
+       {/* <StackNavigation /> */}
     </>
   )
 }

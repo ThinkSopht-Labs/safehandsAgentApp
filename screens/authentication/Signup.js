@@ -21,13 +21,30 @@ export default class Signup extends Component {
       pass:"",
       pass2:"",
       address:"",
-      err:""
+      err:"",
+      step:1
     }
   }
 
   onDateChange = (date) => {
     this.setState({
       dob:date
+    })
+  }
+
+  next = () => {
+    this.setState(prevState=>{
+      return {
+        step:prevState.step+1
+      }
+    })
+  }
+
+  back = () => {
+    this.setState(prevState=>{
+      return {
+        step:prevState.step-1
+      }
     })
   }
 
@@ -44,12 +61,14 @@ export default class Signup extends Component {
       err:""
     })
     if(this.state.pass !== this.state.pass2){
-      Alert.alert("Oops!", "Passwords do not match")
+      this.setState({
+        err:"Passwords do not match. Try again"
+      })
       return
     }
     let driver = {
-      firstName:this.state.name,
-      lastName:this.state.name,
+      firstName:this.state.name.split(' ').slice(0, -1).join(' '),
+      lastName:this.state.name.split(' ').slice(1).join(' '),
       phone:this.state.phone,
       email:this.state.email,
       dob:this.state.dob,
@@ -76,22 +95,47 @@ export default class Signup extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
+
             <Text style={styles.errFeed}>{this.state.err}</Text>
-            <InputField name="name" handleInput={this.handleInput} textContentType='name' style={{marginTop:20}} label="NAME" />
 
-            <InputField onDateChange={this.onDateChange} datepicker textContentType='telephoneNumber' keyboardType='phone-pad' label="DATE OF BIRTH" />
+            {
+              this.state.step === 1 && <InputField defaultValue={this.state.name} name="name" handleInput={this.handleInput} textContentType='name' style={{marginTop:20}} label="NAME" />
+            }
 
-            <InputField name="phone" handleInput={this.handleInput} textContentType='telephoneNumber' keyboardType='phone-pad' label="PHONE" />
+            {
+              this.state.step === 2 && <InputField defaultValue={this.state.dob} onDateChange={this.onDateChange} datepicker style={{marginTop:20}} label="DATE OF BIRTH" />
+            }
 
-            <InputField name="address" handleInput={this.handleInput} textContentType='addressCity' label="ADDRESS" />
+            {
+              this.state.step === 1 && <InputField defaultValue={this.state.phone} name="phone" handleInput={this.handleInput} textContentType='telephoneNumber' keyboardType='phone-pad' label="PHONE" />
+            }
 
-            <InputField name="email" handleInput={this.handleInput} textContentType='emailAddress' keyboardType='email-address' label="EMAIL" />
+            {
+              this.state.step === 2 && <InputField  defaultValue={this.state.address} name="address" handleInput={this.handleInput} textContentType='addressCity' label="ADDRESS" />
+            }
 
-            <PasswordFeild name="pass" handleInput={this.handleInput} label="PASSWORD" />
+            {
+              this.state.step === 2 && <InputField defaultValue={this.state.email} name="email" handleInput={this.handleInput} textContentType='emailAddress' keyboardType='email-address' label="EMAIL" />
+            }
 
-            <PasswordFeild name="pass2" handleInput={this.handleInput} label="CONFIRM PASSWORD" />
+            {
+              this.state.step === 1 && <PasswordFeild defaultValue={this.state.pass} name="pass" handleInput={this.handleInput} label="PASSWORD" />
+            }
 
-            <FormButton handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign Up" />
+            {
+              this.state.step === 1 && <PasswordFeild defaultValue={this.state.pass2} name="pass2" handleInput={this.handleInput} label="CONFIRM PASSWORD" />
+            }
+
+            {
+              this.state.step === 1 ? <FormButton handleSubmit={this.next} style={{marginTop:20}} label="Next" /> : 
+              <FormButton handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign Up" />
+            }
+
+            {
+              this.state.step === 1 ? <Text onPress={this.handleSubmit} style={[styles.link, styles.skip]}>Skip to submit</Text> :
+              <Text onPress={this.back} style={[styles.link, styles.skip]}>Go back</Text>
+            }
+            
         </View>
 
         <View style={styles.signInLink}>
@@ -141,6 +185,12 @@ const styles = StyleSheet.create({
       fontSize:12,
       alignSelf:"center",
       textAlign:"center"
+    },
+
+    skip: {
+      paddingTop:20,
+      alignSelf:"center",
+      textAlign:"center",
     }
     
   })

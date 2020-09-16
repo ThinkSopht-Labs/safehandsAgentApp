@@ -6,6 +6,7 @@ import Signup from '../screens/authentication/Signup';
 import SplashScreen from '../screens/welcome/SplashScreen';
 import ForgotPassword from '../screens/authentication/ForgetPassword';
 import VerifyResetCode from '../screens/authentication/VerifyResetCode';
+import Home from '../screens/menu/Home';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,6 @@ export default class StackNavigation extends Component {
                     <Stack.Screen 
                         name="Splash Screen"
                         component={SplashScreen}
-                        headerMode="none"
                         options={{headerShown: false}}
                     />
 
@@ -72,6 +72,12 @@ export default class StackNavigation extends Component {
                             headerTitleAlign:"center",
                             headerBackTitleVisible:false
                         }}
+                    />
+
+                    <Stack.Screen 
+                        name="Home"
+                        component={Home}
+                        options={{headerShown: false}}
                     />
 
                 </Stack.Navigator>

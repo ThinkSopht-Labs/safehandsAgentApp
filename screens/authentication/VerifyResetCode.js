@@ -1,24 +1,51 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Alert } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 
 export default class VerifyResetCode extends Component {
+    constructor(){
+        super()
+        this.state = {
+            code:""
+        }
+        
+        this.inputRefs = [
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef()
+        ]
+    }
+
+    goNextAfterEdit = (index) => {
+        if(index===this.inputRefs.length-1){
+            this.props.navigation.navigate("Home")
+        }
+        this.inputRefs[index+1].focus()
+    }
     render() {
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.infoContainer}>
                     <View style={stylesheet.info}>
                         <Text style={stylesheet.text}>A code has been sent to</Text>
-                        <Text style={stylesheet.text}>+233 24 676 7766 via SMS</Text>
+                        <Text style={stylesheet.text}>+233 {this.props.route.params.phone} via SMS</Text>
                     </View>
                 </View>
                 <View style={stylesheet.verifyRow}>
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
-                    <TextInput maxLength={1} keyboardType="number-pad" style={stylesheet.input} />
+                    {
+                        this.inputRefs.map((k, idx)=>{
+                            return <TextInput 
+                                onChange={() => this.goNextAfterEdit(idx)} 
+                                ref={r => this.inputRefs[idx] =  r}  
+                                maxLength={1} 
+                                keyboardType="number-pad" 
+                                style={stylesheet.input}  
+                            />
+                        })
+                    }
                 </View>
                 <Text style={[stylesheet.text, {paddingTop:20}]}>Resend code?</Text>
             </View>
