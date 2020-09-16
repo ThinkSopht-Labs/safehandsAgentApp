@@ -41,8 +41,8 @@ const stylesheet = StyleSheet.create({
         borderRadius:15,
         elevation:10,
         paddingBottom:10,
-        minWidth:120,
+        minWidth:110,
         paddingHorizontal:10,
-        marginEnd:10
+        marginHorizontal:5
     }
 })

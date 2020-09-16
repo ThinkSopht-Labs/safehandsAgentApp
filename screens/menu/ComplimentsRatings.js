@@ -2,63 +2,67 @@ import React, { Component } from 'react'
 import { Text, View , StyleSheet, Image, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DeliveryAgentRatingsCard from '../../components/menu/DeliveryAgentRatingsCard'
+import Header from '../../components/menu/Header'
 
 export default class ComplimentsRatings extends Component {
     render() {
         return (
-            <ScrollView style={stylesheet.container}>
-                <View style={stylesheet.nameRow}>
-                    <Image source={require('../../assets/images/user-icon.png')}/>
-                    <View>
-                        <Text style={stylesheet.name}>Patrick</Text>
-                        <Text style={stylesheet.carMake}>Mercedes Vito</Text>
-                    </View>
-                </View>
-                {/* rating row */}
-                <View style={stylesheet.ratingRow}>
-                    {/* rating */}
-                    <View style={stylesheet.rate}>
-                        <View style={stylesheet.rateIconContainer}>
-                            <Icon name='star' size={25} color='white' />
+            <>
+                <Header onPress={()=>this.props.navigation.toggleDrawer()} title="Ratings and Comm."  />
+                <ScrollView style={stylesheet.container}>
+                    <View style={stylesheet.nameRow}>
+                        <Image source={require('../../assets/images/user-icon.png')}/>
+                        <View>
+                            <Text style={stylesheet.name}>Patrick</Text>
+                            <Text style={stylesheet.carMake}>Mercedes Vito</Text>
                         </View>
-                        <Text style={stylesheet.rateText}>4.6</Text>
                     </View>
-                    {/* number of trips */}
-                    <View style={stylesheet.rate}>
-                        <View style={stylesheet.rateIconContainer}>
-                            <Icon name='heart' size={25} color='white' />
+                    {/* rating row */}
+                    <View style={stylesheet.ratingRow}>
+                        {/* rating */}
+                        <View style={stylesheet.rate}>
+                            <View style={stylesheet.rateIconContainer}>
+                                <Icon name='star' size={25} color='white' />
+                            </View>
+                            <Text style={stylesheet.rateText}>4.6</Text>
                         </View>
-                        <Text style={stylesheet.rateText}>126</Text>
-                    </View>
-                    {/* duration */}
-                    <View style={stylesheet.rate}>
-                        <View style={stylesheet.rateIconContainer}>
-                            <Icon name='calendar' size={25} color='white' />
+                        {/* number of trips */}
+                        <View style={stylesheet.rate}>
+                            <View style={stylesheet.rateIconContainer}>
+                                <Icon name='heart' size={25} color='white' />
+                            </View>
+                            <Text style={stylesheet.rateText}>126</Text>
                         </View>
-                        <Text style={stylesheet.rateText}>2 years</Text>
+                        {/* duration */}
+                        <View style={stylesheet.rate}>
+                            <View style={stylesheet.rateIconContainer}>
+                                <Icon name='calendar' size={25} color='white' />
+                            </View>
+                            <Text style={stylesheet.rateText}>2 years</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={stylesheet.formCard}>
-                    <View style={stylesheet.inputField}>
-                        <Text style={stylesheet.label}>Member since</Text>
-                        <Text style={stylesheet.formText}>16.06.2000</Text>
+                    <View style={stylesheet.formCard}>
+                        <View style={stylesheet.inputField}>
+                            <Text style={stylesheet.label}>Member since</Text>
+                            <Text style={stylesheet.formText}>16.06.2000</Text>
+                        </View>
+                        <View style={stylesheet.inputField}>
+                            <Text style={stylesheet.label}>Vehicle type</Text>
+                            <Text style={stylesheet.formText}>Van</Text>
+                        </View>
+                        <View style={stylesheet.inputField}>
+                            <Text style={stylesheet.label}>Plate number</Text>
+                            <Text style={stylesheet.formText}>GN 716 - 12</Text>
+                        </View>
                     </View>
-                    <View style={stylesheet.inputField}>
-                        <Text style={stylesheet.label}>Vehicle type</Text>
-                        <Text style={stylesheet.formText}>Van</Text>
+                    <View style={stylesheet.deliveryAgentRatingContainer}>
+                        <DeliveryAgentRatingsCard />
+                        <DeliveryAgentRatingsCard />
+                        <DeliveryAgentRatingsCard />
+                        <DeliveryAgentRatingsCard />
                     </View>
-                    <View style={stylesheet.inputField}>
-                        <Text style={stylesheet.label}>Plate number</Text>
-                        <Text style={stylesheet.formText}>GN 716 - 12</Text>
-                    </View>
-                </View>
-                <View style={stylesheet.deliveryAgentRatingContainer}>
-                    <DeliveryAgentRatingsCard />
-                    <DeliveryAgentRatingsCard />
-                    <DeliveryAgentRatingsCard />
-                    <DeliveryAgentRatingsCard />
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </>
         )
     }
 }

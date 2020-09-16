@@ -18,9 +18,9 @@ export default class Menu extends Component {
                     <Text style={stylesheet.email}>gerald@mail.com</Text>
                 </View>
                 <View style={stylesheet.whiteBackground}> 
-                    <Text style={stylesheet.list}>DELIVERY HISTORY</Text>
-                    <Text style={stylesheet.list}>RATING AND COMPLIMENTS</Text>
-                    <Text style={stylesheet.list}>COMMISSIONS AND TIP</Text>
+                    <Text onPress={()=>this.props.navigation.navigate("Delivery History")} style={stylesheet.list}>DELIVERY HISTORY</Text>
+                    <Text onPress={()=>this.props.navigation.navigate("Ratings")} style={stylesheet.list}>RATING AND COMPLIMENTS</Text>
+                    <Text onPress={()=>this.props.navigation.navigate("Commision")} style={stylesheet.list}>COMMISSIONS AND TIP</Text>
                     <Text style={stylesheet.list}>MILEAGE</Text>
                     <Text style={stylesheet.list}>SETTINGS</Text>
                     <Text style={stylesheet.list}>SIGN OUT</Text>

@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Dimensions } from
 import TipsCards from '../../components/menu/TipsCards'
 import TipsTableTitle from '../../components/menu/TipsTableTitle'
 import { PieChart } from 'react-native-chart-kit'
+import Header from '../../components/menu/Header'
 
 const screenWidth = Dimensions.get("window").width
 
@@ -33,6 +34,7 @@ export default class CommsTips extends Component {
         }; 
         return (
             <View style={stylesheet.container}>
+                <Header onPress={()=>this.props.navigation.toggleDrawer()} title="Comm. and Tips" />
                 <ScrollView style={stylesheet.scrollContainer} showsVerticalScrollIndicator={false}>
                     <View style={{paddingTop:10}}>
                     <PieChart
@@ -90,14 +92,13 @@ const stylesheet = StyleSheet.create({
         flex:1,
         flexDirection:"column",
         backgroundColor:"#ffffff",
-        paddingHorizontal:20,
         justifyContent:"space-between"
     },
 
     scrollContainer:{
         flex:1,
         flexDirection:"column",
-        backgroundColor:"#ffffff",
+        backgroundColor:"#ffffff"
     },
 
     btnText: {
@@ -136,6 +137,7 @@ const stylesheet = StyleSheet.create({
         flexDirection:"column",
         justifyContent:"flex-start",
         marginTop:10,
+        paddingHorizontal:20
     },
 
     tableTitle: {
@@ -157,15 +159,6 @@ const stylesheet = StyleSheet.create({
 
     smaller: {
         minWidth:70
-    },
-
-    tableRow: {
-        flexDirection:"row",
-        justifyContent:"space-between",
-        alignItems:"flex-start",
-        paddingVertical:8,
-        borderBottomColor:"#E5E5E5",
-        borderBottomWidth:3.5
     },
 
     desc: {
@@ -196,6 +189,7 @@ const stylesheet = StyleSheet.create({
         alignItems:"center",
         paddingTop:10,
         paddingBottom:40,
+        paddingHorizontal:20
     },
 
     total: {
