@@ -22,6 +22,7 @@ export default class VerifyResetCode extends Component {
     goNextAfterEdit = (index) => {
         if(index===this.inputRefs.length-1){
             this.props.navigation.navigate("Home")
+            return
         }
         this.inputRefs[index+1].focus()
     }

@@ -19,12 +19,12 @@ const stylesheet = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"#333"
+        backgroundColor:"#999"
     },
 
     text: {
         color:"#fff",
-        paddingVertical:20,
+        paddingVertical:5,
         fontSize:20
     },
 

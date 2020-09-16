@@ -1,4 +1,3 @@
-import Axios from 'axios'
 import React, { Component } from 'react'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native'
 import InputField from '../../components/authentication/InputField'
@@ -55,6 +54,23 @@ export default class Signup extends Component {
     })
   }
 
+  shootRequest = (driver) => {
+    api.post('/auth/driver/register', JSON.stringify(driver))
+    .then(res=>{
+      if(res.ok){
+        this.props.navigation.navigate("Verify", {phone:driver.phone})
+      }
+      this.setState({
+        err:res.data.message
+      })
+    })
+    .catch(err=>{
+      this.setState({
+        err:err.originalError.message
+      })
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
@@ -75,20 +91,29 @@ export default class Signup extends Component {
       address:this.state.address,
       password:this.state.pass
     }
-    api.post('/auth/driver/register', JSON.stringify(driver))
-    .then(res=>{
-      if(res.ok){
-        this.props.navigation.navigate("Verify", {phone:driver.phone})
-      }
-      this.setState({
-        err:res.data.message
-      })
-    })
-    .catch(err=>{
-      this.setState({
-        err:err.originalError.message
-      })
-    })
+    let emptyCheck = false
+    for (const [key, value] of Object.entries(driver)) {
+      if(value==="") emptyCheck = true
+    }
+    if(emptyCheck){
+      Alert.alert(
+        'Caution',
+        'You will be required to complete profile details before you can accept delivery requests',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => false,
+            style: 'cancel'
+          },
+          {
+            text: 'Continue',
+            onPress: () => this.shootRequest(driver)
+          }
+        ],
+      );
+    } else {
+      this.shootRequest(driver)
+    }
   }
 
   render() {

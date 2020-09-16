@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/Entypo'
 
 export default class MenuButton extends Component {
     render() {
         return (
-            <View style={stylesheet.menuIcon}>
+            <TouchableOpacity style={stylesheet.menuIcon}>
                 <Icon name="menu" size={30} color="#4B545A" />
-            </View>
+            </TouchableOpacity>
         )
     }
 }

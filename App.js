@@ -73,8 +73,8 @@ const App = () => {
        {/* <CommsTips /> */}
        {/* <CommsTips2 /> */}
        {/* <CommsTips3 /> */}
-       <Home />
-       {/* <StackNavigation /> */}
+       {/* <Home /> */}
+       <StackNavigation />
     </>
   )
 }
