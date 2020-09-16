@@ -36,17 +36,17 @@ export default class CommsTips extends Component {
             <View style={stylesheet.container}>
                 <Header onPress={()=>this.props.navigation.toggleDrawer()} title="Comm. and Tips" />
                 <ScrollView style={stylesheet.scrollContainer} showsVerticalScrollIndicator={false}>
-                    <View style={{paddingTop:10}}>
-                    <PieChart
-                        data={data}
-                        width={screenWidth}
-                        height={220}
-                        chartConfig={chartConfig}
-                        accessor="commission"
-                        backgroundColor="transparent"
-                        hasLegend={false}
-                        paddingLeft={screenWidth/5}
-                        absolute
+                    <View style={{paddingTop:10, paddingHorizontal:20}}>
+                        <PieChart
+                            data={data}
+                            width={screenWidth}
+                            height={220}
+                            chartConfig={chartConfig}
+                            accessor="commission"
+                            backgroundColor="transparent"
+                            hasLegend={false}
+                            paddingLeft={screenWidth/5}
+                            absolute
                         />
                     </View>
                     
