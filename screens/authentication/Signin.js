@@ -4,9 +4,10 @@ import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
+import { signInUser } from '../../utils/storage'
 
 const api = create({
-  baseURL: 'http://3.122.61.133:80/api',
+  baseURL: 'http://3.123.29.179:3000/api',
 })
 
 export default class Signin extends Component {
@@ -36,7 +37,7 @@ export default class Signin extends Component {
     api.post('/auth/driver/login', JSON.stringify(cred))
     .then(res=>{
       if(res.ok){
-        this.props.navigation.navigate("Home")
+        signInUser(res.data.data)
         return
       }
       this.setState({

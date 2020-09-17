@@ -6,7 +6,7 @@ import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
 
 const api = create({
-  baseURL: 'http://3.122.61.133:80/api',
+  baseURL: 'http://3.123.29.179:3000/api',
 })
 
 export default class Signup extends Component {
@@ -59,6 +59,7 @@ export default class Signup extends Component {
     .then(res=>{
       if(res.ok){
         this.props.navigation.navigate("Verify", {phone:driver.phone})
+        return
       }
       this.setState({
         err:res.data.message
