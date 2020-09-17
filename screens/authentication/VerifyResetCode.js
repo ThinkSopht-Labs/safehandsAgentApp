@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { create } from 'apisauce'
+import { signInUser } from '../../utils/storage'
 
 const api = create({
     baseURL: 'http://3.123.29.179:3000/api',
@@ -39,8 +40,8 @@ export default class VerifyResetCode extends Component {
         api.get('/auth/driver/activate/'+this.props.route.params.phone+'/'+this.state.code)
         .then(res=>{
             if(res.ok){
-                console.log(res.data);
-                // this.props.navigation.navigate("Verify", {phone:driver.phone})
+                this.props.navigation.navigate("Home")
+                return
             }
             this.setState({
                 err:res.data.message

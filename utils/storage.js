@@ -20,3 +20,11 @@ export const getUser = async () => {
       console.log(e);
     }
 }
+
+export const signoutUser = async () => {
+    try {
+      await AsyncStorage.removeItem('user')
+    } catch(e) {
+      // remove error
+    }
+}

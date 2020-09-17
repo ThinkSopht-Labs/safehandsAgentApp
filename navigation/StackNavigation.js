@@ -7,11 +7,14 @@ import SplashScreen from '../screens/welcome/SplashScreen';
 import ForgotPassword from '../screens/authentication/ForgetPassword';
 import VerifyResetCode from '../screens/authentication/VerifyResetCode';
 import DrawerNavigation from '../navigation/DrawerNavigation';
+import { getUser } from '../utils/storage';
 
 const Stack = createStackNavigator();
 
 export default class StackNavigation extends Component {
+    
     render() {
+       
         return (
             <NavigationContainer>
                 <Stack.Navigator 
@@ -29,7 +32,6 @@ export default class StackNavigation extends Component {
                         letterSpacing:0.2
                     }
                 }}>
-
                     <Stack.Screen 
                         name="Splash Screen"
                         component={SplashScreen}

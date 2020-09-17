@@ -37,7 +37,7 @@ export default class Signin extends Component {
     api.post('/auth/driver/login', JSON.stringify(cred))
     .then(res=>{
       if(res.ok){
-        signInUser(res.data.data)
+        this.props.navigation.navigate("Home")
         return
       }
       this.setState({

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import propic from '../../assets/images/user-icon.png'
 import Icon from 'react-native-vector-icons/Entypo'
+import { signoutUser } from '../../utils/storage'
 
 export default class Menu extends Component {
     render() {
@@ -23,7 +24,7 @@ export default class Menu extends Component {
                     <Text onPress={()=>this.props.navigation.navigate("Commision")} style={stylesheet.list}>COMMISSIONS AND TIP</Text>
                     <Text style={stylesheet.list}>MILEAGE</Text>
                     <Text style={stylesheet.list}>SETTINGS</Text>
-                    <Text style={stylesheet.list}>SIGN OUT</Text>
+                    <Text onPress={()=>signoutUser()} style={stylesheet.list}>SIGN OUT</Text>
                     <Text style={stylesheet.delete}>Delete Account</Text>
                 </View>
             </View>
