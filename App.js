@@ -50,7 +50,7 @@ const App = () => {
       <StatusBar barStyle="light-content" />
        {/* <SplashScreen /> */}
        {/* <Signup /> */}
-       <Signin />
+       {/* <Signin /> */}
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}
@@ -74,7 +74,7 @@ const App = () => {
        {/* <CommsTips2 /> */}
        {/* <CommsTips3 /> */}
        {/* <Home /> */}
-       {/* <StackNavigation /> */}
+       <StackNavigation />
     </>
   )
 }

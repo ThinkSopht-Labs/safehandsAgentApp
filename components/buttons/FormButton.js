@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 
 export default class FormButton extends Component {
     render() {
         return (
-            <TouchableOpacity onPress={this.props.handleSubmit} style={[styles.btn, this.props.style]}>
-              <Text style={styles.btnText}>{this.props.label}</Text>
+            <TouchableOpacity disabled={this.props.disabled} onPress={this.props.handleSubmit} style={[styles.btn, this.props.style]}>
+              {this.props.isLoading ? <ActivityIndicator size="small" color="#fff" /> : <Text style={styles.btnText}>{this.props.label}</Text>}
             </TouchableOpacity>
         )
     }

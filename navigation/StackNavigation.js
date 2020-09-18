@@ -14,8 +14,7 @@ const Stack = createStackNavigator();
 export default class StackNavigation extends Component {
     
     render() {
-       
-        return (
+        return (            
             <NavigationContainer>
                 <Stack.Navigator 
                     screenOptions={{
@@ -32,6 +31,7 @@ export default class StackNavigation extends Component {
                         letterSpacing:0.2
                     }
                 }}>
+                
                     <Stack.Screen 
                         name="Splash Screen"
                         component={SplashScreen}
@@ -81,7 +81,6 @@ export default class StackNavigation extends Component {
                         component={DrawerNavigation}
                         options={{headerShown: false}}
                     />
-
                 </Stack.Navigator>
             </NavigationContainer>
         )

@@ -20,7 +20,10 @@ export default class VerifyResetCode extends Component {
         api.get('/auth/driver/activate/'+this.props.route.params.phone+'/'+code)
         .then(res=>{
             if(res.ok){
-                this.props.navigation.navigate("Home")
+                signInUser(res.data.data)
+                .then(()=>{
+                    this.props.navigation.navigate("Home")
+                })
                 return
             }
             this.verifycode.reset()

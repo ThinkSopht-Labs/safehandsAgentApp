@@ -5,6 +5,12 @@ import Icon from 'react-native-vector-icons/Entypo'
 import { signoutUser } from '../../utils/storage'
 
 export default class Menu extends Component {
+    signout = () => {
+        signoutUser()
+        .then(()=>{
+            this.props.navigation.navigate("Sign In")
+        })
+    }
     render() {
         return (
             <View style={stylesheet.container}>
@@ -24,7 +30,7 @@ export default class Menu extends Component {
                     <Text onPress={()=>this.props.navigation.navigate("Commision")} style={stylesheet.list}>COMMISSIONS AND TIP</Text>
                     <Text style={stylesheet.list}>MILEAGE</Text>
                     <Text style={stylesheet.list}>SETTINGS</Text>
-                    <Text onPress={()=>signoutUser()} style={stylesheet.list}>SIGN OUT</Text>
+                    <Text onPress={this.signout} style={stylesheet.list}>SIGN OUT</Text>
                     <Text style={stylesheet.delete}>Delete Account</Text>
                 </View>
             </View>

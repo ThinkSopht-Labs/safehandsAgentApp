@@ -4,6 +4,7 @@ import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
+import { getUser } from '../../utils/storage'
 
 const api = create({
   baseURL: 'http://3.123.29.179:3000/api',
@@ -21,8 +22,22 @@ export default class Signup extends Component {
       pass2:"",
       address:"",
       err:"",
-      step:1
+      step:1,
+      isDisabled:true,
+      isLoading:false
     }
+  }
+
+  componentDidMount(){
+    getUser()
+    .then(res=>{
+        if(res.token){
+           this.props.navigation.navigate("Home")
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+    })
   }
 
   onDateChange = (date) => {
@@ -62,7 +77,9 @@ export default class Signup extends Component {
         return
       }
       this.setState({
-        err:res.data.message
+        err:res.data.message,
+        isDisabled:false,
+        isDisabled:false
       })
     })
     .catch(err=>{
@@ -75,49 +92,59 @@ export default class Signup extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
-      err:""
+      err:"",
+      isLoading:true,
+      isDisabled:true
     })
     if(this.state.name == ""){
       this.setState({
-        err:"Enter full name Eg. John Doe"
+        err:"Enter full name Eg. John Doe",
+        isLoading:false
       })
       return
     } else if(!this.state.name.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
       this.setState({
-        err:"Enter full name Eg. John Doe"
+        err:"Enter full name Eg. John Doe",
+        isLoading:false
       })
       return
     }
     if(this.state.phone == ""){
       this.setState({
-        err:"Enter phone number"
+        err:"Enter phone number",
+        isLoading:false
       })
       return
     } else if(!this.state.phone.match(/^[0-9]+$/)){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isLoading:false
       })
       return
     } else if(this.state.phone.charAt(0)!=="0"){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isLoading:false
       })
       return
     } else if(this.state.phone.length!==10){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isLoading:false
       })
       return
     }
     if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
       this.setState({
-        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
+        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character",
+        isLoading:false
       })
       return
     }
     if(this.state.pass !== this.state.pass2){
       this.setState({
-        err:"Passwords do not match. Try again"
+        err:"Passwords do not match. Try again",
+        isLoading:false
       })
       return
     }
@@ -156,6 +183,13 @@ export default class Signup extends Component {
   }
 
   render() {
+    if(this.state.email!=="" && this.state.dob!=="" && this.state.address!==""){
+      if(this.state.isDisabled){
+        this.setState({
+          isDisabled:false
+        })
+      }
+    }
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
@@ -192,11 +226,11 @@ export default class Signup extends Component {
 
             {
               this.state.step === 1 ? <FormButton handleSubmit={this.next} style={{marginTop:20}} label="Next" /> : 
-              <FormButton handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign Up" />
+              <FormButton disabled={this.state.isDisabled} isLoading={this.state.isLoading} handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign Up" />
             }
 
             {
-              this.state.step === 1 ? <Text onPress={this.handleSubmit} style={[styles.link, styles.skip]}>Skip to submit</Text> :
+              this.state.step === 1 ? <>{!this.state.isLoading ? <Text onPress={this.handleSubmit} style={[styles.link, styles.skip]}>Skip to submit</Text>: <View style={styles.loader}><ActivityIndicator size="small" color="#1152FD" /></View>}</> :
               <Text onPress={this.back} style={[styles.link, styles.skip]}>Go back</Text>
             }
             
@@ -255,6 +289,10 @@ const styles = StyleSheet.create({
       paddingTop:20,
       alignSelf:"center",
       textAlign:"center",
+    },
+
+    loader: {
+      paddingTop:20,
     }
     
   })

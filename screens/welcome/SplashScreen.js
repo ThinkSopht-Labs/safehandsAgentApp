@@ -1,10 +1,22 @@
 import React, { Component } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'
+import { getUser } from '../../utils/storage'
 
 export default class SplashScreen extends Component {
     gotoSignin = () => {
       this.props.navigation.navigate('Sign In')
+    }
+    componentDidMount(){
+      getUser()
+      .then(res=>{
+          if(res.token){
+             this.props.navigation.navigate("Home")
+          }
+      })
+      .catch(err=>{
+          console.log(err);
+      })
     }
     render() {
         return (

@@ -4,7 +4,7 @@ import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
-import { signInUser } from '../../utils/storage'
+import { signInUser, getUser } from '../../utils/storage'
 
 const api = create({
   baseURL: 'http://3.123.29.179:3000/api',
@@ -16,8 +16,21 @@ export default class Signin extends Component {
     this.state = {
       phone:"",
       pass:"",
-      err:""
+      err:"",
+      isDisabled:true,
+      isLoading:false
     }
+  }
+  componentDidMount(){
+    getUser()
+    .then(res=>{
+        if(res.token){
+           this.props.navigation.navigate("Home")
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+    })
   }
   handleInput = (text, name) => {
     this.setState({
@@ -28,35 +41,45 @@ export default class Signin extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
-      err:""
+      err:"",
+      isDisabled:true,
+      isLoading:true
     })
     if(this.state.phone == ""){
       this.setState({
-        err:"Enter phone number"
+        err:"Enter phone number",
+        isDisabled:false,
+        isLoading:false
       })
       return
     } else if(!this.state.phone.match(/^[0-9]+$/)){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isDisabled:false,
+        isLoading:false
       })
       return
     } else if(this.state.phone.charAt(0)!=="0"){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isDisabled:false,
+        isLoading:false
       })
       return
     } else if(this.state.phone.length!==10){
       this.setState({
-        err:"Enter a valid phone number Eg. 0277011344"
+        err:"Enter a valid phone number Eg. 0277011344",
+        isDisabled:false,
+        isLoading:false
       })
       return
     }
-    if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
-      this.setState({
-        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
-      })
-      return
-    }
+    // if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
+    //   this.setState({
+    //     err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
+    //   })
+    //   return
+    // }
     let cred = {
       phone:this.state.phone,
       password:this.state.pass
@@ -64,27 +87,46 @@ export default class Signin extends Component {
     api.post('/auth/driver/login', JSON.stringify(cred))
     .then(res=>{
       if(res.ok){
-        this.props.navigation.navigate("Home")
+        signInUser(res.data.data)
+        .then(()=>{
+          this.setState({
+            err:"",
+            isDisabled:true,
+            isLoading:false
+          })
+          this.props.navigation.navigate("Home")
+        })
         return
       }
       this.setState({
-        err:res.data.message
+        err:res.data.message,
+        isDisabled:false,
+        isLoading:false
       })
     })
     .catch(err=>{
       this.setState({
-        err:err.originalError.message
+        err:err.originalError.message,
+        isDisabled:false,
+        isLoading:false
       })
     })
   }
   render() {
+    if(this.state.phone!=="" && this.state.pass!==""){
+      if(this.state.isDisabled){
+        this.setState({
+          isDisabled:false
+        })
+      }
+    }
     return (
       <ScrollView contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
             <Text style={styles.errFeed}>{this.state.err}</Text>
             <InputField name="phone" handleInput={this.handleInput} textContentType='telephoneNumber' keyboardType='phone-pad' label="EMAIL/PHONE" />
             <PasswordFeild name="pass" handleInput={this.handleInput} label="PASSWORD" />
-            <FormButton handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign In" />
+            <FormButton disabled={this.state.isDisabled} isLoading={this.state.isLoading} handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign In" />
             <Text style={[styles.bottomText, {paddingVertical:10}]} onPress={()=>this.props.navigation.navigate("Forgot Password")}>Forgotten password?</Text>
         </View>
         <View style={styles.signInLink}>
