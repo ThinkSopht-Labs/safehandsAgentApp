@@ -49,8 +49,8 @@ const App = () => {
     <>
       <StatusBar barStyle="light-content" />
        {/* <SplashScreen /> */}
-       <Signup />
-       {/* <Signin /> */}
+       {/* <Signup /> */}
+       <Signin />
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}
        {/* <Menu /> */}

@@ -30,6 +30,33 @@ export default class Signin extends Component {
     this.setState({
       err:""
     })
+    if(this.state.phone == ""){
+      this.setState({
+        err:"Enter phone number"
+      })
+      return
+    } else if(!this.state.phone.match(/^[0-9]+$/)){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    } else if(this.state.phone.charAt(0)!=="0"){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    } else if(this.state.phone.length!==10){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    }
+    if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
+      this.setState({
+        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
+      })
+      return
+    }
     let cred = {
       phone:this.state.phone,
       password:this.state.pass
