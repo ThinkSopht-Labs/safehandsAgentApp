@@ -74,7 +74,7 @@ const App = () => {
        {/* <CommsTips2 /> */}
        {/* <CommsTips3 /> */}
        {/* <Home /> */}
-       <StackNavigation />
+       {/* <StackNavigation /> */}
     </>
   )
 }

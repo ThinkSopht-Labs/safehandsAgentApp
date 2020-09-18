@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
 import { create } from 'apisauce'
+import SMSVerifyCode from 'react-native-sms-verifycode'
 import { signInUser } from '../../utils/storage'
 
 const api = create({
@@ -13,76 +13,60 @@ export default class VerifyResetCode extends Component {
         super()
         this.state = {
             code:"",
-            err:""
+            err:false
         }
-        
-        this.inputRefs = [
-            React.createRef(),
-            React.createRef(),
-            React.createRef(),
-            React.createRef(),
-            React.createRef(),
-            React.createRef()
-        ]
     }
-
-    goNextAfterEdit = (index, text) => {
-        this.setState({
-            code:this.state.code+text
-        })
-        if(index===this.inputRefs.length-1){            
-            return
-        }
-        this.inputRefs[index+1].focus()
-    }
-
     sendCode = () => {
-        api.get('/auth/driver/activate/'+this.props.route.params.phone+'/'+this.state.code)
+        api.get('/auth/driver/activate/'+this.props.route.params.phone+'/'+code)
         .then(res=>{
             if(res.ok){
                 this.props.navigation.navigate("Home")
                 return
             }
+            this.verifycode.reset()
             this.setState({
-                err:res.data.message
-            })
-            this.inputRefs.map(ref=>{
-                ref.value = ""
+                err:true
             })
         })
         .catch(err=>{
+            this.verifycode.reset()
             this.setState({
-                err:err.originalError.message
+                err:true
             })
         })
     }
-
+    resetErr = () => {
+        this.setState({
+            err:false
+        })
+    }
     render() {
-        if(this.state.code.length ===6){
-            this.sendCode()
-        }
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.infoContainer}>
-                    <Text style={stylesheet.errFeed}>{this.state.err}</Text>
                     <View style={stylesheet.info}>
                         <Text style={stylesheet.text}>A code has been sent to</Text>
                         <Text style={stylesheet.text}>+233 {this.props.route.params.phone} via SMS</Text>
                     </View>
                 </View>
-                <View style={stylesheet.verifyRow}>
-                    {
-                        this.inputRefs.map((k, idx)=>{
-                            return <TextInput 
-                                onChangeText={(text) => this.goNextAfterEdit(idx, text)} 
-                                ref={r => this.inputRefs[idx] =  r}  
-                                maxLength={1} 
-                                keyboardType="number-pad" 
-                                style={stylesheet.input}  
-                            />
-                        })
-                    }
-                </View>
+                <SMSVerifyCode
+                    ref={ref => (this.verifycode = ref)}
+                    onInputCompleted={this.sendCode}
+                    onInputChangeText={this.resetErr}
+                    containerPaddingHorizontal={30}
+                    verifyCodeLength={6}
+                    codeFontSize={28}
+                    codeColor="#1152FD"
+                    focusedCodeViewBorderColor="#1152FD"
+                    codeViewBorderColor={this.state.err ? "red" : "#1152FD"}
+                    codeViewStyle = {{
+                        borderTopWidth:0,
+                        borderRightWidth:0,
+                        borderLeftWidth:0,
+                        borderRadius:0,
+                        fontWeight:"bold"
+                    }}
+                />
                 <Text style={[stylesheet.text, {paddingTop:20}]}>Resend code?</Text>
             </View>
         )
@@ -91,9 +75,8 @@ export default class VerifyResetCode extends Component {
 
 const stylesheet = StyleSheet.create({
     container: {
-        backgroundColor:"#FFFFFF",
+        backgroundColor:"#fff",
         flex:1,
-        paddingHorizontal:20,
         justifyContent:"center",
         alignItems:"center"
     },
@@ -109,36 +92,11 @@ const stylesheet = StyleSheet.create({
         letterSpacing: 1
     },
 
-    verifyRow: {
-        flexDirection:"row",
-        justifyContent:"space-between",
-        alignItems:"center",
-        width:"100%",
-        paddingHorizontal:30
-    },
-
-    input: {
-        borderBottomColor:"#1152FD",
-        borderBottomWidth:0.5,
-        fontSize:36,
-        fontWeight:"bold",
-        minWidth:40,
-        color:"#1152FD"
-    },
-
     infoContainer: {
         justifyContent:"center",
         flexDirection:"column",
         alignItems:"center",
         marginBottom: 50
-    },
-
-    errFeed: {
-        color:"red",
-        fontSize:12,
-        alignSelf:"center",
-        textAlign:"center",
-        marginBottom:20
-      }
+    }
 })
 
