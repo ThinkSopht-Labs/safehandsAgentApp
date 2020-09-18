@@ -49,7 +49,7 @@ const App = () => {
     <>
       <StatusBar barStyle="light-content" />
        {/* <SplashScreen /> */}
-       {/* <Signup /> */}
+       <Signup />
        {/* <Signin /> */}
        {/* <ForgotPassword /> */}
        {/* <VerifyResetCode /> */}

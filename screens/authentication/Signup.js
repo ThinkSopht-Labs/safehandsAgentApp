@@ -77,6 +77,44 @@ export default class Signup extends Component {
     this.setState({
       err:""
     })
+    if(this.state.name == ""){
+      this.setState({
+        err:"Enter full name Eg. John Doe"
+      })
+      return
+    } else if(!this.state.name.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
+      this.setState({
+        err:"Enter full name Eg. John Doe"
+      })
+      return
+    }
+    if(this.state.phone == ""){
+      this.setState({
+        err:"Enter phone number"
+      })
+      return
+    } else if(!this.state.phone.match(/^[0-9]+$/)){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    } else if(this.state.phone.charAt(0)!=="0"){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    } else if(this.state.phone.length!==10){
+      this.setState({
+        err:"Enter a valid phone number Eg. 0277011344"
+      })
+      return
+    }
+    if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
+      this.setState({
+        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
+      })
+      return
+    }
     if(this.state.pass !== this.state.pass2){
       this.setState({
         err:"Passwords do not match. Try again"
