@@ -18,6 +18,7 @@ export default class Home extends Component {
             <View style={stylesheet.container}>
                 <MapView
                     initialRegion={region}
+                    style={stylesheet.mapStyle}
                 >
                     <Marker
                         coordinate={region}
@@ -47,5 +48,10 @@ const stylesheet = StyleSheet.create({
         backgroundColor:"#fff",
         alignItems:"center",
         justifyContent:"center"
+    },
+
+    mapStyle: {
+        width:"100%",
+        height:"100%"
     }
 })
