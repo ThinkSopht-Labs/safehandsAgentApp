@@ -24,7 +24,9 @@ export default class Signup extends Component {
       err:"",
       step:1,
       isDisabled:true,
-      isLoading:false
+      isNextDisabled:true,
+      isLoading:false,
+      passTip:false
     }
   }
 
@@ -89,62 +91,77 @@ export default class Signup extends Component {
     })
   }
 
+  toggleFocus = () => {
+    this.setState({
+      passTip:this.state.passTip ? false : true
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
       err:"",
       isLoading:true,
-      isDisabled:true
+      isDisabled:true,
+      isNextDisabled:true
     })
     if(this.state.name == ""){
       this.setState({
         err:"Enter full name Eg. John Doe",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     } else if(!this.state.name.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
       this.setState({
         err:"Enter full name Eg. John Doe",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     }
     if(this.state.phone == ""){
       this.setState({
         err:"Enter phone number",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     } else if(!this.state.phone.match(/^[0-9]+$/)){
       this.setState({
         err:"Enter a valid phone number Eg. 0277011344",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     } else if(this.state.phone.charAt(0)!=="0"){
       this.setState({
         err:"Enter a valid phone number Eg. 0277011344",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     } else if(this.state.phone.length!==10){
       this.setState({
         err:"Enter a valid phone number Eg. 0277011344",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     }
     if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
       this.setState({
         err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     }
     if(this.state.pass !== this.state.pass2){
       this.setState({
         err:"Passwords do not match. Try again",
-        isLoading:false
+        isLoading:false,
+        isNextDisabled:false
       })
       return
     }
@@ -190,6 +207,13 @@ export default class Signup extends Component {
         })
       }
     }
+    if(this.state.name!=="" && this.state.phone!=="" && this.state.pass!=="" && this.state.conPass!==""){
+      if(this.state.isNextDisabled){
+        this.setState({
+          isNextDisabled:false
+        })
+      }
+    }
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
@@ -197,7 +221,7 @@ export default class Signup extends Component {
             <Text style={styles.errFeed}>{this.state.err}</Text>
 
             {
-              this.state.step === 1 && <InputField defaultValue={this.state.name} name="name" handleInput={this.handleInput} textContentType='name' style={{marginTop:20}} label="NAME" />
+              this.state.step === 1 && <InputField defaultValue={this.state.name} name="name" handleInput={this.handleInput} textContentType='name' style={{marginTop:20}} label="FULL NAME" />
             }
 
             {
@@ -217,7 +241,11 @@ export default class Signup extends Component {
             }
 
             {
-              this.state.step === 1 && <PasswordFeild defaultValue={this.state.pass} name="pass" handleInput={this.handleInput} label="PASSWORD" />
+              this.state.step === 1 && 
+              <>
+              {this.state.passTip && <Text style={styles.passTip}>Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character</Text>}
+              <PasswordFeild onBlur={this.toggleFocus} onFocus={this.toggleFocus} defaultValue={this.state.pass} name="pass" handleInput={this.handleInput} label="PASSWORD" />
+              </>
             }
 
             {
@@ -225,7 +253,12 @@ export default class Signup extends Component {
             }
 
             {
-              this.state.step === 1 ? <FormButton handleSubmit={this.next} style={{marginTop:20}} label="Next" /> : 
+              this.state.step === 1 ? <FormButton 
+                disabled={this.state.isNextDisabled} 
+                handleSubmit={this.next} 
+                style={{marginTop:20}} 
+                label="Next" 
+              /> : 
               <FormButton disabled={this.state.isDisabled} isLoading={this.state.isLoading} handleSubmit={this.handleSubmit} style={{marginTop:20}} label="Sign Up" />
             }
 
@@ -293,6 +326,12 @@ const styles = StyleSheet.create({
 
     loader: {
       paddingTop:20,
+    },
+
+    passTip: {
+      fontSize:12,
+      paddingBottom:10,
+      paddingHorizontal:10
     }
     
   })

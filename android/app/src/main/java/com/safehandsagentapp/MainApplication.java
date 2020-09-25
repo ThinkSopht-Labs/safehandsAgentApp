@@ -1,5 +1,7 @@
 package com.safehandsagentapp;
-
+import com.airbnb.android.react.maps.MapsPackage;
+import java.util.Arrays;
+import com.facebook.react.shell.MainReactPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -13,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-
+  
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
         @Override
@@ -29,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           return packages;
         }
-
+        
         @Override
         protected String getJSMainModuleName() {
           return "index";

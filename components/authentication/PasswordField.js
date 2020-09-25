@@ -20,7 +20,7 @@ export default class PasswordFeild extends Component {
         return (
             <View>
                 <Text style={[styles.title, this.props.style]}>{this.props.label}</Text>
-                <TextInput defaultValue={this.props.defaultValue} onChangeText={(text)=>this.props.handleInput(text, this.props.name)} style={styles.input} secureTextEntry={this.state.isSecureText} />
+                <TextInput onBlur={this.props.onBlur} onFocus={this.props.onFocus} defaultValue={this.props.defaultValue} onChangeText={(text)=>this.props.handleInput(text, this.props.name)} style={styles.input} secureTextEntry={this.state.isSecureText} />
                 <TouchableOpacity onPress={this.toggleSecureTextEntry} style={styles.iconContainer}>
                     <Icon name={this.state.isSecureText ? "eye-outline" : "eye-off-outline"} color="#97ADB6" size={20} />
                 </TouchableOpacity>
