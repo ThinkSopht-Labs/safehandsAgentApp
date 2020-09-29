@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Dimensions, View, StyleSheet } from 'react-native'
 import MenuButton from '../../components/buttons/MenuButton'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 
-const { width, height } = Dimensions.get('window');
-const ASPECT_RATIO = width / height;
+const { width, height } = Dimensions.get('window')
+const ASPECT_RATIO = width / height
 
 export default class Home extends Component {
     toggleDrawer = () => {
@@ -21,7 +21,6 @@ export default class Home extends Component {
             <View style={stylesheet.container}>
                 <MapView
                     initialRegion={region}
-                    provider={PROVIDER_GOOGLE}
                     style={stylesheet.mapStyle}
                 >
                     <Marker
@@ -36,9 +35,7 @@ export default class Home extends Component {
 
 const stylesheet = StyleSheet.create({
     container:{
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center"
+        flex:1
     },
 
     menuIcon: {
