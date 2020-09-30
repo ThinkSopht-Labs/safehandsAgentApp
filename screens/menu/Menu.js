@@ -17,7 +17,7 @@ export default class Menu extends Component {
                 <View style={stylesheet.blueBackground}> 
                     <View style={stylesheet.propicContainer}>
                         <Image style={stylesheet.propic} source={propic} alt="propic" />
-                        <TouchableOpacity style={stylesheet.editIcon}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("Profile")} style={stylesheet.editIcon}>
                             <Icon name="edit" size={22} color="#fff" />
                         </TouchableOpacity>
                     </View>
