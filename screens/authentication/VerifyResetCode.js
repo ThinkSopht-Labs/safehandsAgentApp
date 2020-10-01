@@ -17,7 +17,7 @@ export default class VerifyResetCode extends Component {
         }
     }
     sendCode = () => {
-        api.get('/auth/driver/activate/'+this.props.route.params.phone+'/'+this.state.code)
+        api.get('/auth/rider/activate/'+this.props.route.params.phone+'/'+this.state.code)
         .then(res=>{
             if(res.ok){
                 signInUser(res.data.data)

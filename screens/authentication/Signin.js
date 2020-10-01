@@ -84,7 +84,7 @@ export default class Signin extends Component {
       phone:this.state.phone,
       password:this.state.pass
     }
-    api.post('/auth/driver/login', JSON.stringify(cred))
+    api.post('/auth/rider/login', JSON.stringify(cred))
     .then(res=>{
       if(res.ok){
         signInUser(res.data.data)

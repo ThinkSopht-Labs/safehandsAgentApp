@@ -72,7 +72,7 @@ export default class Signup extends Component {
   }
 
   shootRequest = (driver) => {
-    api.post('/auth/driver/register', JSON.stringify(driver))
+    api.post('/auth/rider/register', JSON.stringify(driver))
     .then(res=>{
       if(res.ok){
         this.props.navigation.navigate("Verify", {phone:driver.phone})

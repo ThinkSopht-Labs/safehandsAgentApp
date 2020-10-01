@@ -8,8 +8,13 @@ import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import moment from 'moment'
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { getUser } from '../../utils/storage'
+import { create } from 'apisauce'
 
 const { width, height } = Dimensions.get('window')
+
+const api = create({
+    baseURL: 'http://3.123.29.179:3000/api',
+})
 
 export default class DeliveryAgentProfile extends Component {
     constructor(){
@@ -74,6 +79,15 @@ export default class DeliveryAgentProfile extends Component {
                 this.setState({
                     err:"Enter a valid email address"
                 })
+                return
+            }
+        }
+        if(this.state.name!==""){
+            if(!this.state.name.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
+                this.setState({
+                    err:"Enter full name Eg. John Doe"
+                })
+                return
             }
         }
         let updatedInfo = {
@@ -95,6 +109,7 @@ export default class DeliveryAgentProfile extends Component {
                 })
             }
         }
+        console.log(info);
         return (
             <>
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -111,7 +126,7 @@ export default class DeliveryAgentProfile extends Component {
                                 <TextInput keyboardType='email-address' onChangeText={(text)=>this.onTextInput("email", text)} style={stylesheet.email} placeholder="Enter email" defaultValue={info.email} />
                                 <Text style={stylesheet.phone}>{info.phone}</Text>
                                 <Text style={stylesheet.text}>Member since</Text>
-                                <Text style={stylesheet.date}>{info.createdAt && moment(info.createdAt.toString()).calendar()}</Text>
+                                <Text style={stylesheet.date}>{info.createdAt && moment(info.createdAt.toString()).format("Do MMMM YYYY")}</Text>
                                 <View style={stylesheet.rating}>
                                     <Icon name="star" size={27} color="#F2C94C" />
                                     <Icon name="star" size={27} color="#F2C94C" />
