@@ -7,8 +7,9 @@ import Icon1 from 'react-native-vector-icons/Entypo'
 import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import moment from 'moment'
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import { getUser } from '../../utils/storage'
+import { getUser, signInUser } from '../../utils/storage'
 import { create } from 'apisauce'
+import { Picker } from '@react-native-community/picker'
 
 const { width, height } = Dimensions.get('window')
 
@@ -27,8 +28,11 @@ export default class DeliveryAgentProfile extends Component {
             name:"",
             email:"",
             address:"",
+            gender:"male",
+            occupation:"",
             disabled:true,
             modalVisible: false,
+            updated:false,
             err:""
         }
     }
@@ -46,9 +50,10 @@ export default class DeliveryAgentProfile extends Component {
             console.log(err);
         })
     }
-    setModalVisible = (visible) => {
+    toggleModal = () => {
         this.setState({ 
-            modalVisible: visible 
+            modalVisible: this.state.modalVisible ? false : true,
+            updated:false
         });
     }
     confirm = (selectedDate) => {
@@ -72,6 +77,7 @@ export default class DeliveryAgentProfile extends Component {
     }
     onSave = () => {
         this.setState({
+            disabled:true,
             modalVisible:true
         })
         if(this.state.email!==""){
@@ -90,18 +96,48 @@ export default class DeliveryAgentProfile extends Component {
                 return
             }
         }
+        if(this.state.occupation!==""){
+            if(!this.state.occupation.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
+                this.setState({
+                    err:"Enter occupation Eg. Student"
+                })
+                return
+            }
+        }
         let updatedInfo = {
             _id:this.state.info._id,
             firstName:this.state.name!=="" ? this.state.name.split(' ').slice(0, -1).join(' ') : this.state.info.firstName,
             lastName:this.state.name!=="" ? this.state.name.split(' ').slice(1).join(' ') : this.state.info.lastName,
             email:this.state.email!=="" ? this.state.email : this.state.info.email,
             dob:this.state.selectedDate!=="" ? this.state.selectedDate : this.state.info.dob,
-            address:this.state.address!=="" ? this.state.address : this.state.info.address
+            address:this.state.address!=="" ? this.state.address : this.state.info.address,
+            gender:this.state.gender!=="" ? this.state.gender : this.state.info.gender,
+            occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation
         }
-        console.log(updatedInfo);
+        api.patch('/auth/rider/update', JSON.stringify(updatedInfo))
+        .then(res=>{
+            if(res.ok){
+                signInUser(res.data.data)
+                .then(()=>{
+                    this.setState({
+                        updated:true
+                    })
+                })
+                .catch(err=>console.log(err))
+            }
+            this.setState({
+                err:res.data.message,
+                disabled:false,
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                err:err.originalError.message
+            })
+        })
     }
     render() {
-        const { info, name, email, selectedDate, address, disabled, modalVisible, err } = this.state
+        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated } = this.state
         if(name!==""||email!==""||selectedDate!==""||address!==""){
             if(disabled){
                 this.setState({
@@ -109,7 +145,6 @@ export default class DeliveryAgentProfile extends Component {
                 })
             }
         }
-        console.log(info);
         return (
             <>
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -174,11 +209,18 @@ export default class DeliveryAgentProfile extends Component {
                             </View>
                             <View style={stylesheet.inputField}>
                                 <Text style={stylesheet.label}>Gender</Text>
-                                <Text style={stylesheet.formText}>Male</Text>
+                                <Picker
+                                    selectedValue={gender}
+                                    style={{height: 50, width: "100%"}}
+                                    onValueChange={(text)=>this.onTextInput("gender", text)}
+                                >
+                                    <Picker.Item label="Male" value="male" />
+                                    <Picker.Item label="Female" value="female" />
+                                </Picker>
                             </View>
                             <View style={stylesheet.inputField}>
                                 <Text style={stylesheet.label}>Occupation</Text>
-                                <Text style={stylesheet.formText}>Student - IPSA</Text>
+                                <TextInput onChangeText={(text)=>this.onTextInput("occupation", text)} style={stylesheet.formText} placeholder="Enter occupation" defaultValue={info.occupation}/>
                             </View>
                         </View>
                         <ProfileButton onPress={this.onSave} disabled={disabled} label="Save" />
@@ -192,7 +234,20 @@ export default class DeliveryAgentProfile extends Component {
                 >
                     <View style={stylesheet.modalView}>
                         {err==="" && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
-                        {err!=="" && <><Icon2 name="cancel" size={50} color="red" /><Text>{err}</Text></>}
+                        {err!=="" && <>
+                            <Icon2 name="cancel" size={50} color="red" />
+                            <Text style={stylesheet.feed}>{err}</Text>
+                            <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
+                                <Text style={stylesheet.btnText}>Close</Text>
+                            </TouchableOpacity>
+                        </>}
+                        {updated && <>
+                            <Icon name="checkcircle" size={50} color="#1152FD" />
+                            <Text style={stylesheet.feed}>Profile updated successfully!</Text>
+                            <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
+                                <Text style={stylesheet.btnText}>Close</Text>
+                            </TouchableOpacity>
+                        </>}
                     </View>
                 </Modal>
             </>
@@ -353,9 +408,8 @@ const stylesheet = StyleSheet.create({
         left:width/2-100,
         backgroundColor: "white",
         borderRadius: 15,
-        padding: 10,
+        padding: 20,
         width:200,
-        height:100,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -365,5 +419,23 @@ const stylesheet = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
+    },
+
+    feed: {
+        textAlign:"center",
+        paddingVertical:10
+    },
+
+    closeBtn: {
+        backgroundColor:"#1152FD",
+        borderRadius:15,
+        paddingVertical:5,
+        paddingHorizontal:10
+    },
+    
+    btnText: {
+        color:"#fff",
+        textAlign:"center",
+        fontWeight:"bold"
     }
 })
