@@ -10,6 +10,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { getUser, signInUser } from '../../utils/storage'
 import { create } from 'apisauce'
 import { Picker } from '@react-native-community/picker'
+import MenuButton from '../../components/buttons/MenuButton';
 
 const { width, height } = Dimensions.get('window')
 
@@ -74,6 +75,9 @@ export default class DeliveryAgentProfile extends Component {
         this.setState({
             show:this.state.show ? false : true
         })
+    }
+    toggleDrawer = () => {
+        console.log("hi");
     }
     onSave = () => {
         this.setState({
@@ -147,6 +151,7 @@ export default class DeliveryAgentProfile extends Component {
         }
         return (
             <>
+                <MenuButton onPress={this.toggleDrawer} />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={stylesheet.updateUserCon}>
                         <View style={stylesheet.topCol}>

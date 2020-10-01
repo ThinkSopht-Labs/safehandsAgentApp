@@ -17,12 +17,22 @@ export default class VerifyResetCode extends Component {
         }
     }
     sendCode = () => {
-        api.get('/auth/rider/activate/'+this.props.route.params.phone+'/'+this.state.code)
+        let request = ""
+        if(this.props.route.params.type==="signup"){
+            request = api.get('/auth/rider/activate/'+this.props.route.params.phone+'/'+this.state.code)
+        } else if(this.props.route.params.type==="forgotpass"){
+            request = api.post('/auth/rider/verifyToken/'+this.props.route.params.phone+'/'+this.state.code)
+        }
+        request
         .then(res=>{
             if(res.ok){
                 signInUser(res.data.data)
                 .then(()=>{
-                    this.props.navigation.navigate("Home")
+                    if(this.props.route.params.type==="signup"){
+                        this.props.navigation.navigate("Home")
+                    } else if(this.props.route.params.type==="forgotpass"){
+                        this.props.navigation.navigate("Change Password", {phone:this.props.route.params.phone})
+                    }
                 })
                 return
             }

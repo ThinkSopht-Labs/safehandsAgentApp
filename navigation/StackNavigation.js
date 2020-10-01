@@ -8,6 +8,7 @@ import ForgotPassword from '../screens/authentication/ForgetPassword';
 import VerifyResetCode from '../screens/authentication/VerifyResetCode';
 import DrawerNavigation from '../navigation/DrawerNavigation';
 import { getUser } from '../utils/storage';
+import ChangePassword from '../screens/authentication/ChangePassword';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default class StackNavigation extends Component {
         return (            
             <NavigationContainer>
                 <Stack.Navigator 
+                    initialRouteName="Sign In"
                     screenOptions={{
                     headerTintColor: '#3E4958',
                     headerStyle: {
@@ -70,6 +72,15 @@ export default class StackNavigation extends Component {
                     <Stack.Screen 
                         name="Verify"
                         component={VerifyResetCode}
+                        options={{
+                            headerTitleAlign:"center",
+                            headerBackTitleVisible:false
+                        }}
+                    />
+
+                    <Stack.Screen 
+                        name="Change Password"
+                        component={ChangePassword}
                         options={{
                             headerTitleAlign:"center",
                             headerBackTitleVisible:false
