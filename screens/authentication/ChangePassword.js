@@ -99,9 +99,10 @@ export default class ChangePassword extends Component {
             //  {this.props.route.params.phone}
             <View style={styles.container}>
                 <Text style={styles.caption}>Create a new password for the account</Text>
+                <Text style={styles.caption}>{this.props.route.params.phone}</Text>
                 <Text style={styles.errFeed}>{this.state.err}</Text>
                 {this.state.passTip && 
-                    <Text style={styles.passTip}>Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character {this.props.route.params.phone}</Text>
+                    <Text style={styles.passTip}>Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character</Text>
                 }
                 <PasswordField onBlur={this.toggleFocus} onFocus={this.toggleFocus} name="pass" handleInput={this.handleInput} label="PASSWORD" />
                 <PasswordField name="conPass" handleInput={this.handleInput} label="CONFIRM PASSWORD" />

@@ -12,16 +12,19 @@ export default class VerifyResetCode extends Component {
     constructor(){
         super()
         this.state = {
-            code:"",
             err:false
         }
     }
-    sendCode = () => {
+    sendCode = (text) => {
         let request = ""
+        let cred = {
+            phone:this.props.route.params.phone,
+            token:text
+        }
         if(this.props.route.params.type==="signup"){
-            request = api.get('/auth/rider/activate/'+this.props.route.params.phone+'/'+this.state.code)
+            request = api.get('/auth/rider/activate/'+cred.phone+'/'+text)
         } else if(this.props.route.params.type==="forgotpass"){
-            request = api.post('/auth/rider/verifyToken/'+this.props.route.params.phone+'/'+this.state.code)
+            request = api.post('/auth/rider/verifyToken/', JSON.stringify(cred))
         }
         request
         .then(res=>{
@@ -31,17 +34,19 @@ export default class VerifyResetCode extends Component {
                     if(this.props.route.params.type==="signup"){
                         this.props.navigation.navigate("Home")
                     } else if(this.props.route.params.type==="forgotpass"){
-                        this.props.navigation.navigate("Change Password", {phone:this.props.route.params.phone})
+                        this.props.navigation.navigate("Change Password", {phone:cred.phone})
                     }
                 })
                 return
             }
+            console.log("async res", res);
             this.verifycode.reset()
             this.setState({
                 err:true
             })
         })
         .catch(err=>{
+            console.log("failed async", err);
             this.verifycode.reset()
             this.setState({
                 err:true
