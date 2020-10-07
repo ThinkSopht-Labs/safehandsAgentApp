@@ -10,13 +10,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { getUser, signInUser } from '../../utils/storage'
 import { create } from 'apisauce'
 import { Picker } from '@react-native-community/picker'
-import MenuButton from '../../components/buttons/MenuButton';
+import MenuButton from '../../components/buttons/MenuButton'
+import { ActionSheet } from 'native-base'
 
 const { width, height } = Dimensions.get('window')
-
-const api = create({
-    baseURL: 'http://3.123.29.179:3000/api',
-})
 
 export default class DeliveryAgentProfile extends Component {
     constructor(){
@@ -25,16 +22,18 @@ export default class DeliveryAgentProfile extends Component {
             show:false,
             date: new Date(),
             selectedDate: "",
+            token:"",
             info:"",
             name:"",
             email:"",
             address:"",
-            gender:"male",
+            gender:"MALE",
             occupation:"",
             disabled:true,
             modalVisible: false,
             updated:false,
-            err:""
+            err:"",
+            avatar:null
         }
     }
 
@@ -43,6 +42,7 @@ export default class DeliveryAgentProfile extends Component {
         .then(res=>{
             if(res.token){
                 this.setState({
+                    token:res.token,
                     info:{...res.user}
                 })
             }
@@ -51,12 +51,38 @@ export default class DeliveryAgentProfile extends Component {
             console.log(err);
         })
     }
+
     toggleModal = () => {
         this.setState({ 
             modalVisible: this.state.modalVisible ? false : true,
             updated:false
         });
     }
+
+    editAvatar = () => {
+        const BUTTONS = ['Take Photo', 'Choose Photo Library', 'Cancel']
+        ActionSheet.show(
+            {
+                options:BUTTONS,
+                cancelButtonIndex:2,
+                title:'Select a photo'
+            },
+
+            buttonIndex => {
+                switch(buttonIndex){
+                    case 0:
+                        console.warn("first option");
+                        break;
+                    case 1:
+                        console.warn("second option");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        )
+    }
+
     confirm = (selectedDate) => {
         const currentDate = selectedDate
         this.setState({
@@ -64,21 +90,24 @@ export default class DeliveryAgentProfile extends Component {
             date:currentDate,
             selectedDate:currentDate
         })
-        this.props.onDateChange(currentDate)
     }
+
     onTextInput = (name, text) => {
         this.setState({
             [name]:text
         })
     }
+
     togglePicker = ()=> {
         this.setState({
             show:this.state.show ? false : true
         })
     }
+
     toggleDrawer = () => {
         console.log("hi");
     }
+
     onSave = () => {
         this.setState({
             disabled:true,
@@ -118,7 +147,11 @@ export default class DeliveryAgentProfile extends Component {
             gender:this.state.gender!=="" ? this.state.gender : this.state.info.gender,
             occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation
         }
-        api.patch('/auth/rider/update', JSON.stringify(updatedInfo))
+        const api = create({
+            baseURL: 'http://3.123.29.179:3000/api',
+            headers: { Authorization: this.state.token }
+        })
+        api.patch('/rider/update_profile', JSON.stringify(updatedInfo))
         .then(res=>{
             if(res.ok){
                 signInUser(res.data.data)
@@ -140,6 +173,7 @@ export default class DeliveryAgentProfile extends Component {
             })
         })
     }
+
     render() {
         const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated } = this.state
         if(name!==""||email!==""||selectedDate!==""||address!==""){
@@ -157,7 +191,7 @@ export default class DeliveryAgentProfile extends Component {
                         <View style={stylesheet.topCol}>
                             <View style={stylesheet.propicContainer}>
                                 <Image style={stylesheet.propic} source={propic} alt="propic" />
-                                <TouchableOpacity style={stylesheet.editIcon}>
+                                <TouchableOpacity onPress={this.editAvatar} style={stylesheet.editIcon}>
                                     <Icon1 name="edit" size={22} color="#000" />
                                 </TouchableOpacity>
                             </View>
@@ -182,7 +216,7 @@ export default class DeliveryAgentProfile extends Component {
                                 <Text style={stylesheet.label}>Date of Birth</Text>
                                 <TouchableOpacity onPress={this.togglePicker}>
                                     <Text style={stylesheet.formText}>{
-                                        this.state.selectedDate !== "" ? moment(this.state.selectedDate.toString()).format("Do MMMM YYYY") : info.dob===null ? <Text style={stylesheet.placeholder}>Enter date of birth</Text> : info.dob
+                                        this.state.selectedDate !== "" ? moment(this.state.selectedDate.toString()).format("Do MMMM YYYY") : info.dob===null ? <Text style={stylesheet.placeholder}>Enter date of birth</Text> : moment(info.dob).format("Do MMMM YYYY")
                                     }</Text>
                                 </TouchableOpacity>
                                 <DateTimePickerModal
@@ -219,8 +253,8 @@ export default class DeliveryAgentProfile extends Component {
                                     style={{height: 50, width: "100%"}}
                                     onValueChange={(text)=>this.onTextInput("gender", text)}
                                 >
-                                    <Picker.Item label="Male" value="male" />
-                                    <Picker.Item label="Female" value="female" />
+                                    <Picker.Item label="Male" value="MALE" />
+                                    <Picker.Item label="Female" value="FEMALE" />
                                 </Picker>
                             </View>
                             <View style={stylesheet.inputField}>
@@ -239,7 +273,7 @@ export default class DeliveryAgentProfile extends Component {
                 >
                     <View style={stylesheet.modalView}>
                         {err==="" && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
-                        {err!=="" && <>
+                        {err!=="" && !updated && <>
                             <Icon2 name="cancel" size={50} color="red" />
                             <Text style={stylesheet.feed}>{err}</Text>
                             <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>

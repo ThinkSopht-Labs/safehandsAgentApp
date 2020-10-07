@@ -1,3 +1,4 @@
+import { Root } from 'native-base'
 import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -16,7 +17,8 @@ export default class StackNavigation extends Component {
     
     render() {
         return (            
-            <NavigationContainer>
+          <Root>
+              <NavigationContainer>
                 <Stack.Navigator 
                     initialRouteName="Sign In"
                     screenOptions={{
@@ -94,6 +96,7 @@ export default class StackNavigation extends Component {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
+          </Root>  
         )
     }
 }

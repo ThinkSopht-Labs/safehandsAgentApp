@@ -74,12 +74,12 @@ export default class Signin extends Component {
       })
       return
     }
-    // if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
-    //   this.setState({
-    //     err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
-    //   })
-    //   return
-    // }
+    if(!this.state.pass.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)){
+      this.setState({
+        err:"Passwords should have 7 to 15 characters which contain at least one numeric digit and a special character"
+      })
+      return
+    }
     let cred = {
       phone:this.state.phone,
       password:this.state.pass

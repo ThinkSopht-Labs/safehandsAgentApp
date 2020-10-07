@@ -39,14 +39,12 @@ export default class VerifyResetCode extends Component {
                 })
                 return
             }
-            console.log("async res", res);
             this.verifycode.reset()
             this.setState({
                 err:true
             })
         })
         .catch(err=>{
-            console.log("failed async", err);
             this.verifycode.reset()
             this.setState({
                 err:true

@@ -7,7 +7,7 @@ import { create } from 'apisauce'
 import { getUser } from '../../utils/storage'
 
 const api = create({
-  baseURL: 'http://3.123.29.179:3000/api',
+  baseURL: 'http://3.123.29.179:3000/api'
 })
 
 export default class Signup extends Component {
