@@ -236,6 +236,8 @@ PODS:
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
   - React-jsinspector (0.63.2)
+  - react-native-maps (0.27.1):
+    - React
   - react-native-safe-area-context (3.1.7):
     - React
   - React-RCTActionSheet (0.63.2):
@@ -302,10 +304,21 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
+  - RNCPicker (1.8.0):
+    - React-Core
   - RNDateTimePicker (3.0.2):
     - React
   - RNGestureHandler (1.7.0):
     - React
+  - RNImageCropPicker (0.35.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.35.0)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.35.0):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
   - RNReanimated (1.13.0):
     - React
   - RNScreens (2.10.1):
@@ -314,6 +327,7 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
+  - TOCropViewController (2.5.5)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -355,6 +369,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -368,8 +383,10 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -389,6 +406,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - OpenSSL-Universal
+    - TOCropViewController
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -422,6 +440,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-RCTActionSheet:
@@ -448,10 +468,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNCPicker:
+    :path: "../node_modules/@react-native-community/picker"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -490,6 +514,7 @@ SPEC CHECKSUMS:
   React-jsi: 54245e1d5f4b690dec614a73a3795964eeef13a8
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
+  react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-safe-area-context: fcece23844742b6f7f0627c3715b806a7deff946
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
@@ -503,12 +528,15 @@ SPEC CHECKSUMS:
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
   RNCAsyncStorage: 3eea36d9460c5159b592f9ecbe5a77f8aca98006
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNCPicker: a724b3aa22b182697c190a8fd7b060b66119e136
   RNDateTimePicker: 3a1783e63fcb6e2b162b08a4321db030d23accff
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
+  RNImageCropPicker: 89352ad050ea8dd9bc1728802c477f5b38cd7b4c
   RNReanimated: 89f5e0a04d1dd52fbf27e7e7030d8f80a646a3fc
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
+  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

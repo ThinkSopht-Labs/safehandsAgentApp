@@ -12,6 +12,7 @@ import { create } from 'apisauce'
 import { Picker } from '@react-native-community/picker'
 import MenuButton from '../../components/buttons/MenuButton'
 import { ActionSheet } from 'native-base'
+import ImagePicker from 'react-native-image-crop-picker'
 
 const { width, height } = Dimensions.get('window')
 
@@ -74,7 +75,14 @@ export default class DeliveryAgentProfile extends Component {
                         console.warn("first option");
                         break;
                     case 1:
-                        console.warn("second option");
+                        // ImagePicker.openPicker({
+                        //     width: 300,
+                        //     height: 400,
+                        //     cropping: true
+                        // })
+                        // .then(image => {
+                        //     console.log(image);
+                        // })
                         break;
                     default:
                         break;
@@ -130,7 +138,7 @@ export default class DeliveryAgentProfile extends Component {
             }
         }
         if(this.state.occupation!==""){
-            if(!this.state.occupation.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
+            if(!this.state.occupation.match(/^[a-zA-Z]+$/)){
                 this.setState({
                     err:"Enter occupation Eg. Student"
                 })
@@ -175,8 +183,8 @@ export default class DeliveryAgentProfile extends Component {
     }
 
     render() {
-        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated } = this.state
-        if(name!==""||email!==""||selectedDate!==""||address!==""){
+        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated, occupation } = this.state
+        if(name!==""||email!==""||selectedDate!==""||address!==""||occupation!==""){
             if(disabled){
                 this.setState({
                     disabled : false
@@ -273,7 +281,7 @@ export default class DeliveryAgentProfile extends Component {
                 >
                     <View style={stylesheet.modalView}>
                         {err==="" && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
-                        {err!=="" && !updated && <>
+                        {!err.match("Successfully") && !updated && <>
                             <Icon2 name="cancel" size={50} color="red" />
                             <Text style={stylesheet.feed}>{err}</Text>
                             <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
