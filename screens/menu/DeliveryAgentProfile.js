@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, ScrollView, Modal, ActivityIndicator, Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/AntDesign'
 import propic from '../../assets/images/user-icon.png'
-import Icon from 'react-native-vector-icons/AntDesign';
-import ProfileButton from '../../components/buttons/ProfileButton';
+import ProfileButton from '../../components/buttons/ProfileButton'
 import Icon1 from 'react-native-vector-icons/Entypo'
 import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import moment from 'moment'
@@ -34,7 +34,7 @@ export default class DeliveryAgentProfile extends Component {
             modalVisible: false,
             updated:false,
             err:"",
-            avatar:null
+            avatar:propic
         }
     }
 
@@ -72,17 +72,41 @@ export default class DeliveryAgentProfile extends Component {
             buttonIndex => {
                 switch(buttonIndex){
                     case 0:
-                        console.warn("first option");
+                        ImagePicker.openCamera({
+                            width: 500,
+                            height: 500,
+                            useFrontCamera:true,
+                            cropping: true,
+                        })
+                        .then(image => {
+                            this.setState({
+                                avatar:{
+                                    uri:image.path
+                                }
+                            })
+                        })
+                        .catch(err=>{
+                            console.log(err)
+                        })
                         break;
                     case 1:
-                        // ImagePicker.openPicker({
-                        //     width: 300,
-                        //     height: 400,
-                        //     cropping: true
-                        // })
-                        // .then(image => {
-                        //     console.log(image);
-                        // })
+                        ImagePicker.openPicker({
+                            compressImageMaxWidth: 500,
+                            compressImageMaxHeight: 500,
+                            compressImageQuality: 0.7,
+                            mediaType:"photo",
+                            cropping: true
+                        })
+                        .then(image => {
+                            this.setState({
+                                avatar:{
+                                    uri:image.path
+                                }
+                            })
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                        })
                         break;
                     default:
                         break;
@@ -183,8 +207,14 @@ export default class DeliveryAgentProfile extends Component {
     }
 
     render() {
-        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated, occupation } = this.state
-        if(name!==""||email!==""||selectedDate!==""||address!==""||occupation!==""){
+        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated, occupation, avatar } = this.state
+        let aviChangeCheck = false
+        if(avatar!==propic){
+            if(avatar.uri!==info.pictureUrl){
+                aviChangeCheck = true
+            }
+        }
+        if(name!==""||email!==""||selectedDate!==""||address!==""||occupation!==""||aviChangeCheck){
             if(disabled){
                 this.setState({
                     disabled : false
@@ -192,32 +222,34 @@ export default class DeliveryAgentProfile extends Component {
             }
         }
         return (
-            <>
-                <MenuButton onPress={this.toggleDrawer} />
+            <View>
                 <ScrollView showsVerticalScrollIndicator={false}>
+                <MenuButton />
                     <View style={stylesheet.updateUserCon}>
                         <View style={stylesheet.topCol}>
                             <View style={stylesheet.propicContainer}>
-                                <Image style={stylesheet.propic} source={propic} alt="propic" />
+                                <Image style={stylesheet.propic} source={info.pictureUrl ? info.pictureUrl : avatar} />
                                 <TouchableOpacity onPress={this.editAvatar} style={stylesheet.editIcon}>
                                     <Icon1 name="edit" size={22} color="#000" />
                                 </TouchableOpacity>
                             </View>
-                            <View style={stylesheet.info}>
-                                <TextInput onChangeText={(text)=>this.onTextInput("name", text)} style={stylesheet.name} defaultValue={info.firstName+' '+info.lastName} />
-                                <TextInput keyboardType='email-address' onChangeText={(text)=>this.onTextInput("email", text)} style={stylesheet.email} placeholder="Enter email" defaultValue={info.email} />
-                                <Text style={stylesheet.phone}>{info.phone}</Text>
-                                <Text style={stylesheet.text}>Member since</Text>
-                                <Text style={stylesheet.date}>{info.createdAt && moment(info.createdAt.toString()).format("Do MMMM YYYY")}</Text>
-                                <View style={stylesheet.rating}>
-                                    <Icon name="star" size={27} color="#F2C94C" />
-                                    <Icon name="star" size={27} color="#F2C94C" />
-                                    <Icon name="star" size={27} color="#F2C94C" />
-                                    <Icon name="star" size={27} color="#F2C94C" />
-                                    <Icon name="star" size={27} color="#D5DDE0" />
-                                </View>
-                                <Text style={stylesheet.blueText}><Text style={stylesheet.deepBlue}>23</Text> Successful deliveries complete</Text>
-                            </View>
+                            {
+                                info ? <View style={stylesheet.info}>
+                                    <TextInput onChangeText={(text)=>this.onTextInput("name", text)} style={stylesheet.name} defaultValue={info.firstName+' '+info.lastName} />
+                                    <TextInput keyboardType='email-address' onChangeText={(text)=>this.onTextInput("email", text)} style={stylesheet.email} placeholder="Enter email" defaultValue={info.email} />
+                                    <Text style={stylesheet.phone}>{info.phone}</Text>
+                                    <Text style={stylesheet.text}>Member since</Text>
+                                    <Text style={stylesheet.date}>{info.createdAt && moment(info.createdAt.toString()).format("Do MMMM YYYY")}</Text>
+                                    <View style={stylesheet.rating}>
+                                        <Icon name="star" size={27} color="#F2C94C" />
+                                        <Icon name="star" size={27} color="#F2C94C" />
+                                        <Icon name="star" size={27} color="#F2C94C" />
+                                        <Icon name="star" size={27} color="#F2C94C" />
+                                        <Icon name="star" size={27} color="#D5DDE0" />
+                                    </View>
+                                    <Text style={stylesheet.blueText}><Text style={stylesheet.deepBlue}>23</Text> Successful deliveries complete</Text>
+                                </View> : null
+                            }
                         </View>
                         <View style={stylesheet.formCard}>
                             <View style={stylesheet.inputField}>
@@ -297,7 +329,7 @@ export default class DeliveryAgentProfile extends Component {
                         </>}
                     </View>
                 </Modal>
-            </>
+            </View>
         )
     }
 }
@@ -331,16 +363,13 @@ const stylesheet = StyleSheet.create({
     },
 
     propicContainer: {
-        position:"relative",
-        width:120,
-        height:120,
-        elevation:10,
-        borderRadius:60
+        position:"relative"
     },
 
     propic: {
         width:120,
-        height:120
+        height:120,
+        borderRadius:60
     },
 
     rating: {
