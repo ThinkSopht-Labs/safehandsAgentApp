@@ -14,6 +14,7 @@ import MenuButton from '../../components/buttons/MenuButton'
 import { ActionSheet } from 'native-base'
 import ImagePicker from 'react-native-image-crop-picker'
 
+
 const { width, height } = Dimensions.get('window')
 
 export default class DeliveryAgentProfile extends Component {
@@ -34,7 +35,9 @@ export default class DeliveryAgentProfile extends Component {
             modalVisible: false,
             updated:false,
             err:"",
-            avatar:propic
+            avatar:propic,
+            pictureUrl:"",
+            image:null
         }
     }
 
@@ -82,7 +85,8 @@ export default class DeliveryAgentProfile extends Component {
                             this.setState({
                                 avatar:{
                                     uri:image.path
-                                }
+                                },
+                                image
                             })
                         })
                         .catch(err=>{
@@ -95,14 +99,17 @@ export default class DeliveryAgentProfile extends Component {
                             compressImageMaxHeight: 500,
                             compressImageQuality: 0.7,
                             mediaType:"photo",
-                            cropping: true
+                            cropping: true,
+                            includeBase64: true
                         })
                         .then(image => {
                             this.setState({
                                 avatar:{
                                     uri:image.path
-                                }
+                                },
+                                image
                             })
+                            console.log(image);
                         })
                         .catch(err=>{
                             console.log(err);
@@ -177,33 +184,64 @@ export default class DeliveryAgentProfile extends Component {
             dob:this.state.selectedDate!=="" ? this.state.selectedDate : this.state.info.dob,
             address:this.state.address!=="" ? this.state.address : this.state.info.address,
             gender:this.state.gender!=="" ? this.state.gender : this.state.info.gender,
-            occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation
+            occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation,
+            pictureUrl:this.state.pictureUrl!=="" ? this.state.pictureUrl : this.state.info.pictureUrl
         }
         const api = create({
             baseURL: 'http://3.123.29.179:3000/api',
-            headers: { Authorization: this.state.token }
+            headers: { 
+                // Authorization: this.state.token,
+                ContentType: 'multipart/form-data',
+                // type: 'image/jpg'
+            }
         })
-        api.patch('/rider/update_profile', JSON.stringify(updatedInfo))
+        const form = new FormData()
+        form.append('document', this.base64ImageToBlob(this.state.image.data))
+        api.post('/upload', form )
         .then(res=>{
-            if(res.ok){
-                signInUser(res.data.data)
-                .then(()=>{
-                    this.setState({
-                        updated:true
-                    })
+            if(res.message==="Processsing"){
+                this.setState({
+                    pictureUrl:res.data
                 })
-                .catch(err=>console.log(err))
             }
             this.setState({
-                err:res.data.message,
-                disabled:false,
+                err:"Picture upload err"
             })
+            console.log(res);
+            return
         })
         .catch(err=>{
             this.setState({
-                err:err.originalError.message
+                err:"Picture upload err"
             })
+            console.log(err);
+            return
         })
+        console.log(this.state.pictureUrl);
+        // api.patch('/rider/update_profile', JSON.stringify(updatedInfo))
+        // .then(res=>{
+        //     if(res.ok){
+        //         signInUser({
+        //             user:res.data.data,
+        //             token:this.state.token
+        //         })
+        //         .then(()=>{
+        //             this.setState({
+        //                 updated:true
+        //             })
+        //         })
+        //         .catch(err=>console.log(err))
+        //     }
+        //     this.setState({
+        //         err:res.data.message,
+        //         disabled:false,
+        //     })
+        // })
+        // .catch(err=>{
+        //     this.setState({
+        //         err:err.originalError.message
+        //     })
+        // })
     }
 
     render() {
@@ -313,7 +351,7 @@ export default class DeliveryAgentProfile extends Component {
                 >
                     <View style={stylesheet.modalView}>
                         {err==="" && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
-                        {!err.match("Successfully") && !updated && <>
+                        {err!=="" && !updated && <>
                             <Icon2 name="cancel" size={50} color="red" />
                             <Text style={stylesheet.feed}>{err}</Text>
                             <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
