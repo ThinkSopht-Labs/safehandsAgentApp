@@ -62,15 +62,12 @@ export default class ChangePassword extends Component {
         api.post('/auth/rider/reset_password', JSON.stringify(cred))
         .then(res=>{
             if(res.ok){
-                signInUser(res.data.data)
-                .then(()=>{
-                    this.setState({
-                        err:"",
-                        isDisabled:true,
-                        isLoading:false
-                    })
-                    this.props.navigation.navigate("Home")
+                this.setState({
+                    err:"",
+                    isDisabled:true,
+                    isLoading:false
                 })
+                this.props.navigation.navigate("Sign In")
                 return
             }
             this.setState({

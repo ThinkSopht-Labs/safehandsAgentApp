@@ -5,7 +5,7 @@ import closeIcon from '../../assets/images/close-icon.png';
 export default class CloseButton extends Component {
     render() {
         return (
-            <TouchableOpacity style={[stylesheet.callBtn, this.props.style]}>
+            <TouchableOpacity onPress={this.props.onPress} style={[stylesheet.callBtn, this.props.style]}>
                 <Image style={stylesheet.icon} source={closeIcon} alt="close-icon" />
             </TouchableOpacity>
         )

@@ -14,7 +14,6 @@ import MenuButton from '../../components/buttons/MenuButton'
 import { ActionSheet } from 'native-base'
 import ImagePicker from 'react-native-image-crop-picker'
 
-
 const { width, height } = Dimensions.get('window')
 
 export default class DeliveryAgentProfile extends Component {
@@ -36,8 +35,7 @@ export default class DeliveryAgentProfile extends Component {
             updated:false,
             err:"",
             avatar:propic,
-            pictureUrl:"",
-            image:null
+            pictureUrl:""
         }
     }
 
@@ -63,6 +61,32 @@ export default class DeliveryAgentProfile extends Component {
         });
     }
 
+    pickSingle = (cropit, circular = false, mediaType) =>{
+        ImagePicker.openPicker({
+          width: 500,
+          height: 500,
+          cropping: cropit,
+          cropperCircleOverlay: circular,
+          sortOrder: 'none',
+          compressImageMaxWidth: 1000,
+          compressImageMaxHeight: 1000,
+          compressImageQuality: 1,
+          compressVideoPreset: 'MediumQuality',
+        })
+        .then((image) => {
+            this.setState({
+                avatar:{
+                    uri:image.path
+                }
+            })
+            console.log(image);
+        })
+        .catch((e) => {
+            console.log(e);
+            Alert.alert(e.message ? e.message : e);
+        })
+    }
+
     editAvatar = () => {
         const BUTTONS = ['Take Photo', 'Choose Photo Library', 'Cancel']
         ActionSheet.show(
@@ -85,8 +109,7 @@ export default class DeliveryAgentProfile extends Component {
                             this.setState({
                                 avatar:{
                                     uri:image.path
-                                },
-                                image
+                                }
                             })
                         })
                         .catch(err=>{
@@ -94,26 +117,7 @@ export default class DeliveryAgentProfile extends Component {
                         })
                         break;
                     case 1:
-                        ImagePicker.openPicker({
-                            compressImageMaxWidth: 500,
-                            compressImageMaxHeight: 500,
-                            compressImageQuality: 0.7,
-                            mediaType:"photo",
-                            cropping: true,
-                            includeBase64: true
-                        })
-                        .then(image => {
-                            this.setState({
-                                avatar:{
-                                    uri:image.path
-                                },
-                                image
-                            })
-                            console.log(image);
-                        })
-                        .catch(err=>{
-                            console.log(err);
-                        })
+                        this.pickSingle(true, true, 'photo')
                         break;
                     default:
                         break;
@@ -189,17 +193,15 @@ export default class DeliveryAgentProfile extends Component {
         }
         const api = create({
             baseURL: 'http://3.123.29.179:3000/api',
-            headers: { 
-                // Authorization: this.state.token,
-                ContentType: 'multipart/form-data',
-                // type: 'image/jpg'
+            headers: {
+                'Content-Type': 'multipart/form-data'
             }
         })
         const form = new FormData()
-        form.append('document', this.base64ImageToBlob(this.state.image.data))
-        api.post('/upload', form )
+        form.append('document', this.state.avatar.uri)
+        api.post('/upload', form)
         .then(res=>{
-            if(res.message==="Processsing"){
+            if(res.ok){
                 this.setState({
                     pictureUrl:res.data
                 })
@@ -217,8 +219,7 @@ export default class DeliveryAgentProfile extends Component {
             console.log(err);
             return
         })
-        console.log(this.state.pictureUrl);
-        // api.patch('/rider/update_profile', JSON.stringify(updatedInfo))
+        // api.patch('/rider/update_profile', JSON.stringify(updatedInfo), {headers: {Authorization: this.state.token}})
         // .then(res=>{
         //     if(res.ok){
         //         signInUser({
