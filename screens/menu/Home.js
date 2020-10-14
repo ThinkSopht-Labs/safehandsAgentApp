@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Dimensions, View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native'
 import MenuButton from '../../components/buttons/MenuButton'
 import MapView, { Marker } from 'react-native-maps'
 import BottomSheet from 'react-native-simple-bottom-sheet'
@@ -17,9 +17,11 @@ export default class Home extends Component {
         super()
         this.state = {
             token:null,
-            info:null
+            info:null,
+            isLoading:false
         }
     }
+
     componentDidMount(){
         getUser()
         .then(res=>{
@@ -40,18 +42,38 @@ export default class Home extends Component {
     }
 
     getRequest = () => {
+        this.setState({
+            isLoading:true
+        })
         const api = create({
             baseURL: 'http://3.123.29.179:3000/api',
             headers: {
                 Authorization: this.state.token
             }
         })
-        api.post('/rider/get_order')
+        api.get('/rider/get_order')
         .then(res=>{
-            console.log(res);
+            if(res.ok){
+                if(res.data===null){
+                    Alert.alert("Sorry!", "No delivery requests available")
+                    this.setState({
+                        isLoading:false
+                    })
+                    return
+                }
+                Alert.alert("Success!", "Got request!")
+                this.setState({
+                    isLoading:false
+                })
+            }
+            this.setState({
+                isLoading:false
+            })
         })
         .catch(err=>{
-            console.log(err);
+            this.setState({
+                isLoading:true
+            })
         })
     }
 
@@ -88,7 +110,7 @@ export default class Home extends Component {
                         <Text style={stylesheet.action}>Are you ready to accept requests?</Text>
                         <View style={stylesheet.actionBtnWrapper}>
                             <CloseButton onPress={()=>this.bottomSheet.togglePanel()} style={{width:60, height:60, borderRadius:15}} />
-                            <FormButton onPress={this.getRequest} label="Get Requests" style={{flex:1, marginLeft:10, elevation:10}} />
+                            <FormButton isLoading={this.state.isLoading} handleSubmit={this.getRequest} label="Get Requests" style={{flex:1, marginLeft:10, elevation:10}} />
                         </View>
                     </View>
                 </BottomSheet>

@@ -84,7 +84,7 @@ export default class Signup extends Component {
       this.setState({
         err:res.data.message,
         isDisabled:false,
-        isDisabled:false
+        isLoading:false
       })
     })
     .catch(err=>{

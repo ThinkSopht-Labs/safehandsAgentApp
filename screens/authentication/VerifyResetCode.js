@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Alert, ActivityIndicator } from 'react-native'
 import { create } from 'apisauce'
 import SMSVerifyCode from 'react-native-sms-verifycode'
 import { signInUser } from '../../utils/storage'
@@ -12,17 +12,22 @@ export default class VerifyResetCode extends Component {
     constructor(){
         super()
         this.state = {
-            err:false
+            err:false,
+            errMessage:"",
+            isLoading:false
         }
     }
     sendCode = (text) => {
+        this.setState({
+            isLoading:true
+        })
         let request = ""
         let cred = {
             phone:this.props.route.params.phone,
             token:text
         }
         if(this.props.route.params.type==="signup"){
-            request = api.get('/auth/rider/activate/'+cred.phone+'/'+text)
+            request = api.get('/auth/rider/activate?phone='+cred.phone+'&token='+text)
         } else if(this.props.route.params.type==="forgotpass"){
             request = api.post('/auth/rider/verifyToken/', JSON.stringify(cred))
         }
@@ -41,30 +46,65 @@ export default class VerifyResetCode extends Component {
             }
             this.verifycode.reset()
             this.setState({
-                err:true
+                err:true,
+                errMessage:res.data.message,
+                isLoading:false
             })
         })
         .catch(err=>{
             this.verifycode.reset()
             this.setState({
-                err:true
+                err:true,
+                errMessage:res.data.message,
+                isLoading:false
             })
         })
     }
     resetErr = () => {
         this.setState({
-            err:false
+            err:false,
+            errMessage:""
+        })
+    }
+    resendCode = () => {
+        this.resetErr()
+        this.setState({
+            isLoading:true
+        })
+        api.get('/auth/rider/resend_token?phone='+this.props.route.params.phone)
+        .then(res=>{
+            if(res.ok){
+                Alert.alert("Success", "Code Sent")
+                this.setState({
+                    isLoading:false
+                })
+                return
+            }
+            this.setState({
+                errMessage:res.data.message,
+                isLoading:false
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                errMessage:err,
+                isLoading:false
+            })
         })
     }
     render() {
         return (
             <View style={stylesheet.container}>
+                {
+                    this.state.isLoading && <View style={stylesheet.loader}><ActivityIndicator size="large" color="#1152FD" /></View>
+                }
                 <View style={stylesheet.infoContainer}>
                     <View style={stylesheet.info}>
                         <Text style={stylesheet.text}>A code has been sent to</Text>
                         <Text style={stylesheet.text}>+233 {this.props.route.params.phone} via SMS</Text>
                     </View>
                 </View>
+                <Text style={stylesheet.err}>{this.state.errMessage}</Text>
                 <SMSVerifyCode
                     ref={ref => (this.verifycode = ref)}
                     onInputCompleted={this.sendCode}
@@ -83,7 +123,7 @@ export default class VerifyResetCode extends Component {
                         fontWeight:"bold"
                     }}
                 />
-                <Text style={[stylesheet.text, {paddingTop:20}]}>Resend code?</Text>
+                <Text onPress={this.resendCode} style={[stylesheet.text, {paddingTop:20}]}>Resend code?</Text>
             </View>
         )
     }
@@ -95,6 +135,10 @@ const stylesheet = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center"
+    },
+
+    loader: {
+        position:"absolute"
     },
 
     info: {
@@ -113,6 +157,13 @@ const stylesheet = StyleSheet.create({
         flexDirection:"column",
         alignItems:"center",
         marginBottom: 50
+    },
+
+    err: {
+        fontSize:12,
+        color:"red",
+        textAlign:"center",
+        paddingVertical:20
     }
 })
 
