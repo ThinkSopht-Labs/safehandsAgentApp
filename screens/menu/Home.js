@@ -159,14 +159,35 @@ export default class Home extends Component {
             })
         })
     }
+
     //Accepted Request
     onAccept = () => {
-        this.setState({
-            isLoading:false,
-            ifRequest:false
+        const api = create({
+            baseURL: 'http://3.123.29.179:3000/api',
+            headers: {
+                Authorization: this.state.token
+            }
         })
-        this.props.navigation.navigate('Start Trip', {request:this.state.request})
+        api.get('/rider/pick_order', {
+            order:this.state.request._id
+        })
+        .then(res=>{
+            if(res.ok){
+                this.setState({
+                    isLoading:false,
+                    ifRequest:false
+                })
+                this.props.navigation.navigate('Start Trip', {request:res.data.data})
+                return
+            }
+            Alert.alert('Sorry!', 'Order is nolonger available.')
+            return
+        })
+        .catch(e=>console.log(e))
     }
+
+    // if order picked please don't return with status ok
+
     //Declined Request
     onDecline = () => {
         Alert.alert(

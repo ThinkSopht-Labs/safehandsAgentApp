@@ -1,21 +1,50 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Dimensions } from 'react-native'
 import DeliveryCard from '../../components/trip/DeliveryCard'
 import FormButton from '../../components/buttons/FormButton'
+import MapView, { Marker } from 'react-native-maps'
+import BottomSheet from 'react-native-simple-bottom-sheet'
 
 export default class StartTrip extends Component {
-    
     render() {
-        console.log(this.props.route.params.request);
+        const { request } = this.props.route.params
+        String.prototype.capitalize = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
         return (
             <View style={stylesheet.container}>
-                <View style={stylesheet.bottomContainer}>
-                    <Text style={stylesheet.orderSummary}>Order Summary</Text>
-                    <Text style={stylesheet.item}>Hair Extention</Text>
-                    <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
-                    <DeliveryCard />
-                    <FormButton style={{width:"70%", marginBottom:30}} label="Start trip" />
-                </View>
+                <MapView
+                    initialRegion={{
+                        latitude: 5.6720746,
+                        longitude: -0.1782299,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421
+                    }}
+                    style={stylesheet.mapStyle}
+                >
+                    <Marker
+                        coordinate={{
+                            latitude: 5.6720746,
+                            longitude: -0.1782299
+                        }}
+                    />
+                </MapView>
+                <BottomSheet
+                    ref={ref => {
+                        this.bottomSheet = ref;
+                    }}
+                    sliderMaxHeight={Dimensions.get('window').height * 0.7}
+                    isOpen={true}
+                >
+                    <View style={stylesheet.bottomContainer}>
+                        <Text style={stylesheet.orderSummary}>Order Summary</Text>
+                        <Text style={stylesheet.item}>{request.itemName.capitalize()}</Text>
+                        <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
+                        <DeliveryCard pickupLoc={request.pickUpLocationName} dropOffLoc={request.dropOffLocationName} />
+                        <FormButton onPress={this.startTrip} style={{width:"95%", marginBottom:30}} label="Start trip" />
+                    </View>
+                </BottomSheet>
+                
             </View>
         )
     }
@@ -23,23 +52,14 @@ export default class StartTrip extends Component {
 
 const stylesheet = StyleSheet.create({
     container: {
-        flex:1,
-        backgroundColor:"#ffffff"
+        flex:1
     },
 
     bottomContainer: {
-        flex:0.5,
-        position:"absolute",
-        bottom:0,
-        backgroundColor:"#ffffff",
-        borderTopLeftRadius:30,
-        borderTopRightRadius:30,
-        elevation:10,
         alignSelf:"center",
         width:"100%",
         justifyContent:"flex-start",
         alignItems:"center",
-        paddingTop:10
     },
 
     orderSummary: {
@@ -69,5 +89,9 @@ const stylesheet = StyleSheet.create({
 
     bold: {
         fontWeight:"bold"
+    },
+
+    mapStyle: {
+        ...StyleSheet.absoluteFillObject
     }
 })

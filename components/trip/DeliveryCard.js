@@ -31,20 +31,18 @@ export default class DeliveryDetailsCard extends Component {
                 }
 
                 <View style={stylesheet.row}>
-                    <View style={stylesheet.verticalLine}></View>
                     <Text style={stylesheet.time}>
                         11:24
                     </Text>
                     <View style={stylesheet.dot}></View>
                     <View style={stylesheet.addtextCon}>
                         <Text style={stylesheet.address}>
-                            No 2 Dadekotopon S St. Some
-                        </Text>
-                        <Text style={stylesheet.address}>
-                            East Legon, Accra
+                           {this.props.pickupLoc}
                         </Text>
                     </View>
                 </View>
+
+                <View style={stylesheet.verticalLine}></View>
 
                 <View style={stylesheet.row}>
                     <Text style={stylesheet.time}>
@@ -53,10 +51,7 @@ export default class DeliveryDetailsCard extends Component {
                     <Icon style={stylesheet.icon} name="caretdown" size={9} color="#3E4958" />
                     <View style={stylesheet.addtextCon}>
                         <Text style={stylesheet.address}>
-                            No 2 Dadekotopon S St. Some
-                        </Text>
-                        <Text style={stylesheet.address}>
-                            East Legon, Accra
+                            {this.props.dropOffLoc}
                         </Text>
                     </View>
                 </View>
@@ -76,6 +71,7 @@ const stylesheet = StyleSheet.create({
         marginBottom:15,
         marginVertical:20,
         borderWidth:1,
+        width:"95%",
         borderColor:"rgba(151, 173, 182, 0.2)"
     },
 
@@ -107,7 +103,6 @@ const stylesheet = StyleSheet.create({
     row: {
         flexDirection:"row",
         justifyContent:"flex-start",
-        paddingVertical:20,
         alignItems:"flex-start"
     },
 
@@ -162,11 +157,14 @@ const stylesheet = StyleSheet.create({
     },
 
     verticalLine:{
-        position:"absolute",
-        top:42,
-        left:55,
-        height:57,
+        width:1,
+        height:50,
+        marginLeft:55,
         borderWidth:1,
         borderColor:"#3E4958"
+    },
+
+    addtextCon: {
+        width:"80%"
     }
 })
