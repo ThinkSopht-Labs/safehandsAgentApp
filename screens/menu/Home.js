@@ -239,7 +239,7 @@ export default class Home extends Component {
                         latitude: this.state.info.currentLat,
                         longitude: this.state.info.currentLong,
                         latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421
+                        longitudeDelta: 0.0922 * ASPECT_RATIO,
                     }}
                     style={stylesheet.mapStyle}
                 >

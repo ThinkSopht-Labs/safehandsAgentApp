@@ -13,8 +13,8 @@ export default class ContactPerson extends Component {
                 </View>
                 <View style={stylesheet.rightColumn}>
                     <Text style={stylesheet.title}>CONTACT PERSON:</Text>
-                    <Text style={stylesheet.name}>James Ofori</Text>
-                    <Text style={stylesheet.phone}>0245367787</Text>
+                    <Text style={stylesheet.name}>{this.props.name}</Text>
+                    <Text style={stylesheet.phone}>{this.props.phone}</Text>
                     <View style={stylesheet.btnRow}>
                         <PhoneButton style={{marginRight:20}} /> 
                         <ChatButton />
