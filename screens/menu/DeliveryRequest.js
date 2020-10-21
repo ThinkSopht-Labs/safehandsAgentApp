@@ -6,17 +6,21 @@ import CloseButton from '../../components/buttons/CloseButton'
 
 export default class DeliveryRequest extends Component {
     render() {
+        const { request } = this.props
+        String.prototype.capitalize = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
                     <Image source={crate} />
                     <Text style={stylesheet.title}>Delivery Request</Text>
                     <Text style={stylesheet.orderSummary}>Order Summary</Text>
-                    <Text style={stylesheet.item}>Hair Extention</Text>
+                    <Text style={stylesheet.item}>{request.itemName.capitalize()}</Text>
                     <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
                     <View style={stylesheet.btnRow}>
-                        <ProfileButton label="Accept" style={{backgroundColor:"#1152FD", width:"65%", elevation:10}} />
-                        <CloseButton style={{width:35, height:35, marginHorizontal:10}} />
+                        <ProfileButton onPress={this.props.onAccept} label="Accept" style={{backgroundColor:"#1152FD", width:"65%", elevation:10}} />
+                        <CloseButton onPress={this.props.onDecline} style={{width:35, height:35, marginHorizontal:10}} />
                     </View>
                 </View>
             </View>
@@ -27,11 +31,9 @@ export default class DeliveryRequest extends Component {
 const stylesheet = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor:"#ffffff",
         justifyContent:"center",
         alignItems:"center",
-        flexDirection:"row",
-        
+        flexDirection:"row"
     },
 
     requestContainer: {

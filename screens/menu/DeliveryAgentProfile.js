@@ -12,7 +12,7 @@ import { create } from 'apisauce'
 import { Picker } from '@react-native-community/picker'
 import MenuButton from '../../components/buttons/MenuButton'
 import { ActionSheet } from 'native-base'
-import ImagePicker from 'react-native-image-crop-picker'
+import DocumentPicker from 'react-native-document-picker'
 
 const { width, height } = Dimensions.get('window')
 
@@ -35,7 +35,8 @@ export default class DeliveryAgentProfile extends Component {
             updated:false,
             err:"",
             avatar:propic,
-            pictureUrl:""
+            pictureUrl:"",
+            image:""
         }
     }
 
@@ -61,30 +62,24 @@ export default class DeliveryAgentProfile extends Component {
         });
     }
 
-    pickSingle = (cropit, circular = false, mediaType) =>{
-        ImagePicker.openPicker({
-          width: 500,
-          height: 500,
-          cropping: cropit,
-          cropperCircleOverlay: circular,
-          sortOrder: 'none',
-          compressImageMaxWidth: 1000,
-          compressImageMaxHeight: 1000,
-          compressImageQuality: 1,
-          compressVideoPreset: 'MediumQuality',
-        })
-        .then((image) => {
+    pickSingle = async () =>{
+        try {
+            const res = await DocumentPicker.pick({
+              type: [DocumentPicker.types.images],
+            });
             this.setState({
                 avatar:{
-                    uri:image.path
-                }
+                    uri:res.uri
+                },
+                image:res
             })
-            console.log(image);
-        })
-        .catch((e) => {
-            console.log(e);
-            Alert.alert(e.message ? e.message : e);
-        })
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker, exit any dialogs or menus and move on
+            } else {
+                throw err;
+            }
+        }
     }
 
     editAvatar = () => {
@@ -117,7 +112,7 @@ export default class DeliveryAgentProfile extends Component {
                         })
                         break;
                     case 1:
-                        this.pickSingle(true, true, 'photo')
+                        this.pickSingle()
                         break;
                     default:
                         break;
@@ -189,60 +184,52 @@ export default class DeliveryAgentProfile extends Component {
             address:this.state.address!=="" ? this.state.address : this.state.info.address,
             gender:this.state.gender!=="" ? this.state.gender : this.state.info.gender,
             occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation,
-            pictureUrl:this.state.pictureUrl!=="" ? this.state.pictureUrl : this.state.info.pictureUrl
         }
         const api = create({
             baseURL: 'http://3.123.29.179:3000/api',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization:this.state.token
             }
         })
-        const form = new FormData()
-        form.append('document', this.state.avatar.uri)
-        api.post('/upload', form)
+        let form = new FormData()
+        form.append('dob', String(updatedInfo.dob))
+        form.append('firstName', updatedInfo.firstName)
+        form.append('lastName', updatedInfo.lastName)
+        form.append('email', updatedInfo.email)
+        form.append('address', updatedInfo.address)
+        form.append('gender', updatedInfo.gender)
+        form.append('occupation', updatedInfo.occupation)
+        if(this.state.image!==""){
+            form.append('document', this.state.image, updatedInfo._id)
+        }
+        api.patch('/rider/update_profile', form)
         .then(res=>{
             if(res.ok){
-                this.setState({
-                    pictureUrl:res.data
+                signInUser({
+                    user:res.data.data,
+                    token:this.state.token
                 })
+                .then(()=>{
+                    this.setState({
+                        updated:true
+                    })
+                })
+                .catch(err=>console.log(err))
             }
             this.setState({
-                err:"Picture upload err"
+                err:"Failed"
             })
-            console.log(res);
             return
         })
         .catch(err=>{
             this.setState({
-                err:"Picture upload err"
+                err:err,
+                disabled:false,
             })
-            console.log(err);
+            console.log(err)
             return
         })
-        // api.patch('/rider/update_profile', JSON.stringify(updatedInfo), {headers: {Authorization: this.state.token}})
-        // .then(res=>{
-        //     if(res.ok){
-        //         signInUser({
-        //             user:res.data.data,
-        //             token:this.state.token
-        //         })
-        //         .then(()=>{
-        //             this.setState({
-        //                 updated:true
-        //             })
-        //         })
-        //         .catch(err=>console.log(err))
-        //     }
-        //     this.setState({
-        //         err:res.data.message,
-        //         disabled:false,
-        //     })
-        // })
-        // .catch(err=>{
-        //     this.setState({
-        //         err:err.originalError.message
-        //     })
-        // })
     }
 
     render() {

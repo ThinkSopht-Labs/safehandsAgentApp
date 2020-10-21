@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Signin from '../screens/authentication/Signin';
 import Signup from '../screens/authentication/Signup';
 import SplashScreen from '../screens/welcome/SplashScreen';
+import StartTrip from '../screens/trip/StartTrip';
 import ForgotPassword from '../screens/authentication/ForgetPassword';
 import VerifyResetCode from '../screens/authentication/VerifyResetCode';
 import DrawerNavigation from '../navigation/DrawerNavigation';
@@ -92,6 +93,12 @@ export default class StackNavigation extends Component {
                     <Stack.Screen 
                         name="Home"
                         component={DrawerNavigation}
+                        options={{headerShown: false}}
+                    />
+
+                    <Stack.Screen 
+                        name="Start Trip"
+                        component={StartTrip}
                         options={{headerShown: false}}
                     />
                 </Stack.Navigator>

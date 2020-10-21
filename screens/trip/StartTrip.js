@@ -4,7 +4,9 @@ import DeliveryCard from '../../components/trip/DeliveryCard'
 import FormButton from '../../components/buttons/FormButton'
 
 export default class StartTrip extends Component {
+    
     render() {
+        console.log(this.props.route.params.request);
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.bottomContainer}>
