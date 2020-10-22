@@ -4,12 +4,13 @@ import { Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-nat
 export default class FormButton extends Component {
     render() {
         return (
-            <TouchableOpacity disabled={this.props.isLoading} onPress={this.props.handleSubmit} style={[styles.btn, this.props.style, this.props.disabled && styles.greyBg]}>
+            <TouchableOpacity disabled={this.props.disabled} onPress={this.props.handleSubmit} style={[styles.btn, this.props.style, this.props.disabled && styles.greyBg]}>
               {this.props.isLoading ? <ActivityIndicator size="small" color="#fff" /> : <Text style={styles.btnText}>{this.props.label}</Text>}
             </TouchableOpacity>
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     btn: {
