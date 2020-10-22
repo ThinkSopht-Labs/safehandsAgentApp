@@ -33,7 +33,8 @@ export default class Home extends Component {
         .then(res=>{
             if(res.token){
                 this.setState({
-                    token:res.token
+                    token:res.token,
+                    info:res.user
                 })
             }
         })
@@ -106,7 +107,8 @@ export default class Home extends Component {
             }
             Alert.alert('Error!', 'Sorry your current location could not be updated')
             this.setState({
-                isLoading:false
+                isLoading:false,
+                isReady:true
             })
             return
         })
@@ -192,7 +194,7 @@ export default class Home extends Component {
     onDecline = () => {
         Alert.alert(
             'Caution', 
-            'Declining a request will affect rider ratings',
+            "Declining an order request has a possible of affecting your overall rating over time. You are encouraged to do so only if it's absolutely necessary",
             [
                 {
                     text: "Cancel",

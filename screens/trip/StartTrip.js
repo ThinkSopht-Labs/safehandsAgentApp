@@ -62,7 +62,6 @@ export default class StartTrip extends Component {
         String.prototype.capitalize = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
         }
-        console.log(this.state.order);
         return (
             <View style={stylesheet.container}>
                 <MapView
