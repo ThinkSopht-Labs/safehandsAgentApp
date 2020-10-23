@@ -16,7 +16,7 @@ export default class ContactPerson extends Component {
                     <Text style={stylesheet.name}>{this.props.name}</Text>
                     <Text style={stylesheet.phone}>{this.props.phone}</Text>
                     <View style={stylesheet.btnRow}>
-                        <PhoneButton style={{marginRight:20}} /> 
+                        <PhoneButton number={this.props.phone} style={{marginRight:20}} /> 
                         <ChatButton />
                     </View>
                 </View>

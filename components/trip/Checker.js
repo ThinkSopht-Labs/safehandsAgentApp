@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Image } from 'react-native'
+import { TouchableOpacity, StyleSheet, Image } from 'react-native'
 import checker from '../../assets/images/checker-icon.png'
 
 export default class Checker extends Component {
     render() {
         return (
-            <View style={[stylesheet.checker, this.props.style]}>
+            <TouchableOpacity onPress={this.props.onPress} style={[stylesheet.checker, this.props.style]}>
                 {
-                    this.props.check && <Image style={stylesheet.check} source={checker} />
+                    this.props.checked && <Image style={stylesheet.check} source={checker} />
                 }
-            </View>
+            </TouchableOpacity>
         )
     }
 }

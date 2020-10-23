@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, Alert, Modal } from 'react-native'
 import DeliveryCard from '../../components/trip/DeliveryCard'
 import FormButton from '../../components/buttons/FormButton'
 import MapView, { Marker } from 'react-native-maps'
@@ -7,6 +7,8 @@ import BottomSheet from 'react-native-simple-bottom-sheet'
 import ContactPerson from '../../components/trip/ContactPerson'
 import { create } from 'apisauce'
 import { getUser } from '../../utils/storage'
+import EstimatedTimeArrival from '../../components/trip/EstimatedTimeArrival'
+import ConfirmDelivery from '../../screens/trip/ConfirmDelivery'
 
 const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height
@@ -16,6 +18,7 @@ export default class StartTrip extends Component {
         super()
         this.state = {
             isStarted:false,
+            isPickedUp:false,
             isLoading:false,
             order:""
         }
@@ -39,10 +42,12 @@ export default class StartTrip extends Component {
             })
             .then(res=>{
                 if(res.ok){
+                    console.log(res);
                     this.setState({
                         order:res.data.data,
                         isLoading:false,
-                        isStarted:true
+                        isStarted:true,
+                        isPickedUp:false
                     })
                     return
                 }
@@ -55,6 +60,19 @@ export default class StartTrip extends Component {
             .catch(e=>console.log(e))
         })
         .catch(e=>console.log(e))
+    }
+
+    //Pick up order
+    pickupOrder = () => {
+        this.setState({
+            isPickedUp:true
+        })
+    }
+
+    onCancel = () => {
+        this.setState({
+            isPickedUp:false
+        })
     }
 
     render() {
@@ -84,22 +102,31 @@ export default class StartTrip extends Component {
                     ref={ref => {
                         this.bottomSheet = ref;
                     }}
+                    isOpen={false}
                     sliderMaxHeight={Dimensions.get('window').height * 0.7}
-                    isOpen={true}
+                    sliderMinHeight={Dimensions.get('window').height * 0.5}
                 >
                     <View style={stylesheet.bottomContainer}>
+                        <EstimatedTimeArrival onPress={() => this.bottomSheet.togglePanel()} eta="23" />
                         <Text style={stylesheet.orderSummary}>Order Summary</Text>
                         <Text style={stylesheet.item}>{request.itemName.capitalize()}</Text>
                         <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
-                        <DeliveryCard pickupLoc={request.pickUpLocationName} dropOffLoc={request.dropOffLocationName} />
+                        <ContactPerson name={request.contactPersonOneName} phone={request.contactPersonOnePhone} />
                         {
-                            !this.state.isStarted ? 
-                            <FormButton isLoading={this.state.isLoading} handleSubmit={this.startTrip} style={{width:"95%", marginBottom:30}} label="Start trip" /> :
-                            <ContactPerson name={request.contactPersonOneName} phone={request.contactPersonOnePhone} />
+                            !this.state.isPickedUp && <FormButton isLoading={this.state.isLoading} handleSubmit={this.pickupOrder} style={{width:"95%", marginTop:30}} label="Start Pickup Trip" /> 
+                        }
+                        {
+                            this.state.isStarted && <DeliveryCard pickupLoc={request.pickUpLocationName} dropOffLoc={request.dropOffLocationName} />  
                         }
                     </View>
                 </BottomSheet>
-                
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.isPickedUp}
+                >
+                    <ConfirmDelivery isLoading={this.state.isLoading} pickup onCancel={this.onCancel} onStart={this.startTrip} />
+                </Modal>
             </View>
         )
     }
@@ -123,7 +150,8 @@ const stylesheet = StyleSheet.create({
         fontSize:20,
         lineHeight:28,
         letterSpacing:0.2,
-        paddingVertical:10
+        paddingVertical:10,
+        marginTop:40,
     },
 
     item: {
@@ -140,7 +168,7 @@ const stylesheet = StyleSheet.create({
         fontSize: 18,
         lineHeight:28,
         letterSpacing:0.2,
-        
+        marginBottom:20
     },
 
     bold: {

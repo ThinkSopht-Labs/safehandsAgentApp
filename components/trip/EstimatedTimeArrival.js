@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 export default class EstimatedTimeArrival extends Component {
     render() {
         return (
-            <View style={[stylesheet.container, this.props.style]}>
+            <TouchableOpacity onPress={this.props.onPress} style={[stylesheet.container, this.props.style]}>
                 <Text style={stylesheet.eta}>ETA</Text>
                 <Text style={stylesheet.min}>{this.props.eta}</Text>
                 <Text style={stylesheet.small}>min</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
 
 const stylesheet = StyleSheet.create({
     container: {
+        position:"absolute",
+        top:-120,
         width:150,
         height:150,
         borderRadius:75,
         elevation:20,
+        marginBottom:50,
         backgroundColor:"#ffffff",
         justifyContent:"center"
     },

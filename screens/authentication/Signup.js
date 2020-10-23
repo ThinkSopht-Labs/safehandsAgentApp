@@ -79,6 +79,10 @@ export default class Signup extends Component {
           phone:driver.phone,
           type:"signup"
         })
+        this.setState({
+          isDisabled:false,
+          isLoading:false
+        })
         return
       }
       this.setState({

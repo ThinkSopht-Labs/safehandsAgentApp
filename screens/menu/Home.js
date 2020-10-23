@@ -22,6 +22,7 @@ export default class Home extends Component {
             token:null,
             info:null,
             isLoading:true,
+            isDisabled:false,
             ifRequest:false,
             isReady:false,
             request:""
@@ -127,7 +128,8 @@ export default class Home extends Component {
     //Get Request
     getRequest = () => {
         this.setState({
-            isLoading:true
+            isLoading:true,
+            isDisabled:true
         })
         const api = create({
             baseURL: 'http://3.123.29.179:3000/api',
@@ -141,12 +143,14 @@ export default class Home extends Component {
                 if(res.data===null){
                     Alert.alert("Sorry!", "No delivery requests available")
                     this.setState({
-                        isLoading:false
+                        isLoading:false,
+                        isDisabled:false
                     })
                     return
                 }
                 this.setState({
                     isLoading:false,
+                    isDisabled:false,
                     request:res.data.data,
                     ifRequest:true
                 })
@@ -157,6 +161,7 @@ export default class Home extends Component {
         })
         .catch(err=>{
             this.setState({
+                isDisabled:false,
                 isLoading:true
             })
         })
@@ -175,6 +180,7 @@ export default class Home extends Component {
         })
         .then(res=>{
             if(res.ok){
+                console.log(res);
                 this.setState({
                     isLoading:false,
                     ifRequest:false
@@ -268,7 +274,7 @@ export default class Home extends Component {
                         <Text style={stylesheet.action}>Are you ready to accept requests?</Text>
                         <View style={stylesheet.actionBtnWrapper}>
                             <CloseButton onPress={()=>this.bottomSheet.togglePanel()} style={{width:60, height:60, borderRadius:15}} />
-                            <FormButton isLoading={this.state.isLoading} handleSubmit={this.getRequest} label="Get Requests" style={{flex:1, marginLeft:10, elevation:10}} />
+                            <FormButton isDisabled={this.state.isDisabled} isLoading={this.state.isLoading} handleSubmit={this.getRequest} label="Get Requests" style={{flex:1, marginLeft:10, elevation:10}} />
                         </View>
                     </View>
                 </BottomSheet>

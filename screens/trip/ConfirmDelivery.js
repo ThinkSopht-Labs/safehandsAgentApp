@@ -3,26 +3,60 @@ import { Text, View, StyleSheet, Image } from 'react-native'
 import crate from '../../assets/images/crate-icon.png'
 import Checker from '../../components/trip/Checker'
 import FormButton from '../../components/buttons/FormButton'
+import CloseButton from '../../components/buttons/CloseButton'
 
 export default class ConfirmDelivery extends Component {
+    constructor(){
+        super()
+        this.state = {
+            picked:false,
+            goodCondition:false,
+        }
+    }
+
+    checkPicked = () => {
+        this.setState(prevState=>({
+            picked:!prevState.picked
+        }))
+    }
+
+    checkGoodCondition = () => {
+        this.setState(prevState=>({
+            goodCondition:!prevState.goodCondition
+        }))
+    }
+
     render() {
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
                     <Image source={crate} />
-                    <Text style={stylesheet.title}>Your Package has been delivered</Text>
+                    {
+                        !this.props.pickup ? <Text style={stylesheet.title}>Your Package has been delivered</Text> :
+                        <Text style={stylesheet.title}>Have you picked up the package?</Text>
+                    }
                     <View style={stylesheet.listContainer}>
                         <View style={stylesheet.list}>
-                            <Checker style={{marginRight:15}} check={true} />
-                            <Text style={stylesheet.text}>Package delivered to the contact person</Text>
+                            <Checker style={{marginRight:15}} onPress={this.checkPicked} checked={this.state.picked} />
+                            {
+                                !this.props.pickup ? <Text style={stylesheet.text}>Package delivered to the contact person</Text> :
+                                <Text style={stylesheet.text}>Package has been picked up from pickup location?</Text>
+                            }
                         </View>
                         <View style={stylesheet.list}>
-                            <Checker style={{marginRight:15}} />
-                            <Text style={stylesheet.text}>Delivered in good condition?</Text>
+                            <Checker style={{marginRight:15}} onPress={this.checkGoodCondition}  checked={this.state.goodCondition} />
+                            {
+                                !this.props.pickup ? <Text style={stylesheet.text}>Delivered in good condition?</Text> :
+                                <Text style={stylesheet.text}>Package picked up in good condition?</Text>
+                            }
+                            
                         </View>
                     </View>
                 </View>
-                <FormButton label="End Trip" style={{backgroundColor:"#EB5757", width:"90%", position:"absolute", bottom:30}} />
+                <View style={stylesheet.actionBtns}>
+                    <CloseButton onPress={this.props.onCancel} style={{width:60, height:60, borderRadius:15}} />
+                    <FormButton isLoading={this.props.isLoading} handleSubmit={this.props.onStart} label="Start Delivery Trip" style={{flex:1, marginLeft:10, elevation:10}} />
+                </View>
             </View>
         )
     }
@@ -35,7 +69,7 @@ const stylesheet = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         flexDirection:"column",
-        
+        paddingBottom:50
     },
 
     requestContainer: {
@@ -73,5 +107,13 @@ const stylesheet = StyleSheet.create({
     text: {
         fontSize:15,
         color:"#000000"
+    },
+
+    actionBtns: {
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between",
+        marginTop:40,
+        marginHorizontal:20
     }
 })
