@@ -11,6 +11,7 @@ export default class ConfirmDelivery extends Component {
         this.state = {
             picked:false,
             goodCondition:false,
+            isDisabled:true
         }
     }
 
@@ -27,6 +28,13 @@ export default class ConfirmDelivery extends Component {
     }
 
     render() {
+        if(this.state.picked && this.state.goodCondition){
+            if(this.state.isDisabled){
+                this.setState({
+                    isDisabled:false
+                })
+            }
+        }
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
@@ -55,7 +63,10 @@ export default class ConfirmDelivery extends Component {
                 </View>
                 <View style={stylesheet.actionBtns}>
                     <CloseButton onPress={this.props.onCancel} style={{width:60, height:60, borderRadius:15}} />
-                    <FormButton isLoading={this.props.isLoading} handleSubmit={this.props.onStart} label="Start Delivery Trip" style={{flex:1, marginLeft:10, elevation:10}} />
+                    {
+                        this.props.pickup ? <FormButton disabled={this.state.isDisabled} isLoading={this.props.isLoading} handleSubmit={this.props.onStart} label="Start Delivery Trip" style={{flex:1, marginLeft:10, elevation:10}} />:
+                        <FormButton disabled={this.state.isDisabled} isLoading={this.props.isLoading} handleSubmit={this.props.onStart} label="End Trip" style={{flex:1, marginLeft:10, elevation:10, backgroundColor:"#EB5757"}} />
+                    }
                 </View>
             </View>
         )

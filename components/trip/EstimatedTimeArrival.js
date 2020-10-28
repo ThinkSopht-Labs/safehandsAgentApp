@@ -23,7 +23,8 @@ const stylesheet = StyleSheet.create({
         elevation:20,
         marginBottom:50,
         backgroundColor:"#ffffff",
-        justifyContent:"center"
+        justifyContent:"center",
+        zIndex:3
     },
 
     eta: {

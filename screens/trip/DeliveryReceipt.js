@@ -8,13 +8,14 @@ import CloseButton from '../../components/buttons/CloseButton'
 
 export default class DeliveryReceipt extends Component {
     render() {
+        const { order } = this.props
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
                     <View style={stylesheet.imgContainer}>
                         <Image source={avi} />
                     </View>
-                    <Text style={stylesheet.title}>James Salifu</Text>
+                    <Text style={stylesheet.title}>{order.contactPersonOneName}</Text>
                     <View style={stylesheet.rating}>
                         <Icon name="star" size={40} color="#F2C94C" />
                         <Icon name="star" size={40} color="#F2C94C" />
@@ -28,7 +29,7 @@ export default class DeliveryReceipt extends Component {
                     </View>
                 </View>
                 <View style={stylesheet.btnContainer}>
-                    <FormButton label="Confirm Payment" style={{width:"76%", marginRight:20}}/>
+                    <FormButton handleSubmit={()=>this.props.navigation.navigate("Home")} label="Rate Customer" style={{width:"76%", marginRight:20}}/>
                     <CloseButton style={{width:60, height:60, borderRadius:15}} />
                 </View>
             </View>

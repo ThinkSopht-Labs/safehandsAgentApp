@@ -193,14 +193,12 @@ export default class Home extends Component {
         })
         .catch(e=>console.log(e))
     }
-
-    // if order picked please don't return with status ok
-
+    
     //Declined Request
     onDecline = () => {
         Alert.alert(
             'Caution', 
-            "Declining an order request has a possible of affecting your overall rating over time. You are encouraged to do so only if it's absolutely necessary",
+            "Declining an order request has a possibility of affecting your overall rating over time. You are encouraged to do so only if it's absolutely necessary",
             [
                 {
                     text: "Cancel",

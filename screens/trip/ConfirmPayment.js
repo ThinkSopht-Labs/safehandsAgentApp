@@ -6,15 +6,16 @@ import CreditCard from '../../components/trip/CreditCard'
 
 export default class ConfirmPayment extends Component {
     render() {
+        const { order } = this.props
         return (
             <View style={stylesheet.container}>
                 <View style={stylesheet.requestContainer}>
                     <View style={stylesheet.aviPlaceholder}></View>
                     <Text style={stylesheet.title}>Payment Confirmed</Text>
-                    <DeliveryCard />
+                    <DeliveryCard pickupLoc={order.pickUpLocationName} dropOffLoc={order.dropOffLocationName} />
                     <CreditCard style={{width:'93%'}} />
                 </View>
-                <FormButton label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:30}} />
+                <FormButton handleSubmit={this.props.onConfirm} label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:80}} />
             </View>
         )
     }
@@ -24,10 +25,9 @@ const stylesheet = StyleSheet.create({
     container: {
         flex:1,
         backgroundColor:"#ffffff",
-        justifyContent:"center",
         alignItems:"center",
         flexDirection:"column",
-        marginTop:-30
+        paddingTop:"15%"
     },
 
     requestContainer: {
