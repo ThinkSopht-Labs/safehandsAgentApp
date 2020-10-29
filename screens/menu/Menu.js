@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { Image, View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import propic from '../../assets/images/user-icon.png'
 import Icon from 'react-native-vector-icons/Entypo'
-import { signoutUser } from '../../utils/storage'
+import { AuthContext } from '../../utils/context'
+
 
 export default class Menu extends Component {
+
+    static contextType = AuthContext
+
     signout = () => {
-        signoutUser()
-        .then(()=>{
-            this.props.navigation.navigate("Sign In")
-        })
+        const { signOut } = this.context
+        signOut()
     }
     render() {
         return (

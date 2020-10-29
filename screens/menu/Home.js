@@ -37,18 +37,20 @@ export default class Home extends Component {
                     token:res.token,
                     info:res.user
                 })
+                Geolocation.getCurrentPosition(
+                    info => this.updateLocation(info), 
+                    err => this.failedPermissionRequest(err),
+                    {enableHighAccuracy: true}
+                )
             }
         })
         .catch(err=>{
             console.log(err);
         })
-        Geolocation.getCurrentPosition(
-            info => this.updateLocation(info), 
-            err => this.failedPermissionRequest(err)
-        )
     }
     //Handle location permission err
     failedPermissionRequest = (err) => {
+        console.log(err);
         Alert.alert(
             "Unable to get your location", 
             err.message,
@@ -242,8 +244,8 @@ export default class Home extends Component {
             <View style={stylesheet.container}>
                 <MapView
                     initialRegion={{
-                        latitude: this.state.info.currentLat,
-                        longitude: this.state.info.currentLong,
+                        latitude: 5.6720746,
+                        longitude: -0.1782299,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0922 * ASPECT_RATIO,
                     }}
@@ -251,8 +253,8 @@ export default class Home extends Component {
                 >
                     <Marker
                         coordinate={{
-                            latitude: this.state.info.currentLat,
-                            longitude: this.state.info.currentLong
+                            latitude: 5.6720746,
+                            longitude: -0.1782299
                         }}
                     />
                 </MapView>
@@ -265,7 +267,7 @@ export default class Home extends Component {
                     sliderMinHeight={130}
                 >
                     <View style={stylesheet.greetingsWrapper}>
-                        <Text style={stylesheet.greeting}>Hello Gerald</Text>
+                        <Text style={stylesheet.greeting}>Hello {this.state.info.firstName}</Text>
                         <Text style={stylesheet.welcome}>Welcome back!</Text>
                     </View>
                     <View style={stylesheet.actionWrapper}>

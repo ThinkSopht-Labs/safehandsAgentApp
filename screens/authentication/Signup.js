@@ -4,7 +4,6 @@ import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
-import { getUser } from '../../utils/storage'
 
 const api = create({
   baseURL: 'http://3.123.29.179:3000/api'
@@ -28,18 +27,6 @@ export default class Signup extends Component {
       isLoading:false,
       passTip:false
     }
-  }
-
-  componentDidMount(){
-    getUser()
-    .then(res=>{
-        if(res.token){
-           this.props.navigation.navigate("Home")
-        }
-    })
-    .catch(err=>{
-        console.log(err);
-    })
   }
 
   onDateChange = (date) => {

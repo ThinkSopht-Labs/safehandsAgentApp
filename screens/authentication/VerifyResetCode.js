@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, Alert, ActivityIndicator } from 'react-native'
 import { create } from 'apisauce'
 import SMSVerifyCode from 'react-native-sms-verifycode'
-import { signInUser } from '../../utils/storage'
+import { AuthContext } from '../../utils/context'
 
 const api = create({
     baseURL: 'http://3.123.29.179:3000/api',
@@ -17,6 +17,9 @@ export default class VerifyResetCode extends Component {
             isLoading:false
         }
     }
+
+    static contextType = AuthContext
+
     sendCode = (text) => {
         this.setState({
             isLoading:true
@@ -34,14 +37,12 @@ export default class VerifyResetCode extends Component {
         request
         .then(res=>{
             if(res.ok){
-                signInUser(res.data.data)
-                .then(()=>{
-                    if(this.props.route.params.type==="signup"){
-                        this.props.navigation.navigate("Home")
-                    } else if(this.props.route.params.type==="forgotpass"){
-                        this.props.navigation.navigate("Change Password", {phone:cred.phone})
-                    }
-                })
+                if(this.props.route.params.type==="signup"){
+                    const { signIn } = this.context
+                    signIn(res.data.data)
+                } else if(this.props.route.params.type==="forgotpass"){
+                    this.props.navigation.navigate("Change Password", {phone:cred.phone})
+                }
                 return
             }
             this.verifycode.reset()

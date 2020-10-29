@@ -4,7 +4,7 @@ import InputField from '../../components/authentication/InputField'
 import PasswordFeild from '../../components/authentication/PasswordField'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
-import { signInUser, getUser } from '../../utils/storage'
+import { AuthContext } from '../../utils/context'
 
 const api = create({
   baseURL: 'http://3.123.29.179:3000/api',
@@ -21,23 +21,16 @@ export default class Signin extends Component {
       isLoading:false
     }
   }
-  componentDidMount(){
-    getUser()
-    .then(res=>{
-        if(res.token){
-           this.props.navigation.navigate("Home")
-        }
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-  }
+
+  static contextType = AuthContext
+
   handleInput = (text, name) => {
     this.setState({
       err:"",
       [name]:text
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
@@ -87,15 +80,16 @@ export default class Signin extends Component {
     api.post('/auth/rider/login', JSON.stringify(cred))
     .then(res=>{
       if(res.ok){
-        signInUser(res.data.data)
+        const { signIn } = this.context
+        signIn(res.data.data)
         .then(()=>{
           this.setState({
             err:"",
             isDisabled:true,
             isLoading:false
           })
-          this.props.navigation.navigate("Home")
         })
+        .catch(e=>console.log(e))
         return
       }
       this.setState({
