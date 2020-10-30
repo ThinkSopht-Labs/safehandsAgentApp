@@ -17,7 +17,12 @@ export default class DeliveryRequest extends Component {
                     <Text style={stylesheet.title}>Delivery Request</Text>
                     <Text style={stylesheet.orderSummary}>Order Summary</Text>
                     <Text style={stylesheet.item}>{request.itemName.capitalize()}</Text>
-                    <Text style={stylesheet.desc}><Text style={stylesheet.bold}>Size:</Text> Small <Text style={stylesheet.bold}>| Weight:</Text> Light</Text>
+                    <View style={stylesheet.descContainer}>
+                        <Text style={[stylesheet.desc, stylesheet.bold]}>Size</Text>
+                        <Text style={stylesheet.desc}>{request.packageSize}</Text>
+                        <Text style={[stylesheet.desc, stylesheet.bold]}>Weight</Text>
+                        <Text style={stylesheet.desc}>{request.packageWeight}</Text>
+                    </View>
                     <View style={stylesheet.btnRow}>
                         <ProfileButton onPress={this.props.onAccept} label="Accept" style={{backgroundColor:"#1152FD", width:"65%", elevation:10}} />
                         <CloseButton onPress={this.props.onDecline} style={{width:35, height:35, marginHorizontal:10}} />
@@ -41,7 +46,7 @@ const stylesheet = StyleSheet.create({
         alignItems:"center",
         backgroundColor:"#ffffff",
         elevation:7,
-        paddingVertical:50,
+        paddingVertical:30,
         paddingHorizontal:20
     },
 
@@ -56,7 +61,6 @@ const stylesheet = StyleSheet.create({
     orderSummary: {
         color:"#000000",
         fontSize:20,
-        lineHeight:28,
         letterSpacing:0.2,
         paddingVertical:10
     },
@@ -65,9 +69,8 @@ const stylesheet = StyleSheet.create({
         fontSize:30,
         fontWeight:"bold",
         letterSpacing:0.2,
-        lineHeight:28,
         color:"#000000",
-        marginTop:20
+        marginTop:10
     },
 
     desc: {
@@ -75,7 +78,7 @@ const stylesheet = StyleSheet.create({
         fontSize: 18,
         lineHeight:28,
         letterSpacing:0.2,
-        
+        textAlign:"center"
     },
 
     bold: {
@@ -84,9 +87,16 @@ const stylesheet = StyleSheet.create({
 
     btnRow: {
         width:"100%",
-        marginVertical:50,
+        marginTop:50,
+        marginBottom:20,
         flexDirection:"row",
         justifyContent:"center",
         alignItems:"center"
+    },
+    
+    descContainer: {
+        flexDirection:"column",
+        alignItems:"center",
+        paddingHorizontal:20
     }
 })

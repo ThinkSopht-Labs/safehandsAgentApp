@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/AntDesign'
 const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height
 
-
 export default class Home extends Component {
     constructor(){
         super()
@@ -40,7 +39,11 @@ export default class Home extends Component {
                 Geolocation.getCurrentPosition(
                     info => this.updateLocation(info), 
                     err => this.failedPermissionRequest(err),
-                    {enableHighAccuracy: true}
+                    {
+                        enableHighAccuracy: true,
+                        maximumAge:0,
+                        timeout:6000
+                    }
                 )
             }
         })
@@ -80,8 +83,8 @@ export default class Home extends Component {
             }
         })
         let form = new FormData()
-        form.append('currentLat', String(5.6720746))
-        form.append('currentLong', String(-0.1782299))
+        form.append('currentLat', String(info.coords.latitude))
+        form.append('currentLong', String(info.coords.longitude))
         api.patch('/rider/update_profile', form)
         .then(res=>{
             if(res.ok){
@@ -187,7 +190,14 @@ export default class Home extends Component {
                     isLoading:false,
                     ifRequest:false
                 })
-                this.props.navigation.navigate('Start Trip', {request:res.data.data})
+                this.props.navigation.navigate(
+                    'Start Trip', 
+                    {
+                        request:res.data.data,
+                        info:this.state.info,
+                        token:this.state.token
+                    }
+                )
                 return
             }
             Alert.alert('Sorry!', 'Order is nolonger available.')
@@ -243,21 +253,15 @@ export default class Home extends Component {
         return (
             <View style={stylesheet.container}>
                 <MapView
+                    showsUserLocation
                     initialRegion={{
-                        latitude: 5.6720746,
-                        longitude: -0.1782299,
+                        latitude: this.state.info.currentLat,
+                        longitude: this.state.info.currentLong,
                         latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0922 * ASPECT_RATIO,
+                        longitudeDelta: 0.0922 * ASPECT_RATIO
                     }}
                     style={stylesheet.mapStyle}
-                >
-                    <Marker
-                        coordinate={{
-                            latitude: 5.6720746,
-                            longitude: -0.1782299
-                        }}
-                    />
-                </MapView>
+                />
                 <MenuButton onPress={this.toggleDrawer} />
                 <BottomSheet
                     ref={ref => {
@@ -309,7 +313,8 @@ const stylesheet = StyleSheet.create({
     },
 
     mapStyle: {
-        ...StyleSheet.absoluteFillObject
+        width:width,
+        height:height
     },
 
     greetingsWrapper: {

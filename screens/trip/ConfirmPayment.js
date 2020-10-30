@@ -5,6 +5,21 @@ import DeliveryCard from '../../components/trip/DeliveryCard'
 import CreditCard from '../../components/trip/CreditCard'
 
 export default class ConfirmPayment extends Component {
+    constructor(){
+        super()
+        this.state = {
+            isLoading:false,
+            isDisabled:false
+        }
+    }
+
+    onConfirm = ()=>{
+        this.setState({
+            isLoading:true,
+            isDisabled:true
+        })
+        this.props.onConfirm()
+    }
     render() {
         const { order } = this.props
         return (
@@ -12,10 +27,10 @@ export default class ConfirmPayment extends Component {
                 <View style={stylesheet.requestContainer}>
                     <View style={stylesheet.aviPlaceholder}></View>
                     <Text style={stylesheet.title}>Payment Confirmed</Text>
-                    <DeliveryCard pickupLoc={order.pickUpLocationName} dropOffLoc={order.dropOffLocationName} />
+                    <DeliveryCard eta={order.duration} pickupLoc={order.pickUpLocationName} dropOffLoc={order.dropOffLocationName} />
                     <CreditCard style={{width:'93%'}} />
                 </View>
-                <FormButton handleSubmit={this.props.onConfirm} label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:80}} />
+                <FormButton isLoading={this.state.isLoading} disabled={this.state.disabled} handleSubmit={this.onConfirm} label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:50}} />
             </View>
         )
     }

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
+import moment from 'moment'
+
+const currentDate = new Date
 
 export default class DeliveryDetailsCard extends Component {
     render() {
@@ -32,7 +35,7 @@ export default class DeliveryDetailsCard extends Component {
 
                 <View style={stylesheet.row}>
                     <Text style={stylesheet.time}>
-                        11:24
+                        {moment(currentDate).format('LT')}
                     </Text>
                     <View style={stylesheet.dot}></View>
                     <View style={stylesheet.addtextCon}>
@@ -46,7 +49,7 @@ export default class DeliveryDetailsCard extends Component {
 
                 <View style={stylesheet.row}>
                     <Text style={stylesheet.time}>
-                        11:54
+                        {moment(currentDate).add(Math.round(this.props.eta), 'm').format('LT')}
                     </Text>
                     <Icon style={stylesheet.icon} name="caretdown" size={9} color="#3E4958" />
                     <View style={stylesheet.addtextCon}>
@@ -159,7 +162,7 @@ const stylesheet = StyleSheet.create({
     verticalLine:{
         width:1,
         height:50,
-        marginLeft:55,
+        marginLeft:79,
         borderWidth:1,
         borderColor:"#3E4958"
     },
