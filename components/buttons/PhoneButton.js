@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Image, Linking } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, Linking, Platform } from 'react-native';
 import callIcon from '../../assets/images/call-icon.png';
 
 export default class PhoneButton extends Component {
+    call = () => {
+        let phoneNumber = ''
+        if (Platform.OS === 'android') {
+            phoneNumber = 'tel:'+this.props.number
+        } else {
+            phoneNumber = 'telprompt:'+this.props.number
+        }
+        Linking.openURL(phoneNumber)
+    }
     render() {
         return (
-            <TouchableOpacity onPress={()=>Linking.openURL(this.props.number)} style={[stylesheet.callBtn, this.props.style]}>
+            <TouchableOpacity onPress={this.call} style={[stylesheet.callBtn, this.props.style]}>
                 <Image style={stylesheet.icon} source={callIcon} alt="call-icon" />
             </TouchableOpacity>
         )
