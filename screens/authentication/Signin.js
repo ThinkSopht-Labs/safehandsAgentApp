@@ -7,7 +7,7 @@ import { create } from 'apisauce'
 import { AuthContext } from '../../utils/context'
 
 const api = create({
-  baseURL: 'http://3.123.29.179:3000/api',
+  baseURL: 'http://api.thinksophtlabs.com:3000',
 })
 
 export default class Signin extends Component {

@@ -77,7 +77,7 @@ export default class Home extends Component {
     //Update rider location
     updateLocation = (info) => {
         const api = create({
-            baseURL: 'http://3.123.29.179:3000/api',
+            baseURL: 'http://api.thinksophtlabs.com:3000',
             headers: {
                 Authorization: this.state.token
             }
@@ -137,7 +137,7 @@ export default class Home extends Component {
             isDisabled:true
         })
         const api = create({
-            baseURL: 'http://3.123.29.179:3000/api',
+            baseURL: 'http://api.thinksophtlabs.com:3000',
             headers: {
                 Authorization: this.state.token
             }
@@ -175,7 +175,7 @@ export default class Home extends Component {
     //Accepted Request
     onAccept = () => {
         const api = create({
-            baseURL: 'http://3.123.29.179:3000/api',
+            baseURL: 'http://api.thinksophtlabs.com:3000',
             headers: {
                 Authorization: this.state.token
             }
@@ -184,8 +184,8 @@ export default class Home extends Component {
             order:this.state.request._id
         })
         .then(res=>{
+            console.log(res);
             if(res.ok){
-                console.log(res);
                 this.setState({
                     isLoading:false,
                     ifRequest:false

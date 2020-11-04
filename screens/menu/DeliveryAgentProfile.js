@@ -186,7 +186,7 @@ export default class DeliveryAgentProfile extends Component {
             occupation:this.state.occupation!=="" ? this.state.occupation : this.state.info.occupation,
         }
         const api = create({
-            baseURL: 'http://3.123.29.179:3000/api',
+            baseURL: 'http://api.thinksophtlabs.com:3000',
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization:this.state.token
