@@ -6,7 +6,7 @@ import { create } from 'apisauce'
 import { signInUser } from '../../utils/storage'
 
 const api = create({
-    baseURL: 'http://api.thinksophtlabs.com:3000',
+    baseURL: 'http://3.123.29.179:3000/api',
 })
 
 export default class ChangePassword extends Component {

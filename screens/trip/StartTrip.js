@@ -38,7 +38,7 @@ export default class StartTrip extends Component {
             isLoading:true
         })
         const api = create({
-            baseURL: 'http://api.thinksophtlabs.com:3000',
+            baseURL: 'http://3.123.29.179:3000/api',
             headers: {
                 Authorization: this.props.route.params.token
             }
@@ -105,14 +105,17 @@ export default class StartTrip extends Component {
         })
         getUser()
         .then(res=>{
+            console.log(res)
             const api = create({
-                baseURL: 'http://api.thinksophtlabs.com:3000',
+                baseURL: 'http://3.123.29.179:3000/api',
                 headers: {
                     Authorization: res.token
                 }
             })
-            api.get('/rider/end_trip', {
-                order:this.props.route.params.request._id
+            api.post('/rider/end_trip', {
+                order:this.props.route.params.request._id,
+                currentLat:this.state.location.lat,
+                currentLong:this.state.location.long
             })
             .then(res=>{
                 console.log('ended', res)

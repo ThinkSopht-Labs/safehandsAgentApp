@@ -7,7 +7,7 @@ import { create } from 'apisauce'
 import { AuthContext } from '../../utils/context'
 
 const api = create({
-  baseURL: 'http://api.thinksophtlabs.com:3000',
+  baseURL: 'http://3.123.29.179:3000/api',
 })
 
 export default class Signin extends Component {
@@ -29,6 +29,16 @@ export default class Signin extends Component {
       err:"",
       [name]:text
     })
+  }
+
+  componentDidUpdate(){
+    if(this.state.phone!=="" && this.state.pass!==""){
+      if(this.state.isDisabled){
+        this.setState({
+          isDisabled:false
+        })
+      }
+    }
   }
 
   handleSubmit = (e) => {
@@ -79,6 +89,7 @@ export default class Signin extends Component {
     }
     api.post('/auth/rider/login', JSON.stringify(cred))
     .then(res=>{
+      console.log(res)
       if(res.ok){
         const { signIn } = this.context
         signIn(res.data.data)
@@ -107,13 +118,6 @@ export default class Signin extends Component {
     })
   }
   render() {
-    if(this.state.phone!=="" && this.state.pass!==""){
-      if(this.state.isDisabled){
-        this.setState({
-          isDisabled:false
-        })
-      }
-    }
     return (
       <ScrollView contentContainerStyle={{minHeight: '100%', minWidth: '100%'}}>
           <View style={styles.container}>
