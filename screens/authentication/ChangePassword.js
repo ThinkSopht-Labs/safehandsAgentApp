@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PasswordField from '../../components/authentication/PasswordField'
-import {View, Text, StyleSheet } from 'react-native'
+import {View, Text, StyleSheet, Alert } from 'react-native'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
 import { signInUser } from '../../utils/storage'
@@ -22,17 +22,29 @@ export default class ChangePassword extends Component {
         }
     }
 
+    componentDidUpdate(){
+        if(this.state.pass!=="" && this.state.conPass!==""){
+            if(this.state.isDisabled){
+              this.setState({
+                isDisabled:false
+              })
+            }
+        }
+    }
+
     handleInput = (text, name) => {
         this.setState({
           err:"",
           [name]:text
         })
     }
+
     toggleFocus = () => {
         this.setState({
           passTip:this.state.passTip ? false : true
         })
     }
+
     handleSubmit = () => {
         this.setState({
             err:"",
@@ -67,6 +79,7 @@ export default class ChangePassword extends Component {
                     isDisabled:true,
                     isLoading:false
                 })
+                Alert.alert("Success!", "Password was successfully changed")
                 this.props.navigation.navigate("Sign In")
                 return
             }
@@ -84,16 +97,9 @@ export default class ChangePassword extends Component {
             })
         })
     }
+
     render() {
-        if(this.state.pass!=="" && this.state.conPass!==""){
-            if(this.state.isDisabled){
-              this.setState({
-                isDisabled:false
-              })
-            }
-        }
         return (
-            //  {this.props.route.params.phone}
             <View style={styles.container}>
                 <Text style={styles.caption}>Create a new password for the account</Text>
                 <Text style={styles.caption}>{this.props.route.params.phone}</Text>
