@@ -36,7 +36,8 @@ export default class DeliveryAgentProfile extends Component {
             err:"",
             avatar:propic,
             pictureUrl:"",
-            image:""
+            image:"",
+            isLoading:true
         }
     }
 
@@ -149,12 +150,15 @@ export default class DeliveryAgentProfile extends Component {
     onSave = () => {
         this.setState({
             disabled:true,
-            modalVisible:true
+            modalVisible:true,
+            isLoading:true,
+            updated:false
         })
         if(this.state.email!==""){
             if(!this.state.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
                 this.setState({
-                    err:"Enter a valid email address"
+                    err:"Enter a valid email address",
+                    isLoading:false
                 })
                 return
             }
@@ -162,15 +166,17 @@ export default class DeliveryAgentProfile extends Component {
         if(this.state.name!==""){
             if(!this.state.name.match(/^[a-zA-Z]+ [a-zA-Z]+$/)){
                 this.setState({
-                    err:"Enter full name Eg. John Doe"
+                    err:"Enter full name Eg. John Doe",
+                    isLoading:false
                 })
                 return
             }
         }
         if(this.state.occupation!==""){
-            if(!this.state.occupation.match(/^[a-zA-Z]+$/)){
+            if(!this.state.occupation.match(/^[a-zA-Z][a-zA-Z\s]*$/)){
                 this.setState({
-                    err:"Enter occupation Eg. Student"
+                    err:"Enter occupation Eg. Student",
+                    isLoading:false
                 })
                 return
             }
@@ -212,20 +218,29 @@ export default class DeliveryAgentProfile extends Component {
                 })
                 .then(()=>{
                     this.setState({
-                        updated:true
+                        err:"",
+                        updated:true,
+                        isLoading:false,
+                        disabled:false
                     })
                 })
                 .catch(err=>console.log(err))
+                return
             }
             this.setState({
-                err:"Failed"
+                updated:false,
+                err:"Failed",
+                isLoading:false,
+                disabled:false
             })
             return
         })
         .catch(err=>{
             this.setState({
+                updated:false,
                 err:err,
-                disabled:false,
+                isLoading:false,
+                disabled:false
             })
             console.log(err)
             return
@@ -233,7 +248,7 @@ export default class DeliveryAgentProfile extends Component {
     }
 
     render() {
-        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated, occupation, avatar } = this.state
+        const { info, name, email, selectedDate, address, disabled, modalVisible, err, gender, updated, occupation, avatar, isLoading } = this.state
         let aviChangeCheck = false
         if(avatar!==propic){
             if(avatar.uri!==info.pictureUrl){
@@ -338,15 +353,17 @@ export default class DeliveryAgentProfile extends Component {
                     transparent={true}
                 >
                     <View style={stylesheet.modalView}>
-                        {err==="" && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
-                        {err!=="" && !updated && <>
+                        {isLoading && <><ActivityIndicator size='large' color="#1152FD" /><Text>Saving...</Text></>}
+                        {!updated && err!=="" &&
+                        <>
                             <Icon2 name="cancel" size={50} color="red" />
                             <Text style={stylesheet.feed}>{err}</Text>
                             <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
                                 <Text style={stylesheet.btnText}>Close</Text>
                             </TouchableOpacity>
                         </>}
-                        {updated && <>
+                        {updated &&
+                        <>
                             <Icon name="checkcircle" size={50} color="#1152FD" />
                             <Text style={stylesheet.feed}>Profile updated successfully!</Text>
                             <TouchableOpacity onPress={this.toggleModal} style={stylesheet.closeBtn}>
