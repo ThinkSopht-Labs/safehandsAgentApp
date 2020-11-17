@@ -17,6 +17,7 @@ const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height
 const GOOGLE_MAPS_APIKEY = ""
 
+
 export default class StartTrip extends Component {
     constructor(){
         super()
