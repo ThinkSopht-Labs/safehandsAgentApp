@@ -15,7 +15,7 @@ import MapViewDirections from 'react-native-maps-directions'
 
 const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height
-const GOOGLE_MAPS_APIKEY = "AIzaSyBOOTpqdukl_AGjrSA7dt8FHAKAFwlyr7o"
+const GOOGLE_MAPS_APIKEY = ""
 
 export default class StartTrip extends Component {
     constructor(){
