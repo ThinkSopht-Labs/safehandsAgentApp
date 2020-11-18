@@ -102,6 +102,7 @@ export default function StackNavigation({ navigation }) {
         )
     }
     return (            
+        <Root>
         <NavigationContainer>
             <AuthContext.Provider value={authContext}>
                 <Stack.Navigator 
@@ -189,6 +190,7 @@ export default function StackNavigation({ navigation }) {
                     }
                 </Stack.Navigator>
             </AuthContext.Provider>
-        </NavigationContainer>
+        </NavigationContainer> 
+        </Root>
     )
 }
