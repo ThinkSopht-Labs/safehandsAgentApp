@@ -32,8 +32,8 @@ export default class StartTrip extends Component {
             eta:""
         }
     }
+    
     // Start trip
-    // if already picked dont return ok
     startTrip = () => {
         this.setState({
             isLoading:true
@@ -138,6 +138,26 @@ export default class StartTrip extends Component {
         })
     }
 
+    //Update rider location
+    updateLocation = (info) => {
+        const api = create({
+            baseURL: 'http://3.123.29.179:3000/api',
+            headers: {
+                Authorization: this.props.route.params.token
+            }
+        })
+        let form = new FormData()
+        form.append('currentLat', String(info.nativeEvent.coordinate.latitude))
+        form.append('currentLong', String(info.nativeEvent.coordinate.longitude))
+        api.patch('/rider/update_profile', form)
+        .then(res=>{
+            console.log(res)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
     render() {
         const { request, info } = this.props.route.params
         String.prototype.capitalize = function() {
@@ -150,13 +170,14 @@ export default class StartTrip extends Component {
                     followsUserLocation
                     showsMyLocationButton
                     onUserLocationChange={
-                        res=>this.setState({
+                        res=>{this.setState({
                             location:{
                                 lat:res.nativeEvent.coordinate.latitude,
                                 long:res.nativeEvent.coordinate.longitude
                             }
                         })
-                    }
+                        this.updateLocation(res)
+                    }}
                     // minZoomLevel={20}
                     initialRegion={{
                         latitude:info.currentLat, 

@@ -28,3 +28,31 @@ export const signoutUser = async () => {
       // remove error
     }
 }
+
+export const setTripStatus = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('trip', jsonValue)
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
+}
+
+export const getTripStatus = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('trip')
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch(e) {
+    // error reading value
+    console.log(e);
+  }
+}
+
+export const endTrip = async () => {
+  try {
+    await AsyncStorage.removeItem('trip')
+  } catch(e) {
+    // remove error
+  }
+}

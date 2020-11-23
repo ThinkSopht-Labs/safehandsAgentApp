@@ -28,7 +28,7 @@ export default class ConfirmPayment extends Component {
                     <View style={stylesheet.aviPlaceholder}></View>
                     <Text style={stylesheet.title}>Payment Confirmed</Text>
                     <DeliveryCard eta={order.duration} pickupLoc={order.pickUpLocationName} dropOffLoc={order.dropOffLocationName} />
-                    <CreditCard style={{width:'93%'}} />
+                    <CreditCard fee={order.orderFee} style={{width:'93%'}} />
                 </View>
                 <FormButton isLoading={this.state.isLoading} disabled={this.state.disabled} handleSubmit={this.onConfirm} label="Confirm Payment" style={{width:"90%", position:"absolute", bottom:50}} />
             </View>

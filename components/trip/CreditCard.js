@@ -16,11 +16,9 @@ export default function CreditCard(props) {
 
                 <View style={{flexDirection:'row', alignItems:'center'}}>
 
-                    <Text style={styles.subScript}>GHS </Text>
+                    <Text style={styles.subScript}>GHS</Text>
 
-                    <Text style={styles.superScript}>13 </Text>
-
-                    <Text style={styles.subScript}>50</Text>
+                    <Text style={styles.superScript}>{props.fee}</Text>
 
                 </View>
 

@@ -6,7 +6,7 @@ import BottomSheet from 'react-native-simple-bottom-sheet'
 import CloseButton from '../../components/buttons/CloseButton'
 import FormButton from '../../components/buttons/FormButton'
 import { create } from 'apisauce'
-import { getUser, signInUser } from '../../utils/storage'
+import { getUser, signInUser, getTripStatus, setTripStatus } from '../../utils/storage'
 import DeliveryRequest from './DeliveryRequest'
 import Geolocation from '@react-native-community/geolocation'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -41,8 +41,8 @@ export default class Home extends Component {
                     err => this.failedPermissionRequest(err),
                     {
                         enableHighAccuracy: true,
-                        maximumAge:0,
-                        timeout:6000
+                        maximumAge:1000,
+                        timeout:20000
                     }
                 )
             }
@@ -50,6 +50,15 @@ export default class Home extends Component {
         .catch(err=>{
             console.log(err);
         })
+        // getTripStatus()
+        // .then(res=>{
+        //     if(res===null){
+                   
+        //     } else {
+        //         this.props.navigation.navigate("Start Trip", {res})
+        //     }
+        // })
+        // .catch(e=>console.log(e))
     }
     //Handle location permission err
     failedPermissionRequest = (err) => {
@@ -184,7 +193,6 @@ export default class Home extends Component {
             order:this.state.request._id
         })
         .then(res=>{
-            console.log(res);
             if(res.ok){
                 this.setState({
                     isLoading:false,
@@ -198,6 +206,11 @@ export default class Home extends Component {
                         token:this.state.token
                     }
                 )
+                // setTripStatus(res.data.data)
+                // .then(()=>{
+                    
+                // })
+                // .catch(e=>console.log(e))
                 return
             }
             Alert.alert('Sorry!', 'Order is nolonger available.')
@@ -268,7 +281,7 @@ export default class Home extends Component {
                         this.bottomSheet = ref;
                     }}
                     isOpen={false}
-                    sliderMinHeight={130}
+                    sliderMinHeight={120}
                 >
                     <View style={stylesheet.greetingsWrapper}>
                         <Text style={stylesheet.greeting}>Hello {this.state.info.firstName}</Text>
