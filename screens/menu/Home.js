@@ -42,7 +42,7 @@ export default class Home extends Component {
                     {
                         enableHighAccuracy: true,
                         maximumAge:1000,
-                        timeout:20000
+                        timeout:6000
                     }
                 )
             }
@@ -263,6 +263,7 @@ export default class Home extends Component {
                 </View>
             )
         }
+        console.log(this.state.token);
         return (
             <View style={stylesheet.container}>
                 <MapView

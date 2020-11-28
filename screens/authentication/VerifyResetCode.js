@@ -107,6 +107,7 @@ export default class VerifyResetCode extends Component {
                 </View>
                 <Text style={stylesheet.err}>{this.state.errMessage}</Text>
                 <SMSVerifyCode
+                    autoFocus
                     ref={ref => (this.verifycode = ref)}
                     onInputCompleted={this.sendCode}
                     onInputChangeText={this.resetErr}
